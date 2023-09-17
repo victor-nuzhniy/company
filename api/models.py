@@ -30,8 +30,8 @@ class Discount(db.Model):
         return str(self.name)
 
 
-class CounterParty(db.Model):
-    """CounterParty model for api app."""
+class Counterparty(db.Model):
+    """Counterparty model for api app."""
 
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(150), unique=True)
