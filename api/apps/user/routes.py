@@ -1,22 +1,9 @@
 """User routers."""
-from flask_restful import Resource, fields, marshal_with, reqparse
+from flask_restful import Resource, fields, marshal_with
 
 from api import User, api
-from api.apps.user.validators import email, username
+from api.apps.user.parsers import patch_parser, post_parser, put_parser
 from api.services import crud
-
-post_parser = reqparse.RequestParser()
-post_parser.add_argument("username", type=username, required=True)
-post_parser.add_argument("email", type=email, required=True)
-post_parser.add_argument("password", required=False)
-
-put_parser = reqparse.RequestParser()
-put_parser.add_argument("username", type=username, required=True)
-put_parser.add_argument("email", type=email, required=True)
-
-patch_parameters = reqparse.RequestParser()
-patch_parameters.add_argument("username", type=username, required=False)
-patch_parameters.add_argument("email", type=email, required=False)
 
 user_fields = {
     "id": fields.Integer,
@@ -44,7 +31,7 @@ class UserRoute(Resource):
     @marshal_with(user_fields)
     def patch(self, user_id):
         """Update user by user id, partially."""
-        args = patch_parameters.parse_args()
+        args = patch_parser.parse_args()
         args = {key: value for key, value in args.items() if value}
         user = crud.update(User, args, {"id": user_id})
         return user
