@@ -9,3 +9,5 @@ For db creation using only flask functionality we need:
     - in terminal '$env:FLASK_APP="api"' for windows;
     - run 'flask db init';
     - flask db migrate -m "0001" (vary name);
+    - flask db stamp head;
+    - flask db upgrade;
