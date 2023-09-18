@@ -15,23 +15,14 @@ app.config["SQLALCHEMY_DATABASE_URI"] = os.getenv("SQLALCHEMY_DATABASE_URI")
 api = Api(app)
 db = SQLAlchemy(app)
 
-from .models import (
-    Agreement,
-    Counterparty,
-    Discount,
-    Invoice,
-    InvoiceProducts,
-    Order,
-    OrderProducts,
-    Product,
-    PurchaseInvoice,
-    PurchaseInvoiceProducts,
-    SaleInvoice,
-    TaxInvoice,
-    TaxInvoiceProducts,
-    User,
-)
+from api.apps.counterparty.models import Agreement, Counterparty, Discount
+from api.apps.invoice.models import Invoice, InvoiceProducts, SaleInvoice
+from api.apps.order.models import Order, OrderProducts
+from api.apps.product.models import Product
+from api.apps.purchase.models import PurchaseInvoice, PurchaseInvoiceProducts
+from api.apps.tax.models import TaxInvoice, TaxInvoiceProducts
+from api.apps.user.models import User
 
 migrate = Migrate(app, db)
 
-from api import routes
+from api.apps.user import routes
