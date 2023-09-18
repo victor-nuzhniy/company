@@ -6,11 +6,11 @@ class User(db.Model):
     """User model for api app."""
 
     id = db.Column(db.Integer, primary_key=True)
-    username = db.Column(db.String(50), unique=True)
-    email = db.Column(db.String(120), unique=True)
-    password = db.Column(db.String(60))
+    username = db.Column(db.String(50), unique=True, nullable=False)
+    email = db.Column(db.String(120), unique=True, nullable=False)
+    password = db.Column(db.String(60), nullable=False)
     is_admin = db.Column(db.Boolean, default=False)
-    orders = db.relationship("Order", backref="orders")
+    orders = db.relationship("Order")
 
     def __repr__(self) -> str:
         """Represent model instance."""
@@ -21,9 +21,9 @@ class Discount(db.Model):
     """Discount model for api app."""
 
     id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(30), unique=True)
-    rate = db.Column(db.Integer)  # TODO add validator
-    counterparties = db.relationship("CounterParty", backref="counterparties")
+    name = db.Column(db.String(30), unique=True, nullable=False)
+    rate = db.Column(db.Integer, nullable=False)  # TODO add validator
+    counterparties = db.relationship("Counterparty")
 
     def __repr__(self) -> str:
         """Represent model instance."""
@@ -34,15 +34,19 @@ class Counterparty(db.Model):
     """Counterparty model for api app."""
 
     id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(150), unique=True)
+    name = db.Column(db.String(150), unique=True, nullable=False)
     postal_code = db.Column(db.String(10))
     country = db.Column(db.String(100))
     city = db.Column(db.String(100))
     address = db.Column(db.String(255))
     phone_number = db.Column(db.String(30))  # TODO add validator
-    discount_id = db.Column(db.Integer, db.ForeignKey("discount.id"), nullable=True)
-    agreements = db.relationship("Agreement", backref="agreements")
-    orders = db.relationship("Order", backref="orders")
+    discount_id = db.Column(
+        db.Integer,
+        db.ForeignKey("discount.id", ondelete="CASCADE", onupdate="CASCADE"),
+        nullable=True,
+    )
+    agreements = db.relationship("Agreement")
+    orders = db.relationship("Order")
 
     def __repr__(self) -> str:
         """Represent model instance."""
@@ -54,9 +58,13 @@ class Agreement(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(200), unique=True, nullable=False)
-    counterparty_id = db.Column(db.Integer, db.ForeignKey("counterparty.id"))
-    invoices = db.relationship("Invoice", backref="invoices")
-    purchase_invoices = db.relationship("PurchaseInvoice", backref="purchase_invoices")
+    counterparty_id = db.Column(
+        db.Integer,
+        db.ForeignKey("counterparty.id", ondelete="CASCADE", onupdate="CASCADE"),
+        nullable=False,
+    )
+    invoices = db.relationship("Invoice")
+    purchase_invoices = db.relationship("PurchaseInvoice")
 
     def __repr__(self) -> str:
         """Represent model instance."""
@@ -67,15 +75,13 @@ class Product(db.Model):
     """Product model for api app."""
 
     id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(200))
-    code = db.Column(db.String(100), unique=True)
-    units = db.Column(db.String(100))
-    price = db.Column(db.Integer)
-    order_products = db.relationship("OrderProducts", backref="order_products")
-    invoice_products = db.relationship("InvoiceProducts", backref="invoice_products")
-    purchase_invoice_products = db.relationship(
-        "PurchaseInvoiceProducts", backref="purchase_invoice_products"
-    )
+    name = db.Column(db.String(200), nullable=False)
+    code = db.Column(db.String(100), unique=True, nullable=False)
+    units = db.Column(db.String(100), nullable=False)
+    price = db.Column(db.Integer, nullable=False)
+    order_products = db.relationship("OrderProducts")
+    invoice_products = db.relationship("InvoiceProducts")
+    purchase_invoice_products = db.relationship("PurchaseInvoiceProducts")
 
     def __repr__(self) -> str:
         """Represent model instance."""
@@ -86,12 +92,20 @@ class Order(db.Model):
     """Order model for api app."""
 
     id = db.Column(db.Integer, primary_key=True)
-    user_id = db.Column(db.Integer, db.ForeignKey("user.id"))
-    name = db.Column(db.String(100), unique=True)
-    created_at = db.Column(db.DateTime)
-    customer_id = db.Column(db.Integer, db.ForeignKey("counterparty.id"))
-    order_products = db.relationship("Order", backref="order_products")
-    invoices = db.relationship("Invoice", backref="invoices")
+    user_id = db.Column(
+        db.Integer,
+        db.ForeignKey("user.id", ondelete="CASCADE", onupdate="CASCADE"),
+        nullable=False,
+    )
+    name = db.Column(db.String(100), unique=True, nullable=False)
+    created_at = db.Column(db.DateTime, nullable=False)
+    customer_id = db.Column(
+        db.Integer,
+        db.ForeignKey("counterparty.id", ondelete="CASCADE", onupdate="CASCADE"),
+        nullable=False,
+    )
+    order_products = db.relationship("OrderProducts")
+    invoices = db.relationship("Invoice")
 
     def __repr__(self) -> str:
         """Represent model instance."""
@@ -102,10 +116,18 @@ class OrderProducts(db.Model):
     """OrderProducts model for api app."""
 
     id = db.Column(db.Integer, primary_key=True)
-    product_id = db.Column(db.Integer, db.ForeignKey("product.id"))
-    quantity = db.Column(db.Integer)
-    price = db.Column(db.Integer)
-    order_id = db.Column(db.Integer, db.ForeignKey("order.id"))
+    product_id = db.Column(
+        db.Integer,
+        db.ForeignKey("product.id", ondelete="CASCADE", onupdate="CASCADE"),
+        nullable=False,
+    )
+    quantity = db.Column(db.Integer, nullable=False)
+    price = db.Column(db.Integer, nullable=False)
+    order_id = db.Column(
+        db.Integer,
+        db.ForeignKey("order.id", ondelete="CASCADE", onupdate="CASCADE"),
+        nullable=False,
+    )
 
     def __repr__(self) -> str:
         """Represent model instance."""
@@ -116,13 +138,21 @@ class Invoice(db.Model):
     """Invoice model for api app."""
 
     id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(100))
-    order_id = db.Column(db.Integer, db.ForeignKey("order.id"))
-    created_at = db.Column(db.DateTime)
-    paid = db.Column(db.Boolean)
-    agreement_id = db.Column(db.Integer, db.ForeignKey("agreement.id"))
-    invoice_products = db.relationship("InvoiceProducts", backref="invoice_products")
-    sale_invoices = db.relationship("SaleInvoice", backref="sale_invoices")
+    name = db.Column(db.String(100), nullable=False)
+    order_id = db.Column(
+        db.Integer,
+        db.ForeignKey("order.id", ondelete="CASCADE", onupdate="CASCADE"),
+        nullable=False,
+    )
+    created_at = db.Column(db.DateTime, nullable=False)
+    paid = db.Column(db.Boolean, default=False)
+    agreement_id = db.Column(
+        db.Integer,
+        db.ForeignKey("agreement.id", ondelete="CASCADE", onupdate="CASCADE"),
+        nullable=False,
+    )
+    invoice_products = db.relationship("InvoiceProducts")
+    sale_invoices = db.relationship("SaleInvoice")
 
     def __repr__(self) -> str:
         """Represent model instance."""
@@ -133,13 +163,19 @@ class InvoiceProducts(db.Model):
     """InvoiceProducts model for api app."""
 
     id = db.Column(db.Integer, primary_key=True)
-    product_id = db.Column(db.Integer, db.ForeignKey("product.id"))
-    quantity = db.Column(db.Integer)
-    price = db.Column(db.Integer)
-    invoice_id = db.Column(db.Integer, db.ForeignKey("invoice.id"))
-    tax_invoice_products = db.relationship(
-        "TaxInvoiceProducts", backref="tax_invoice_products"
+    product_id = db.Column(
+        db.Integer,
+        db.ForeignKey("product.id", ondelete="CASCADE", onupdate="CASCADE"),
+        nullable=False,
     )
+    quantity = db.Column(db.Integer, nullable=False)
+    price = db.Column(db.Integer, nullable=False)
+    invoice_id = db.Column(
+        db.Integer,
+        db.ForeignKey("invoice.id", ondelete="CASCADE", onupdate="CASCADE"),
+        nullable=False,
+    )
+    tax_invoice_products = db.relationship("TaxInvoiceProducts")
 
     def __repr__(self) -> str:
         """Represent model instance."""
@@ -150,10 +186,14 @@ class SaleInvoice(db.Model):
     """SaleInvoice model for api app."""
 
     id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(100))
-    invoice_id = db.Column(db.Integer, db.ForeignKey("invoice.id"))
-    created_at = db.Column(db.DateTime)
-    done = db.Column(db.Boolean)
+    name = db.Column(db.String(100), nullable=False)
+    invoice_id = db.Column(
+        db.Integer,
+        db.ForeignKey("invoice.id", ondelete="CASCADE", onupdate="CASCADE"),
+        nullable=False,
+    )
+    created_at = db.Column(db.DateTime, nullable=False)
+    done = db.Column(db.Boolean, default=False)
 
     def __repr__(self) -> str:
         """Represent model instance."""
@@ -164,12 +204,14 @@ class PurchaseInvoice(db.Model):
     """PurchaseInvoice model for api app."""
 
     id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(100))
-    agreement_id = db.Column(db.Integer, db.ForeignKey("agreement.id"))
-    created_at = db.Column(db.DateTime)
-    purchase_invoice_products = db.relationship(
-        "PurchaseInvoiceProducts", backref="purchase_invoice_products"
+    name = db.Column(db.String(100), nullable=False)
+    agreement_id = db.Column(
+        db.Integer,
+        db.ForeignKey("agreement.id", ondelete="CASCADE", onupdate="CASCADE"),
+        nullable=False,
     )
+    created_at = db.Column(db.DateTime, nullable=False)
+    purchase_invoice_products = db.relationship("PurchaseInvoiceProducts")
 
     def __repr__(self) -> str:
         """Represent model instance."""
@@ -180,14 +222,20 @@ class PurchaseInvoiceProducts(db.Model):
     """PurchaseInvoiceProducts model for api app."""
 
     id = db.Column(db.Integer, primary_key=True)
-    product_id = db.Column(db.Integer, db.ForeignKey("product.id"))
-    quantity = db.Column(db.Integer)
-    price = db.Column(db.Integer)
-    purchase_invoice_id = db.Column(db.Integer, db.ForeignKey("purchase_invoice.id"))
-    products_left = db.Column(db.Integer)
-    tax_invoice_products = db.relationship(
-        "TaxInvoiceProducts", backref="tax_invoice_products"
+    product_id = db.Column(
+        db.Integer,
+        db.ForeignKey("product.id", ondelete="CASCADE", onupdate="CASCADE"),
+        nullable=False,
     )
+    quantity = db.Column(db.Integer, nullable=False)
+    price = db.Column(db.Integer, nullable=False)
+    purchase_invoice_id = db.Column(
+        db.Integer,
+        db.ForeignKey("purchase_invoice.id", ondelete="CASCADE", onupdate="CASCADE"),
+        nullable=False,
+    )
+    products_left = db.Column(db.Integer, nullable=False)
+    tax_invoice_products = db.relationship("TaxInvoiceProducts")
 
     def __repr__(self) -> str:
         """Represent model instance."""
@@ -198,12 +246,14 @@ class TaxInvoice(db.Model):
     """SaleInvoice model for api app."""
 
     id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(100))
-    invoice_id = db.Column(db.Integer, db.ForeignKey("invoice.id"))
-    created_at = db.Column(db.DateTime)
-    tax_invoice_products = db.relationship(
-        "TaxInvoiceProducts", backref="tax_invoice_products"
+    name = db.Column(db.String(100), nullable=False)
+    invoice_id = db.Column(
+        db.Integer,
+        db.ForeignKey("invoice.id", ondelete="CASCADE", onupdate="CASCADE"),
+        nullable=False,
     )
+    created_at = db.Column(db.DateTime, nullable=False)
+    tax_invoice_products = db.relationship("TaxInvoiceProducts")
 
     def __repr__(self) -> str:
         """Represent model instance."""
@@ -214,12 +264,24 @@ class TaxInvoiceProducts(db.Model):
     """TaxInvoiceProducts model for api app."""
 
     id = db.Column(db.Integer, primary_key=True)
-    tax_invoice_id = db.Column(db.Integer, db.ForeignKey("tax_invoice.id"))
-    invoice_products_id = db.Column(db.Integer, db.ForeignKey("invoice_products.id"))
-    purchase_invoice_products_id = db.Column(
-        db.Integer, db.ForeignKey("purchase_invoice_products.id")
+    tax_invoice_id = db.Column(
+        db.Integer,
+        db.ForeignKey("tax_invoice.id", ondelete="CASCADE", onupdate="CASCADE"),
+        nullable=False,
     )
-    quantity = db.Column(db.Integer)
+    invoice_products_id = db.Column(
+        db.Integer,
+        db.ForeignKey("invoice_products.id", ondelete="CASCADE", onupdate="CASCADE"),
+        nullable=False,
+    )
+    purchase_invoice_products_id = db.Column(
+        db.Integer,
+        db.ForeignKey(
+            "purchase_invoice_products.id", ondelete="CASCADE", onupdate="CASCADE"
+        ),
+        nullable=False,
+    )
+    quantity = db.Column(db.Integer, nullable=False)
 
     def __repr__(self) -> str:
         """Represent model instance."""
