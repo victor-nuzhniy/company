@@ -140,28 +140,34 @@ class ModelRoute(Resource):
     patch_parser: Optional[RequestParser] = None
     model_fields: Optional[Dict] = None
 
-    @marshal_with(model_fields)
-    def get(self, model_id):
-        """Get model instance by id."""
-        return crud.read(self.model, {"id": model_id})
+    def __init__(self):
+        """Add model_fields attribute and apply decorator to methods."""
+        super().__init__()
+        ModelRoute.get = marshal_with(self.model_fields)(ModelRoute.get)
+        ModelRoute.put = marshal_with(self.model_fields)(ModelRoute.put)
+        ModelRoute.patch = marshal_with(self.model_fields)(ModelRoute.patch)
 
-    @marshal_with(model_fields)
-    def put(self, model_id):
+    def get(self, instance_id):
+        """Get model instance by id."""
+        return crud.read(self.model, {"id": instance_id})
+
+    def put(self, instance_id):
         """Update instance by id."""
         args = self.put_parser.parse_args()
-        return crud.update(self.model, args, {"id": model_id})
+        return crud.update(self.model, args, {"id": instance_id})
 
-    @marshal_with(model_fields)
-    def patch(self, model_id):
+    def patch(self, instance_id):
         """Update instance bu id, partially."""
         args = self.patch_parser.parse_args()
         args = {key: value for key, value in args.items() if value}
-        return crud.update(self.model, args, {"id": model_id})
+        return crud.update(self.model, args, {"id": instance_id})
 
-    def delete(self, model_id):
+    def delete(self, instance_id):
         """Delete instance by id."""
-        crud.delete(self.model, {"id": model_id})
-        return {"message": f"Deleted {self.model.__name__} instance with id {model_id}"}
+        crud.delete(self.model, {"id": instance_id})
+        return {
+            "message": f"Deleted {self.model.__name__} instance with id {instance_id}"
+        }
 
 
 class ModelsRoute(Resource):
@@ -171,13 +177,17 @@ class ModelsRoute(Resource):
     post_parser: Optional[RequestParser] = None
     model_fields: Optional[Dict] = None
 
-    @marshal_with(model_fields)
+    def __init__(self):
+        """Add model_fields attribute and apply decorator to methods."""
+        super().__init__()
+        ModelsRoute.post = marshal_with(self.model_fields)(ModelsRoute.post)
+        ModelsRoute.get = marshal_with(self.model_fields)(ModelsRoute.get)
+
     def post(self):
         """Create model instance."""
         args = self.post_parser.parse_args()
         return crud.create(self.model, args)
 
-    @marshal_with(model_fields)
     def get(self):
         """Get model instance list."""
         return crud.read_many(self.model)
