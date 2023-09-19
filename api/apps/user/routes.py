@@ -1,9 +1,14 @@
 """User routers."""
-from flask_restful import fields
+from flask_restful import Resource, fields, marshal_with
 
 from api import User, api
-from api.apps.user.parsers import user_patch_parser, user_post_parser, user_put_parser
-from api.services import ModelRoute, ModelsRoute
+from api.apps.user.parsers import (
+    user_admin_patch_parser,
+    user_patch_parser,
+    user_post_parser,
+    user_put_parser,
+)
+from api.services import ModelRoute, ModelsRoute, crud, token_required
 
 user_fields = {
     "id": fields.Integer,
@@ -29,5 +34,18 @@ class UsersRoute(ModelsRoute):
     model_fields = user_fields
 
 
+class AdminUserRoute(Resource):
+    """Admin user operations."""
+
+    @token_required(is_admin=True)
+    @marshal_with(user_fields)
+    def patch(self, user_id, *args, **kwargs):
+        """Patch user instance."""
+        args = user_admin_patch_parser.parse_args()
+        args = {key: value for key, value in args.items() if value is not None}
+        return crud.update(User, args, {"id": user_id})
+
+
 api.add_resource(UserRoute, "/user/<instance_id>")
 api.add_resource(UsersRoute, "/user/")
+api.add_resource(AdminUserRoute, "/user/admin/<user_id>")
