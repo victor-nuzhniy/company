@@ -9,7 +9,7 @@ from api.apps.counterparty.parsers import (
     discount_parser,
     discount_patch_parser,
 )
-from api.services import ModelRoute, ModelsRoute
+from api.model_routes import ModelRoute, ModelsRoute
 
 discount_fields = {
     "id": fields.Integer,

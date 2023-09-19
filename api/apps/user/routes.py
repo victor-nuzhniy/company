@@ -8,7 +8,8 @@ from api.apps.user.parsers import (
     user_post_parser,
     user_put_parser,
 )
-from api.services import ModelRoute, ModelsRoute, crud, token_required
+from api.model_routes import ModelRoute, ModelsRoute, token_required
+from api.services import crud
 
 user_fields = {
     "id": fields.Integer,
