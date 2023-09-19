@@ -1,9 +1,15 @@
 """Module for counterparty rounters."""
-from flask_restful import Resource, fields, marshal_with
+from flask_restful import fields
 
-from api import api
-from api.apps.counterparty.parsers import discount_parser
-from api.services import crud
+from api import Agreement, Counterparty, Discount, api
+from api.apps.counterparty.parsers import (
+    agreement_parser,
+    counterparty_parser,
+    counterparty_patch_parser,
+    discount_parser,
+    discount_patch_parser,
+)
+from api.services import ModelRoute, ModelsRoute
 
 discount_fields = {
     "id": fields.Integer,
@@ -11,53 +17,78 @@ discount_fields = {
     "rate": fields.Integer,
 }
 
+counterparty_fields = {
+    "id": fields.Integer,
+    "name": fields.String,
+    "postal_code": fields.String,
+    "country": fields.String,
+    "city": fields.String,
+    "address": fields.String,
+    "phone_number": fields.String,
+    "discount_id": fields.Integer,
+}
 
-class Discount(Resource):
-    """Operations with single Discount instance."""
-
-    @marshal_with(discount_fields)
-    def get(self, discount_id):
-        """Get discount by id."""
-        discount = crud.read(Discount, {"id": discount_id})
-        return discount
-
-    @marshal_with(discount_fields)
-    def put(self, discount_id):
-        """Update discount by id."""
-        args = discount_parser.parse_args()
-        discount = crud.update(Discount, args, {"id": discount_id})
-        return discount
-
-    @marshal_with(discount_fields)
-    def patch(self, discount_id):
-        """Update discount by id, partially."""
-        args = discount_parser.parse_args()
-        args = {key: value for key, value in args.items() if value}
-        discount = crud.update(Discount, args, {"id": discount_id})
-        return discount
-
-    def delete(self, discount_id):
-        """Delete discount by id."""
-        crud.delete(Discount, {"id": discount_id})
-        return {"message": f"Deleted Discount with id {discount_id}"}
+agreement_fields = {
+    "id": fields.Integer,
+    "name": fields.String,
+    "counterparty_id": fields.Integer,
+}
 
 
-class Discounts(Resource):
-    """Operations with many Discounts instances."""
+class DiscountRoute(ModelRoute):
+    """Operations with single Agreement instance."""
 
-    @marshal_with(discount_fields)
-    def post(self):
-        """Create discount."""
-        args = discount_parser.parse_args()
-        discount = crud.create(Discount, args)
-        return discount
-
-    @marshal_with(discount_fields)
-    def get(self):
-        """Get discount list."""
-        discounts = crud.read_many(Discount)
-        return discounts
+    model = Discount
+    put_parser = discount_parser
+    patch_parser = discount_patch_parser
+    model_fields = discount_fields
 
 
-api.add_resource(Discount, "/discount/<discount_id>/")
-api.add_resource(Discounts, "/discount/")
+class DiscountsRoute(ModelsRoute):
+    """Operations with many Discounts instances and instance creation."""
+
+    model = Discount
+    post_parser = discount_parser
+    model_fields = discount_fields
+
+
+class CounterpartyRoute(ModelRoute):
+    """Operations with single Counterparty instance."""
+
+    model = Counterparty
+    put_parser = counterparty_parser
+    patch_parser = counterparty_patch_parser
+    model_fields = counterparty_fields
+
+
+class CounterpartiesRoute(ModelsRoute):
+    """Operations with many Counterparty instances and instance creation."""
+
+    model = Counterparty
+    post_parser = counterparty_parser
+    model_fields = counterparty_fields
+
+
+class AgreementRoute(ModelRoute):
+    """Operations with single Agreement instance."""
+
+    model = Agreement
+    put_parser = agreement_parser
+    patch_parser = agreement_parser
+    model_fields = agreement_fields
+
+
+class AgreementsRoute(ModelsRoute):
+    """Operations with many Agreement instances and instance creation."""
+
+    model = Agreement
+    post_parser = agreement_parser
+    model_fields = agreement_fields
+
+
+api.add_resource(DiscountRoute, "/discount/<discount_id>")
+api.add_resource(DiscountsRoute, "/discount/")
+api.add_resource(CounterpartyRoute, "/counterpary/,<counterparty_id>")
+api.add_resource(CounterpartiesRoute, "/counterparty/")
+api.add_resource(AgreementRoute, "/agreement/<agreement_id>")
+api.add_resource(AgreementsRoute, "/agreement/")
