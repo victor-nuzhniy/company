@@ -2,7 +2,7 @@
 import jwt
 from flask_restful import Resource
 
-from api import app
+from api import api, app
 from api.apps.auth.parsers import login_parser
 from api.apps.auth.utils import login
 
@@ -19,7 +19,7 @@ class Login(Resource):
                 try:
                     # token should expire after 24 hrs
                     token = jwt.encode(
-                        {"user_id": user["_id"]},
+                        {"user_id": user.id},
                         app.config["SECRET_KEY"],
                         algorithm="HS256",
                     )
@@ -40,3 +40,6 @@ class Login(Resource):
                 "error": str(e),
                 "data": None,
             }, 500
+
+
+api.add_resource(Login, "/login/")
