@@ -27,3 +27,4 @@ migrate = Migrate(app, db)
 
 from api.apps.user import routes
 from api.apps.counterparty import routes
+from api.apps.auth import routes
