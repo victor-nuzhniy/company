@@ -198,16 +198,16 @@ class ModelRoute(Resource):
         """Get model instance by id."""
         return crud.read(self.model, {"id": instance_id})
 
-    @token_required(is_admin=True)
+    @token_required
     def put(self, instance_id, *args, **kwargs):
         """Update instance by id."""
         args = self.put_parser.parse_args()
         return crud.update(self.model, args, {"id": instance_id})
 
-    def patch(self, instance_id, *args, **kwargs):
+    def patch(self, instance_id, *args, **kwargs):  # TODO add token_decorator to all
         """Update instance bu id, partially."""
         args = self.patch_parser.parse_args()
-        args = {key: value for key, value in args.items() if value}
+        args = {key: value for key, value in args.items() if value is not None}
         return crud.update(self.model, args, {"id": instance_id})
 
     def delete(self, instance_id, *args, **kwargs):
