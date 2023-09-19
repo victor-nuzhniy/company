@@ -1,9 +1,9 @@
 """User routers."""
-from flask_restful import Resource, fields, marshal_with
+from flask_restful import fields
 
 from api import User, api
-from api.apps.user.parsers import patch_parser, post_parser, put_parser
-from api.services import crud
+from api.apps.user.parsers import user_patch_parser, user_post_parser, user_put_parser
+from api.services import ModelRoute, ModelsRoute
 
 user_fields = {
     "id": fields.Integer,
@@ -12,52 +12,22 @@ user_fields = {
 }
 
 
-class UserRoute(Resource):
+class UserRoute(ModelRoute):
     """Operations with single User isntance."""
 
-    @marshal_with(user_fields)
-    def get(self, user_id):
-        """Get user by user id."""
-        user = crud.read(User, {"id": user_id})
-        return user
-
-    @marshal_with(user_fields)
-    def put(self, user_id):
-        """Update user by user id."""
-        args = put_parser.parse_args()
-        user = crud.update(User, args, {"id": user_id})
-        return user
-
-    @marshal_with(user_fields)
-    def patch(self, user_id):
-        """Update user by user id, partially."""
-        args = patch_parser.parse_args()
-        args = {key: value for key, value in args.items() if value}
-        user = crud.update(User, args, {"id": user_id})
-        return user
-
-    def delete(self, user_id):
-        """Delete user by id."""
-        crud.delete(User, {"id": user_id})
-        return {"message": f"Deleted User with id {user_id}"}
+    model = User
+    put_parser = user_put_parser
+    patch_parser = user_patch_parser
+    model_fields = user_fields
 
 
-class UserListRoute(Resource):
-    """Operations with many User isntances."""
+class UsersRoute(ModelsRoute):
+    """Operations with many User isntances and instance creation."""
 
-    @marshal_with(user_fields)
-    def post(self):
-        """Create user."""
-        args = post_parser.parse_args()
-        user = crud.create(User, args)
-        return user
-
-    @marshal_with(user_fields)
-    def get(self):
-        """Get users list."""
-        users = crud.read_many(User)
-        return users
+    model = User
+    post_parser = user_post_parser
+    model_fields = user_fields
 
 
 api.add_resource(UserRoute, "/user/<user_id>")
-api.add_resource(UserListRoute, "/user/")
+api.add_resource(UsersRoute, "/user/")
