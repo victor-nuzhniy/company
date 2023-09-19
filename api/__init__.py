@@ -26,3 +26,4 @@ from api.apps.user.models import User
 migrate = Migrate(app, db)
 
 from api.apps.user import routes
+from api.apps.counterparty import routes
