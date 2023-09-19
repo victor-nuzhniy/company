@@ -29,5 +29,5 @@ class UsersRoute(ModelsRoute):
     model_fields = user_fields
 
 
-api.add_resource(UserRoute, "/user/<user_id>")
+api.add_resource(UserRoute, "/user/<instance_id>")
 api.add_resource(UsersRoute, "/user/")
