@@ -1,7 +1,8 @@
 """Operation with db."""
 from typing import Dict, List, Optional, Sequence
 
-from flask_restful import abort
+from flask_restful import Resource, abort, marshal_with
+from flask_restful.reqparse import RequestParser
 from sqlalchemy import (
     ChunkedIteratorResult,
     CursorResult,
@@ -129,3 +130,54 @@ class CRUDOperations:
 
 
 crud = CRUDOperations()
+
+
+class ModelRoute(Resource):
+    """Operations with single model instance."""
+
+    model: Optional[db.Model] = None
+    put_parser: Optional[RequestParser] = None
+    patch_parser: Optional[RequestParser] = None
+    model_fields: Optional[Dict] = None
+
+    @marshal_with(model_fields)
+    def get(self, model_id):
+        """Get model instance by id."""
+        return crud.read(self.model, {"id": model_id})
+
+    @marshal_with(model_fields)
+    def put(self, model_id):
+        """Update instance by id."""
+        args = self.put_parser.parse_args()
+        return crud.update(self.model, args, {"id": model_id})
+
+    @marshal_with(model_fields)
+    def patch(self, model_id):
+        """Update instance bu id, partially."""
+        args = self.patch_parser.parse_args()
+        args = {key: value for key, value in args.items() if value}
+        return crud.update(self.model, args, {"id": model_id})
+
+    def delete(self, model_id):
+        """Delete instance by id."""
+        crud.delete(self.model, {"id": model_id})
+        return {"message": f"Deleted {self.model.__name__} instance with id {model_id}"}
+
+
+class ModelsRoute(Resource):
+    """Operations with multiple model instance and instance creation."""
+
+    model: Optional[db.Model] = None
+    post_parser: Optional[RequestParser] = None
+    model_fields: Optional[Dict] = None
+
+    @marshal_with(model_fields)
+    def post(self):
+        """Create model instance."""
+        args = self.post_parser.parse_args()
+        return crud.create(self.model, args)
+
+    @marshal_with(model_fields)
+    def get(self):
+        """Get model instance list."""
+        return crud.read_many(self.model)
