@@ -1,7 +1,7 @@
 """Validators for user apps."""
 import re
 
-from werkzeug.security import generate_password_hash
+from api.apps.auth.utils import encrypt_password
 
 
 def username(username_str) -> str:
@@ -45,5 +45,4 @@ def password(password_str: str) -> str:
     """Validate and encrypt password."""
     if len(password_str) < 1:  # TODO bigger int
         raise ValueError("Password length is too short.")
-    token = generate_password_hash(password_str, salt_length=20)
-    return token
+    return encrypt_password(password_str)
