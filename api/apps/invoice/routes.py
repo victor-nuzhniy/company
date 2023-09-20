@@ -1,8 +1,15 @@
 """Invoice routes."""
 from flask_restful import fields
 
-from api import Invoice, api
-from api.apps.invoice.parsers import invoice_parser, invoice_patch_parser
+from api import Invoice, InvoiceProducts, SaleInvoice, api
+from api.apps.invoice.parsers import (
+    invoice_parser,
+    invoice_patch_parser,
+    invoice_products_parser,
+    invoice_products_patch_parser,
+    sale_invoice_parser,
+    sale_invoice_patch_parser,
+)
 from api.model_routes import ModelRoute, ModelsRoute
 
 invoice_fields = {
@@ -48,5 +55,43 @@ class InvoicesRoute(ModelsRoute):
     model_fields = invoice_fields
 
 
+class InvoiceProductsRoute(ModelRoute):
+    """Operations with single InvoiceProducts instance."""
+
+    model = InvoiceProducts
+    put_parser = invoice_products_parser
+    patch_parser = invoice_products_patch_parser
+    model_fields = invoice_products_fields
+
+
+class ManyInvoiceProductsRoute(ModelsRoute):
+    """Operations with many InvoiceProducts instances and instance creation."""
+
+    model = InvoiceProducts
+    post_parser = invoice_products_parser
+    model_fields = invoice_products_fields
+
+
+class SaleInvoiceRoute(ModelRoute):
+    """Operations with single SaleInvoice instnce."""
+
+    model = SaleInvoice
+    put_parser = sale_invoice_parser
+    patch_parser = sale_invoice_patch_parser
+    model_fields = sale_invoice_fields
+
+
+class SaleInvoicesRoute(ModelsRoute):
+    """Operations with many SaleInvoice instances and instance creation."""
+
+    model = SaleInvoice
+    post_parser = sale_invoice_parser
+    model_fields = sale_invoice_fields
+
+
 api.add_resource(InvoiceRoute, "/invoice/<instance_id>")
 api.add_resource(InvoicesRoute, "/invoice/")
+api.add_resource(InvoiceProductsRoute, "/invoice-products/<instance_id>")
+api.add_resource(ManyInvoiceProductsRoute, "/invoice-products/")
+api.add_resource(SaleInvoiceRoute, "/sale-invoice/<instance_id>")
+api.add_resource(SaleInvoicesRoute, "/sale-invoice/")
