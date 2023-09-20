@@ -10,6 +10,7 @@ product_fields = {
     "name": fields.String,
     "code": fields.String,
     "units": fields.String,
+    "currency": fields.String,
     "price": fields.Integer,
 }
 
