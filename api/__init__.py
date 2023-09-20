@@ -29,3 +29,6 @@ from api.apps.user import routes
 from api.apps.counterparty import routes
 from api.apps.auth import routes
 from api.apps.invoice import routes
+from api.apps.order import routes
+from api.apps.product import routes
+from api.apps.purchase import routes
