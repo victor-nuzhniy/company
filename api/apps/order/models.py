@@ -1,5 +1,8 @@
 """Models for order apps."""
+from sqlalchemy import func
+
 from api import db
+from api.common import AwareDateTime
 
 
 class Order(db.Model):
@@ -12,7 +15,7 @@ class Order(db.Model):
         nullable=False,
     )
     name = db.Column(db.String(100), unique=True, nullable=False)
-    created_at = db.Column(db.DateTime, nullable=False)
+    created_at = db.Column(AwareDateTime, default=func.now(), nullable=False)
     customer_id = db.Column(
         db.Integer,
         db.ForeignKey("counterparty.id", ondelete="CASCADE", onupdate="CASCADE"),

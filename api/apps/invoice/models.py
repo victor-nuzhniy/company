@@ -1,5 +1,8 @@
 """Models for invoice apps."""
+from sqlalchemy import func
+
 from api import db
+from api.common import AwareDateTime
 
 
 class Invoice(db.Model):
@@ -12,7 +15,7 @@ class Invoice(db.Model):
         db.ForeignKey("order.id", ondelete="CASCADE", onupdate="CASCADE"),
         nullable=False,
     )
-    created_at = db.Column(db.DateTime, nullable=False)
+    created_at = db.Column(AwareDateTime, default=func.now(), nullable=False)
     paid = db.Column(db.Boolean, default=False)
     agreement_id = db.Column(
         db.Integer,
@@ -60,7 +63,7 @@ class SaleInvoice(db.Model):
         db.ForeignKey("invoice.id", ondelete="CASCADE", onupdate="CASCADE"),
         nullable=False,
     )
-    created_at = db.Column(db.DateTime, nullable=False)
+    created_at = db.Column(AwareDateTime, default=func.now(), nullable=False)
     done = db.Column(db.Boolean, default=False)
 
     def __repr__(self) -> str:

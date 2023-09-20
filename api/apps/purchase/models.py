@@ -1,5 +1,8 @@
 """Models for purchase apps."""
+from sqlalchemy import func
+
 from api import db
+from api.common import AwareDateTime
 
 
 class PurchaseInvoice(db.Model):
@@ -12,7 +15,7 @@ class PurchaseInvoice(db.Model):
         db.ForeignKey("agreement.id", ondelete="CASCADE", onupdate="CASCADE"),
         nullable=False,
     )
-    created_at = db.Column(db.DateTime, nullable=False)
+    created_at = db.Column(AwareDateTime, default=func.now(), nullable=False)
     purchase_invoice_products = db.relationship("PurchaseInvoiceProducts")
 
     def __repr__(self) -> str:

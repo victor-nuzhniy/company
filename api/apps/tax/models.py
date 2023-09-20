@@ -1,5 +1,8 @@
 """Models for tax apps."""
+from sqlalchemy import func
+
 from api import db
+from api.common import AwareDateTime
 
 
 class TaxInvoice(db.Model):
@@ -12,7 +15,7 @@ class TaxInvoice(db.Model):
         db.ForeignKey("invoice.id", ondelete="CASCADE", onupdate="CASCADE"),
         nullable=False,
     )
-    created_at = db.Column(db.DateTime, nullable=False)
+    created_at = db.Column(AwareDateTime, default=func.now(), nullable=False)
     tax_invoice_products = db.relationship("TaxInvoiceProducts")
 
     def __repr__(self) -> str:
