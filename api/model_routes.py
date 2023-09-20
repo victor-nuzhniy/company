@@ -45,9 +45,9 @@ def token_required(is_admin: bool = False):
                     "error": "Unauthorized",
                 }, 401
             if not current_user.is_active:
-                abort(403)
+                abort(403, "Current user is not active.")
             if is_admin and not current_user.is_admin:
-                abort(403)
+                abort(403, "Current user is not admin.")
             return f(*args, current_user=current_user, **kwargs)
 
         return decorated
