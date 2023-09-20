@@ -129,3 +129,23 @@ class CRUDOperations:
 
 
 crud = CRUDOperations()
+
+
+class DbUtils:
+    """Db utilities."""
+
+    @staticmethod
+    def is_exists(
+        model: db.Model,
+        data: Dict,
+    ) -> bool:
+        """Check instance existence."""
+        """Get model instance by given data."""
+        statement = select(model.id)
+        for k, v in data.items():
+            statement = statement.where(getattr(model, k) == v)
+        result: CursorResult = db.session.execute(statement=statement)
+        return result.first() is not None
+
+
+db_utils = DbUtils()
