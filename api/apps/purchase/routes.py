@@ -41,7 +41,7 @@ class PurchaseInvoicesRoute(ModelsRoute):
 
     model = PurchaseInvoice
     post_parser = purchase_invoice_parser
-    model_fields = purchase_invoice_products_fields
+    model_fields = purchase_invoice_fields
 
 
 class PurchaseInvoiceProductsRoute(ModelRoute):
@@ -66,3 +66,4 @@ api.add_resource(PurchaseInvoicesRoute, "/purchase-invoice/")
 api.add_resource(
     PurchaseInvoiceProductsRoute, "/purchase-invoice-products/<instance_id>"
 )
+api.add_resource(ManyPurchaseInvoiceProductsRoute, "/purchase-invoice-products/")
