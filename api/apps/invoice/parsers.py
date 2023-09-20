@@ -7,7 +7,7 @@ from api.apps.invoice.validators import (
     invoice_id,
     order_id,
     product_id,
-    sale_name,
+    str_length_100,
 )
 
 invoice_parser = reqparse.RequestParser()
@@ -41,11 +41,11 @@ invoice_products_patch_parser.add_argument(
 )
 
 sale_invoice_parser = reqparse.RequestParser()
-sale_invoice_parser.add_argument("name", type=sale_name, required=True)
+sale_invoice_parser.add_argument("name", type=str_length_100, required=True)
 sale_invoice_parser.add_argument("invoice_id", type=invoice_id, required=True)
 
 sale_invoice_patch_parser = reqparse.RequestParser()
-sale_invoice_patch_parser.add_argument("name", type=sale_name, required=False)
+sale_invoice_patch_parser.add_argument("name", type=str_length_100, required=False)
 sale_invoice_patch_parser.add_argument("invoice_id", type=invoice_id, required=False)
 sale_invoice_patch_parser.add_argument(
     "created_at", type=datetime_from_iso8601, required=False

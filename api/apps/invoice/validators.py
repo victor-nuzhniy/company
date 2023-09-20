@@ -33,7 +33,7 @@ def invoice_id(invoice_id_int: int) -> int:
     abort(409, f"Product with id {invoice_id_int} does not exist.")
 
 
-def sale_name(name_str: str) -> str:
+def str_length_100(name_str: str) -> str:
     """Validate sale_invoice name."""
     if len(name_str) > 100:
         abort(422, f"{name_str} length should be lower then 100 character.")
