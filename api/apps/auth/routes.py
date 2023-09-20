@@ -1,10 +1,12 @@
 """Auth routes."""
 import jwt
-from flask_restful import Resource
+from flask_restful import Resource, marshal
 
-from api import api, app
-from api.apps.auth.parsers import login_parser
+from api import User, api, app
+from api.apps.auth.parsers import admin_parser, login_parser
 from api.apps.auth.utils import login
+from api.apps.user.routes import user_fields
+from api.services import crud
 
 
 class Login(Resource):
@@ -42,4 +44,16 @@ class Login(Resource):
             }, 500
 
 
+class Admin(Resource):
+    """Admin routes."""
+
+    def post(self):
+        """Handle post request."""
+        args = admin_parser.parse_args()
+        args.update({"is_active": True, "is_admin": True})
+        args.pop("admin_password")
+        return marshal(crud.create(User, args), user_fields)
+
+
 api.add_resource(Login, "/login/")
+api.add_resource(Admin, "/create-admin/")
