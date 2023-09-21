@@ -1,4 +1,4 @@
-"""Service functionality for api."""
+"""Db service functionality for api."""
 from typing import Dict, List, Optional, Sequence
 
 from flask_restful import abort
