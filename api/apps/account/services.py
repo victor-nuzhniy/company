@@ -1,37 +1,43 @@
 """Db services for account apps."""
-from typing import Dict, List
+from typing import Dict, List, Sequence
 
 from flask import abort
-from sqlalchemy import select
+from sqlalchemy import CursorResult, select
 
 from api import Product, PurchaseInvoiceProducts, TaxInvoice, TaxInvoiceProducts, db
 from api.services import crud
 
 
-def get_purchase_products_by_invoice_products(invoice_products: List) -> List:
+def get_purchase_products_by_invoice_products(invoice_products: List) -> Sequence:
     """Get purchase products list by products ids."""
-    products_ids = [elem.product_id for elem in invoice_products]
-    statement = (
+    products_ids: List[int] = [elem.product_id for elem in invoice_products]
+    statement: str = (
         select(Product, Product.id.in_(products_ids))
         .join(PurchaseInvoiceProducts, Product.id == PurchaseInvoiceProducts.product_id)
         .where(PurchaseInvoiceProducts.products_left > 0)
     )
-    result = db.session.execute(statement)
-    objects = result.scalars().all()
+    result: CursorResult = db.session.execute(statement)
+    objects: Sequence = result.scalars().all()
     return objects
 
 
 def prepare_tax_invoice_products(
     invoice_products: List, purchase_products: List, invoice_id: int
 ) -> List[Dict]:
-    """Create tax_invoice_products list with products quantity checking."""
-    purchase_products_dict = {item.id: item for item in purchase_products}
-    tax_products = []
+    """
+    Create tax_invoice_products list with products quantity checking.
+
+    In case of lacking products amount in purchase invoices raise error with 409 code.
+    """
+    purchase_products_dict: Dict = {item.id: item for item in purchase_products}
+    tax_products: List = []
     for product in invoice_products:
-        purchase_products = purchase_products_dict[product.id].purchase_invoice_products
-        quantity = product.quantity
+        purchase_products: Sequence = purchase_products_dict[
+            product.id
+        ].purchase_invoice_products
+        quantity: int = product.quantity
         for purchase_product in purchase_products:
-            tax_product = dict()
+            tax_product: Dict = dict()
             tax_product["invoice_products_id"] = product.id
             tax_product["purchase_invoice_products_id"] = purchase_product.id
             if quantity > purchase_product.products_left:
@@ -56,7 +62,7 @@ def prepare_tax_invoice_products(
 
 
 def create_tax_invoice_products(tax_products: List[Dict], invoice_id: int) -> None:
-    """Create tax_invoice_products and tax_invoice they connected."""
+    """Create tax_invoice_products and tax_invoice they are connected."""
     tax_invoice = crud.create(
         TaxInvoice, {"name": "Tax-0001", "invoice_id": invoice_id}
     )
