@@ -33,3 +33,4 @@ from api.apps.order import routes
 from api.apps.product import routes
 from api.apps.purchase import routes
 from api.apps.tax import routes
+from api.apps.account import routes
