@@ -18,13 +18,10 @@ product_fields = {
     "units": fields.String,
     "currency": fields.String,
     "price": fields.Integer,
+    "product_type_id": fields.Integer,
 }
 
-product_type_fields = {
-    "id": fields.Integer,
-    "name": fields.String,
-    "product_id": fields.Integer,
-}
+product_type_fields = {"id": fields.Integer, "name": fields.String}
 
 
 class ProductRoute(ModelRoute):
@@ -56,7 +53,7 @@ class ProductTypeRoute(ModelRoute):
 class ProductTypesRoute(ModelsRoute):
     """Operations with many Product instance and instance creation."""
 
-    model = Product
+    model = ProductType
     post_parser = product_type_parser
     model_fields = product_type_fields
 
