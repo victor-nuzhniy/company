@@ -17,6 +17,7 @@ class SaleInvoice(db.Model):
     created_at = db.Column(db.DateTime, default=func.now(), nullable=False)
     done = db.Column(db.Boolean, default=False)
     tax_invoices = db.relationship("TaxInvoice")
+    sale_invoice_products = db.relationship("SaleInvoiceProduct")
 
     def __repr__(self) -> str:
         """Represent model instance."""
