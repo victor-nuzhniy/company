@@ -16,11 +16,12 @@ api = Api(app)
 db = SQLAlchemy(app)
 
 from api.apps.counterparty.models import Agreement, Counterparty, Discount
-from api.apps.invoice.models import Invoice, InvoiceProducts, SaleInvoice
-from api.apps.order.models import Order, OrderProducts
+from api.apps.invoice.models import Invoice, InvoiceProduct
+from api.apps.order.models import Order, OrderProduct
 from api.apps.product.models import Product
-from api.apps.purchase.models import PurchaseInvoice, PurchaseInvoiceProducts
-from api.apps.tax.models import TaxInvoice, TaxInvoiceProducts
+from api.apps.purchase.models import PurchaseInvoice, PurchaseInvoiceProduct
+from api.apps.sale.models import SaleInvoice, SaleInvoiceProduct
+from api.apps.tax.models import TaxInvoice, TaxInvoiceProduct
 from api.apps.user.models import User
 
 migrate = Migrate(app, db)
@@ -34,3 +35,4 @@ from api.apps.product import routes
 from api.apps.purchase import routes
 from api.apps.tax import routes
 from api.apps.account import routes
+from api.apps.sale import routes
