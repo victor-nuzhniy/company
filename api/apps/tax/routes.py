@@ -13,14 +13,14 @@ from api.model_routes import ModelRoute, ModelsRoute
 tax_invoice_fields = {
     "id": fields.Integer,
     "name": fields.String,
-    "invoice_id": fields.Integer,
+    "sale_invoice_id": fields.Integer,
     "created_at": fields.DateTime,
 }
 
 tax_invoice_product_fields = {
     "id": fields.Integer,
     "tax_invoice_id": fields.Integer,
-    "invoice_products_id": fields.Integer,
+    "sale_invoice_products_id": fields.Integer,
     "purchase_invoice_products_id": fields.Integer,
     "quantity": fields.Integer,
 }
