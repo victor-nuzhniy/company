@@ -1,7 +1,7 @@
 """Validators for invoice apps."""
 from flask import abort
 
-from api import Agreement, Invoice, Order, Product, SaleInvoice
+from api import Agreement, Invoice, Order, Product
 from api.services import db_utils
 
 
@@ -38,10 +38,3 @@ def str_length_100(name_str: str) -> str:
     if len(name_str) > 100:
         abort(422, f"{name_str} length should be lower then 100 character.")
     return name_str
-
-
-def sale_invoice_id(sale_invoice_id_int: int) -> int:
-    """Validate sale_invoice_id."""
-    if db_utils.is_exists(SaleInvoice, {"id": sale_invoice_id_int}):
-        return sale_invoice_id_int
-    abort(409, f"SaleInvoice with id {sale_invoice_id_int} does not exist.")
