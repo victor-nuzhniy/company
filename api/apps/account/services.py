@@ -4,7 +4,14 @@ from typing import Dict, List, Sequence
 from flask import abort
 from sqlalchemy import CursorResult, select
 
-from api import Product, PurchaseInvoiceProducts, TaxInvoice, TaxInvoiceProducts, db
+from api import (
+    Product,
+    PurchaseInvoiceProducts,
+    TaxInvoice,
+    TaxInvoiceProducts,
+    constants,
+    db,
+)
 from api.services import crud
 
 
@@ -63,8 +70,15 @@ def prepare_tax_invoice_products(
 
 def create_tax_invoice_products(tax_products: List[Dict], invoice_id: int) -> None:
     """Create tax_invoice_products and tax_invoice they are connected."""
+    last_tax_invoice = (
+        TaxInvoice.query.with_entities(TaxInvoice.id).order_by(-TaxInvoice.id).first()
+    )
     tax_invoice = crud.create(
-        TaxInvoice, {"name": "Tax-0001", "invoice_id": invoice_id}
+        TaxInvoice,
+        {
+            "name": constants.TAX_INVOICE_NAME_PREFIX + str(last_tax_invoice.id),
+            "invoice_id": invoice_id,
+        },
     )
     for product in tax_products:
         product["tax_invoice_id"] = tax_invoice.id

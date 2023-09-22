@@ -1,0 +1,6 @@
+"""Contstants for api app."""
+
+
+INVOICE_NAME_PREFIX = "I-0000"
+TAX_INVOICE_NAME_PREFIX = "T-0000"
+SALE_INVOICE_NAME_PREFIX = "S-0000"
