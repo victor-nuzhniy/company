@@ -18,28 +18,26 @@ purchase_invoice_patch_parser.add_argument(
     "created_at", type=datetime_from_iso8601, required=False
 )
 
-purchase_invoice_products_parser = reqparse.RequestParser()
-purchase_invoice_products_parser.add_argument(
+purchase_invoice_product_parser = reqparse.RequestParser()
+purchase_invoice_product_parser.add_argument(
     "product_id", type=product_id, required=True
 )
-purchase_invoice_products_parser.add_argument("quantity", type=int, required=True)
-purchase_invoice_products_parser.add_argument("price", type=int, required=True)
-purchase_invoice_products_parser.add_argument(
+purchase_invoice_product_parser.add_argument("quantity", type=int, required=True)
+purchase_invoice_product_parser.add_argument("price", type=int, required=True)
+purchase_invoice_product_parser.add_argument(
     "purchase_invoice_id", type=purchase_invoice_id, required=True
 )
-purchase_invoice_products_parser.add_argument("products_left", type=int, required=True)
+purchase_invoice_product_parser.add_argument("products_left", type=int, required=True)
 
-purchase_invoice_products_patch_parser = reqparse.RequestParser()
-purchase_invoice_products_patch_parser.add_argument(
+purchase_invoice_product_patch_parser = reqparse.RequestParser()
+purchase_invoice_product_patch_parser.add_argument(
     "product_id", type=product_id, required=False
 )
-purchase_invoice_products_patch_parser.add_argument(
-    "quantity", type=int, required=False
-)
-purchase_invoice_products_patch_parser.add_argument("price", type=int, required=False)
-purchase_invoice_products_patch_parser.add_argument(
+purchase_invoice_product_patch_parser.add_argument("quantity", type=int, required=False)
+purchase_invoice_product_patch_parser.add_argument("price", type=int, required=False)
+purchase_invoice_product_patch_parser.add_argument(
     "purchase_invoice_id", type=purchase_invoice_id, required=False
 )
-purchase_invoice_products_patch_parser.add_argument(
+purchase_invoice_product_patch_parser.add_argument(
     "products_left", type=int, required=False
 )
