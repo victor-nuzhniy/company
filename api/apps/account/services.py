@@ -2,12 +2,13 @@
 from typing import Dict, List, Sequence
 
 from flask import abort
-from sqlalchemy import CursorResult, select
+from sqlalchemy import CursorResult, and_, select
 
 from api import (
     Product,
     PurchaseInvoiceProduct,
     SaleInvoice,
+    SaleInvoiceProduct,
     TaxInvoice,
     TaxInvoiceProduct,
     constants,
@@ -89,3 +90,33 @@ def create_tax_invoice_products(tax_products: List[Dict], invoice_id: int) -> No
 def update_sale_invoice(sale_invoice_id: int) -> None:
     """Update SaleInvoice 'done' field to True."""
     crud.update(SaleInvoice, {"done": True}, {"id": sale_invoice_id})
+
+
+def get_sale_invoice_products_by_period(period: Dict) -> Sequence:
+    """Get sold products list by given period."""
+    date_from = period.get("date_from")
+    date_to = period.get("date_to")
+    result = (
+        SaleInvoiceProduct.query.with_entities(
+            SaleInvoiceProduct.id.label("id"),
+            SaleInvoiceProduct.quantity.label("quantity"),
+            SaleInvoiceProduct.price.label("price"),
+            SaleInvoice.name.label("sale_invoice_name"),
+            SaleInvoice.created_at.label("created_at"),
+            Product.name.label("name"),
+            Product.units.label("units"),
+            Product.code.label("code"),
+            Product.currency.label("currency"),
+        )
+        .join(SaleInvoice.sale_invoice_products)
+        .filter(
+            and_(
+                SaleInvoice.created_at > date_from,
+                SaleInvoice.created_at < date_to,
+                SaleInvoice.done,
+            )
+        )
+        .join(Product)
+        .all()
+    )
+    return result
