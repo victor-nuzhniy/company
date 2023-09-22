@@ -6,9 +6,9 @@ from sqlalchemy import CursorResult, select
 
 from api import (
     Product,
-    PurchaseInvoiceProducts,
+    PurchaseInvoiceProduct,
     TaxInvoice,
-    TaxInvoiceProducts,
+    TaxInvoiceProduct,
     constants,
     db,
 )
@@ -20,8 +20,8 @@ def get_purchase_products_by_invoice_products(invoice_products: List) -> Sequenc
     products_ids: List[int] = [elem.product_id for elem in invoice_products]
     statement: str = (
         select(Product, Product.id.in_(products_ids))
-        .join(PurchaseInvoiceProducts, Product.id == PurchaseInvoiceProducts.product_id)
-        .where(PurchaseInvoiceProducts.products_left > 0)
+        .join(PurchaseInvoiceProduct, Product.id == PurchaseInvoiceProduct.product_id)
+        .where(PurchaseInvoiceProduct.products_left > 0)
     )
     result: CursorResult = db.session.execute(statement)
     objects: Sequence = result.scalars().all()
@@ -29,7 +29,7 @@ def get_purchase_products_by_invoice_products(invoice_products: List) -> Sequenc
 
 
 def prepare_tax_invoice_products(
-    invoice_products: List, purchase_products: List, invoice_id: int
+    invoice_products: List, purchase_products: Sequence, invoice_id: int
 ) -> List[Dict]:
     """
     Create tax_invoice_products list with products quantity checking.
@@ -45,8 +45,8 @@ def prepare_tax_invoice_products(
         quantity: int = product.quantity
         for purchase_product in purchase_products:
             tax_product: Dict = dict()
-            tax_product["invoice_products_id"] = product.id
-            tax_product["purchase_invoice_products_id"] = purchase_product.id
+            tax_product["sale_invoice_product_id"] = product.id
+            tax_product["purchase_invoice_product_id"] = purchase_product.id
             if quantity > purchase_product.products_left:
                 quantity -= purchase_product.products_left
                 tax_product["quantity"] = purchase_product.products_left
@@ -82,4 +82,4 @@ def create_tax_invoice_products(tax_products: List[Dict], invoice_id: int) -> No
     )
     for product in tax_products:
         product["tax_invoice_id"] = tax_invoice.id
-    crud.create_many(TaxInvoiceProducts, tax_products)
+    crud.create_many(TaxInvoiceProduct, tax_products)
