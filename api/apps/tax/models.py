@@ -9,20 +9,20 @@ class TaxInvoice(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(100), nullable=False)
-    invoice_id = db.Column(
+    sale_invoice_id = db.Column(
         db.Integer,
-        db.ForeignKey("invoice.id", ondelete="CASCADE", onupdate="CASCADE"),
+        db.ForeignKey("sale_invoice.id", ondelete="CASCADE", onupdate="CASCADE"),
         nullable=False,
     )
     created_at = db.Column(db.DateTime, default=func.now(), nullable=False)
-    tax_invoice_products = db.relationship("TaxInvoiceProducts")
+    tax_invoice_products = db.relationship("TaxInvoiceProduct")
 
     def __repr__(self) -> str:
         """Represent model instance."""
         return str(self.name)
 
 
-class TaxInvoiceProducts(db.Model):
+class TaxInvoiceProduct(db.Model):
     """TaxInvoiceProducts model for api app."""
 
     id = db.Column(db.Integer, primary_key=True)
@@ -31,15 +31,17 @@ class TaxInvoiceProducts(db.Model):
         db.ForeignKey("tax_invoice.id", ondelete="CASCADE", onupdate="CASCADE"),
         nullable=False,
     )
-    invoice_products_id = db.Column(
-        db.Integer,
-        db.ForeignKey("invoice_products.id", ondelete="CASCADE", onupdate="CASCADE"),
-        nullable=False,
-    )
-    purchase_invoice_products_id = db.Column(
+    sale_invoice_product_id = db.Column(
         db.Integer,
         db.ForeignKey(
-            "purchase_invoice_products.id", ondelete="CASCADE", onupdate="CASCADE"
+            "sale_invoice_product.id", ondelete="CASCADE", onupdate="CASCADE"
+        ),
+        nullable=False,
+    )
+    purchase_invoice_product_id = db.Column(
+        db.Integer,
+        db.ForeignKey(
+            "purchase_invoice_product.id", ondelete="CASCADE", onupdate="CASCADE"
         ),
         nullable=False,
     )
