@@ -28,9 +28,10 @@ class Product(db.Model):
         db.ForeignKey("product_type.id", ondelete="CASCADE", onupdate="CASCADE"),
         nullable=False,
     )
-    order_products = db.relationship("OrderProducts")
-    invoice_products = db.relationship("InvoiceProducts")
-    purchase_invoice_products = db.relationship("PurchaseInvoiceProducts")
+    order_products = db.relationship("OrderProduct")
+    invoice_products = db.relationship("InvoiceProduct")
+    sale_invoice_products = db.relationship("SaleInvoiceProduct")
+    purchase_invoice_products = db.relationship("PurchaseInvoiceProduct")
 
     def __repr__(self) -> str:
         """Represent model instance."""
