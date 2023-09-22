@@ -63,5 +63,5 @@ class OrderProductsRoute(ModelsRoute):
 
 api.add_resource(OrderRoute, "/order/<instance_id>")
 api.add_resource(OrdersRoute, "/order/")
-api.add_resource(OrderProductRoute, "/order-products/<instance_id>")
-api.add_resource(OrderProductsRoute, "/order-products/")
+api.add_resource(OrderProductRoute, "/order-product/<instance_id>")
+api.add_resource(OrderProductsRoute, "/order-product/")

@@ -63,7 +63,5 @@ class PurchaseInvoiceProductsRoute(ModelsRoute):
 
 api.add_resource(PurchaseInvoiceRoute, "/purchase-invoice/<instance_id>")
 api.add_resource(PurchaseInvoicesRoute, "/purchase-invoice/")
-api.add_resource(
-    PurchaseInvoiceProductRoute, "/purchase-invoice-products/<instance_id>"
-)
-api.add_resource(PurchaseInvoiceProductsRoute, "/purchase-invoice-products/")
+api.add_resource(PurchaseInvoiceProductRoute, "/purchase-invoice-product/<instance_id>")
+api.add_resource(PurchaseInvoiceProductsRoute, "/purchase-invoice-product/")

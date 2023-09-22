@@ -62,5 +62,5 @@ class TaxInvoiceProductsRoute(ModelsRoute):
 
 api.add_resource(TaxInvoiceRoute, "/tax-invoice/<instance_id>")
 api.add_resource(TaxInvoicesRoute, "/tax-invoice/")
-api.add_resource(TaxInvoiceProductRoute, "/tax-invoice-products/<instance_id>")
-api.add_resource(TaxInvoiceProductsRoute, "/tax-invoice-products/")
+api.add_resource(TaxInvoiceProductRoute, "/tax-invoice-product/<instance_id>")
+api.add_resource(TaxInvoiceProductsRoute, "/tax-invoice-product/")
