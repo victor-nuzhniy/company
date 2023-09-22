@@ -7,6 +7,7 @@ from api.apps.account.services import (
     create_tax_invoice_products,
     get_purchase_products_by_invoice_products,
     prepare_tax_invoice_products,
+    update_sale_invoice,
 )
 from api.services import crud
 
@@ -28,6 +29,7 @@ class Account(Resource):
             sale_invoice_products, purchase_products, sale_invoice_id
         )
         create_tax_invoice_products(tax_invoice_products, sale_invoice_id)
+        update_sale_invoice(sale_invoice_id)
 
         return {"message": "Operation succussfully performed"}
 
