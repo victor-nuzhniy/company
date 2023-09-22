@@ -7,6 +7,7 @@ from sqlalchemy import CursorResult, select
 from api import (
     Product,
     PurchaseInvoiceProduct,
+    SaleInvoice,
     TaxInvoice,
     TaxInvoiceProduct,
     constants,
@@ -83,3 +84,8 @@ def create_tax_invoice_products(tax_products: List[Dict], invoice_id: int) -> No
     for product in tax_products:
         product["tax_invoice_id"] = tax_invoice.id
     crud.create_many(TaxInvoiceProduct, tax_products)
+
+
+def update_sale_invoice(sale_invoice_id: int) -> None:
+    """Update SaleInvoice 'done' field to True."""
+    crud.update(SaleInvoice, {"done": True}, {"id": sale_invoice_id})
