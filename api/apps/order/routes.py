@@ -1,12 +1,12 @@
 """Routes for order apps."""
 from flask_restful import fields
 
-from api import Order, OrderProducts, api
+from api import Order, OrderProduct, api
 from api.apps.order.parsers import (
     order_parser,
     order_patch_parser,
-    order_products_parser,
-    order_products_patch_parser,
+    order_product_parser,
+    order_product_patch_parser,
 )
 from api.model_routes import ModelRoute, ModelsRoute
 
@@ -18,7 +18,7 @@ order_fields = {
     "customer_id": fields.Integer,
 }
 
-order_products_fields = {
+order_product_fields = {
     "id": fields.Integer,
     "product_id": fields.Integer,
     "quantity": fields.Integer,
@@ -44,24 +44,24 @@ class OrdersRoute(ModelsRoute):
     model_fields = order_fields
 
 
-class OrderProductsRoute(ModelRoute):
+class OrderProductRoute(ModelRoute):
     """Operations with single OrderProducts instance."""
 
-    model = OrderProducts
-    put_parser = order_products_parser
-    patch_parser = order_products_patch_parser
-    model_fields = order_products_fields
+    model = OrderProduct
+    put_parser = order_product_parser
+    patch_parser = order_product_patch_parser
+    model_fields = order_product_fields
 
 
-class ManyOrderProductsRoute(ModelsRoute):
+class OrderProductsRoute(ModelsRoute):
     """Operations with many OrderProducts and instance creation."""
 
-    model = OrderProducts
-    post_parser = order_products_parser
-    model_fields = order_products_fields
+    model = OrderProduct
+    post_parser = order_product_parser
+    model_fields = order_product_fields
 
 
 api.add_resource(OrderRoute, "/order/<instance_id>")
 api.add_resource(OrdersRoute, "/order/")
-api.add_resource(OrderProductsRoute, "/order-products/<instance_id>")
-api.add_resource(ManyOrderProductsRoute, "/order-products/")
+api.add_resource(OrderProductRoute, "/order-products/<instance_id>")
+api.add_resource(OrderProductsRoute, "/order-products/")

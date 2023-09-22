@@ -20,7 +20,7 @@ class Order(db.Model):
         db.ForeignKey("counterparty.id", ondelete="CASCADE", onupdate="CASCADE"),
         nullable=False,
     )
-    order_products = db.relationship("OrderProducts")
+    order_products = db.relationship("OrderProduct")
     invoices = db.relationship("Invoice")
 
     def __repr__(self) -> str:
@@ -28,7 +28,7 @@ class Order(db.Model):
         return str(self.name)
 
 
-class OrderProducts(db.Model):
+class OrderProduct(db.Model):
     """OrderProducts model for api app."""
 
     id = db.Column(db.Integer, primary_key=True)
