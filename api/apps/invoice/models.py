@@ -21,7 +21,7 @@ class Invoice(db.Model):
         db.ForeignKey("agreement.id", ondelete="CASCADE", onupdate="CASCADE"),
         nullable=False,
     )
-    invoice_products = db.relationship("InvoiceProducts")
+    invoice_products = db.relationship("InvoiceProduct")
     sale_invoices = db.relationship("SaleInvoice")
 
     def __repr__(self) -> str:
@@ -29,7 +29,7 @@ class Invoice(db.Model):
         return str(self.name)
 
 
-class InvoiceProducts(db.Model):
+class InvoiceProduct(db.Model):
     """InvoiceProducts model for api app."""
 
     id = db.Column(db.Integer, primary_key=True)
@@ -45,26 +45,7 @@ class InvoiceProducts(db.Model):
         db.ForeignKey("invoice.id", ondelete="CASCADE", onupdate="CASCADE"),
         nullable=False,
     )
-    tax_invoice_products = db.relationship("TaxInvoiceProducts")
 
     def __repr__(self) -> str:
         """Represent model instance."""
         return f"Invoice product with id {self.product_id}"
-
-
-class SaleInvoice(db.Model):
-    """SaleInvoice model for api app."""
-
-    id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(100), nullable=False)
-    invoice_id = db.Column(
-        db.Integer,
-        db.ForeignKey("invoice.id", ondelete="CASCADE", onupdate="CASCADE"),
-        nullable=False,
-    )
-    created_at = db.Column(db.DateTime, default=func.now(), nullable=False)
-    done = db.Column(db.Boolean, default=False)
-
-    def __repr__(self) -> str:
-        """Represent model instance."""
-        return str(self.name)
