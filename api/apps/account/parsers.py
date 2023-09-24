@@ -10,3 +10,6 @@ account_parser.add_argument("sale_invoice_id", type=sale_invoice_id, required=Tr
 period_parser = reqparse.RequestParser()
 period_parser.add_argument("date_from", type=date, required=True)
 period_parser.add_argument("date_to", type=date, required=True)
+
+product_leftovers_parser = reqparse.RequestParser()
+product_leftovers_parser.add_argument("date", type=date, required=True)
