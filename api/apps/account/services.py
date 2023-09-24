@@ -2,10 +2,11 @@
 from typing import Dict, List, Sequence
 
 from flask import abort
-from sqlalchemy import CursorResult, and_, select
+from sqlalchemy import CursorResult, and_, func, select
 
 from api import (
     Product,
+    PurchaseInvoice,
     PurchaseInvoiceProduct,
     SaleInvoice,
     SaleInvoiceProduct,
@@ -96,7 +97,7 @@ def get_sale_invoice_products_by_period(period: Dict) -> Sequence:
     """Get sold products list by given period."""
     date_from = period.get("date_from")
     date_to = period.get("date_to")
-    result = (
+    return (
         SaleInvoiceProduct.query.with_entities(
             SaleInvoiceProduct.id.label("id"),
             SaleInvoiceProduct.quantity.label("quantity"),
@@ -119,4 +120,38 @@ def get_sale_invoice_products_by_period(period: Dict) -> Sequence:
         .join(Product)
         .all()
     )
-    return result
+
+
+def get_purchase_products_quantity_list(data: Dict) -> Sequence:
+    """Get products list with purchase quantities on given date."""
+    date = data.get("date")
+    return (
+        Product.query.with_entities(
+            Product.id.label("id"),
+            Product.name.label("name"),
+            Product.units.label("units"),
+            Product.currency.label("currency"),
+            func.sum(PurchaseInvoiceProduct.quantity).label("quantity"),
+        )
+        .join(PurchaseInvoiceProduct)
+        .join(PurchaseInvoice)
+        .filter(PurchaseInvoice.created_at < date)
+        .group_by(Product.name)
+        .all()
+    )
+
+
+def get_sold_products(data: Dict) -> Dict:
+    """Get sold product dict on given date."""
+    date = data.get("date")
+    return (
+        Product.query.with_entities(
+            Product.id.label("id"),
+            func.sum(SaleInvoiceProduct.quantity).label("quantity"),
+        )
+        .join(SaleInvoiceProduct)
+        .join(SaleInvoice)
+        .filter(and_(SaleInvoice.done, SaleInvoice.created_at < date))
+        .group_by(Product.id)
+        .all()
+    )
