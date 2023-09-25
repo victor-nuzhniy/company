@@ -9,6 +9,7 @@ from api.apps.user.parsers import (
     user_post_parser,
     user_put_parser,
 )
+from api.apps.user.schemas import user_schema
 from api.model_routes import ModelRoute, ModelsRoute, token_required
 from api.services import crud
 
@@ -44,6 +45,7 @@ class UsersRoute(ModelsRoute):
 class AdminUserRoute(Resource):
     """Admin user operations."""
 
+    @swagger.operation(**user_schema)
     @token_required(is_admin=True)
     @marshal_with(UserFields.resource_fields)
     def patch(self, user_id, *args, **kwargs):
