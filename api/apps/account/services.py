@@ -15,6 +15,7 @@ from api import (
     constants,
     db,
 )
+from api.apps.product.models import ProductType
 from api.services import crud
 
 
@@ -71,7 +72,7 @@ def prepare_tax_invoice_products(
     return tax_products
 
 
-def create_tax_invoice_products(tax_products: List[Dict], invoice_id: int) -> None:
+def create_tax_invoice_products(tax_products: List[Dict], sale_invoice_id: int) -> None:
     """Create tax_invoice_products and tax_invoice they are connected."""
     last_tax_invoice = (
         TaxInvoice.query.with_entities(TaxInvoice.id).order_by(-TaxInvoice.id).first()
@@ -80,7 +81,7 @@ def create_tax_invoice_products(tax_products: List[Dict], invoice_id: int) -> No
         TaxInvoice,
         {
             "name": constants.TAX_INVOICE_NAME_PREFIX + str(last_tax_invoice.id),
-            "invoice_id": invoice_id,
+            "sale_invoice_id": sale_invoice_id,
         },
     )
     for product in tax_products:
@@ -141,7 +142,7 @@ def get_purchase_products_quantity_list(data: Dict) -> Sequence:
     )
 
 
-def get_sold_products(data: Dict) -> Dict:
+def get_sold_products(data: Dict) -> Sequence:
     """Get sold product dict on given date."""
     date = data.get("date")
     return (
@@ -155,3 +156,56 @@ def get_sold_products(data: Dict) -> Dict:
         .group_by(Product.id)
         .all()
     )
+
+
+def get_tax_invoice_products_with_prices_data(period: Dict) -> Sequence:
+    """Get sold products with purchase and sale prices by given period."""
+    date_from = period.get("date_from")
+    date_to = period.get("date_to")
+    result = (
+        TaxInvoiceProduct.query.with_entities(
+            SaleInvoiceProduct.product_id.label("product_id"),
+            TaxInvoiceProduct.quantity.label("quantity"),
+            SaleInvoiceProduct.price.label("sale_price"),
+            PurchaseInvoiceProduct.price.label("purchase_price"),
+        )
+        .join(SaleInvoiceProduct)
+        .join(PurchaseInvoiceProduct)
+        .join(TaxInvoice)
+        .filter(
+            and_(
+                SaleInvoice.created_at > date_from,
+                SaleInvoice.created_at < date_to,
+            )
+        )
+        .all()
+    )
+    return result
+
+
+def get_sold_products_for_period(period: Dict) -> Sequence:
+    """Get sold products for given period."""
+    date_from = period.get("date_from")
+    date_to = period.get("date_to")
+    result = (
+        Product.query.with_entities(
+            Product.id.label("id"),
+            Product.name.label("name"),
+            Product.code.label("code"),
+            Product.currency.label("currency"),
+            ProductType.name.label("product_type"),
+        )
+        .join(ProductType)
+        .join(SaleInvoiceProduct)
+        .join(SaleInvoice)
+        .filter(
+            and_(
+                SaleInvoice.created_at > date_from,
+                SaleInvoice.created_at < date_to,
+                SaleInvoice.done,
+            )
+        )
+        .group_by(Product.id)
+        .all()
+    )
+    return result

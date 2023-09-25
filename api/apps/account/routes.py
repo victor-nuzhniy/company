@@ -13,10 +13,16 @@ from api.apps.account.services import (
     get_purchase_products_quantity_list,
     get_sale_invoice_products_by_period,
     get_sold_products,
+    get_sold_products_for_period,
+    get_tax_invoice_products_with_prices_data,
     prepare_tax_invoice_products,
     update_sale_invoice,
 )
-from api.apps.account.utils import get_product_leftovers_on_date
+from api.apps.account.utils import (
+    add_income_to_products,
+    create_income_products_dict,
+    get_product_leftovers_on_date,
+)
 from api.services import crud
 
 period_report_fields = {
@@ -38,6 +44,14 @@ product_leftovers_fields = {
     "units": fields.String,
     "currency": fields.String,
     "quantity": fields.Integer,
+}
+
+product_income_fields = {
+    "id": fields.Integer,
+    "name": fields.String,
+    "code": fields.String,
+    "currency": fields.String,
+    "product_type": fields.String,
 }
 
 
@@ -86,6 +100,19 @@ class ProductsLeftoversRoute(Resource):
         return get_product_leftovers_on_date(purchase_products, sold_products)
 
 
+class IncomeForPeriod(Resource):
+    """Calculate income for given period."""
+
+    def post(self, *args, **kwargs):
+        """Calculate income for given period."""
+        args = period_parser.parse_args()
+        income_products_data = get_tax_invoice_products_with_prices_data(args)
+        products = marshal(get_sold_products_for_period(args), product_income_fields)
+        income_dict = create_income_products_dict(income_products_data)
+        return add_income_to_products(income_dict, products)
+
+
 api.add_resource(ProcessSaleInvoiceRoute, "/process-sale-invoice/")
 api.add_resource(PeriodReportRoute, "/sale-report/")
 api.add_resource(ProductsLeftoversRoute, "/product-leftovers/")
+api.add_resource(IncomeForPeriod, "/income-for-period/")
