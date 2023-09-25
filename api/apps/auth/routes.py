@@ -5,15 +5,16 @@ from flask_restful_swagger import swagger
 
 from api import User, api, app
 from api.apps.auth.parsers import admin_parser, login_parser
+from api.apps.auth.schemas import admin_schema, login_schema
 from api.apps.auth.utils import login
-from api.apps.user.routes import user_fields
+from api.apps.user.routes import UserFields
 from api.services import crud
 
 
-class Login(Resource):
+class LoginRoute(Resource):
     """Login routes."""
 
-    @swagger.operation()
+    @swagger.operation(**login_schema)
     def post(self):
         """Handle post request."""
         try:
@@ -46,16 +47,21 @@ class Login(Resource):
             }, 500
 
 
-class Admin(Resource):
-    """Admin routes."""
+class AdminRoute(Resource):
+    """
+    Admin routes.
 
+    Create active admin user.
+    """
+
+    @swagger.operation(**admin_schema)
     def post(self):
         """Handle post request."""
         args = admin_parser.parse_args()
         args.update({"is_active": True, "is_admin": True})
         args.pop("admin_password")
-        return marshal(crud.create(User, args), user_fields)
+        return marshal(crud.create(User, args), UserFields.resource_fields)
 
 
-api.add_resource(Login, "/auth/login/")
-api.add_resource(Admin, "/auth/create-admin/")
+api.add_resource(LoginRoute, "/auth/login/")
+api.add_resource(AdminRoute, "/auth/create-admin/")
