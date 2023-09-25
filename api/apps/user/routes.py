@@ -1,5 +1,6 @@
 """User routers."""
 from flask_restful import Resource, fields, marshal_with
+from flask_restful_swagger import swagger
 
 from api import User, api
 from api.apps.user.parsers import (
@@ -11,11 +12,16 @@ from api.apps.user.parsers import (
 from api.model_routes import ModelRoute, ModelsRoute, token_required
 from api.services import crud
 
-user_fields = {
-    "id": fields.Integer,
-    "username": fields.String,
-    "email": fields.String,
-}
+
+@swagger.model
+class UserFields:
+    """UserRoute output fields."""
+
+    resource_fields = {
+        "id": fields.Integer,
+        "username": fields.String,
+        "email": fields.String,
+    }
 
 
 class UserRoute(ModelRoute):
@@ -24,7 +30,7 @@ class UserRoute(ModelRoute):
     model = User
     put_parser = user_put_parser
     patch_parser = user_patch_parser
-    model_fields = user_fields
+    model_fields = UserFields.resource_fields
 
 
 class UsersRoute(ModelsRoute):
@@ -32,14 +38,14 @@ class UsersRoute(ModelsRoute):
 
     model = User
     post_parser = user_post_parser
-    model_fields = user_fields
+    model_fields = UserFields.resource_fields
 
 
 class AdminUserRoute(Resource):
     """Admin user operations."""
 
     @token_required(is_admin=True)
-    @marshal_with(user_fields)
+    @marshal_with(UserFields.resource_fields)
     def patch(self, user_id, *args, **kwargs):
         """Patch user instance."""
         args = user_admin_patch_parser.parse_args()
