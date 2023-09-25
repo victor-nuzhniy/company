@@ -160,7 +160,7 @@ class IncomeForPeriodRoute(Resource):
         return add_income_to_products(income_dict, products)
 
 
-api.add_resource(ProcessSaleInvoiceRoute, "/process-sale-invoice/")
-api.add_resource(PeriodReportRoute, "/sale-report/")
-api.add_resource(ProductsLeftoversRoute, "/product-leftovers/")
-api.add_resource(IncomeForPeriodRoute, "/income-for-period/")
+api.add_resource(ProcessSaleInvoiceRoute, "/account/process-sale-invoice/")
+api.add_resource(PeriodReportRoute, "/account/sale-report/")
+api.add_resource(ProductsLeftoversRoute, "/account/product-leftovers/")
+api.add_resource(IncomeForPeriodRoute, "/account/income-for-period/")

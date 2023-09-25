@@ -1,6 +1,7 @@
 """Auth routes."""
 import jwt
 from flask_restful import Resource, marshal
+from flask_restful_swagger import swagger
 
 from api import User, api, app
 from api.apps.auth.parsers import admin_parser, login_parser
@@ -12,6 +13,7 @@ from api.services import crud
 class Login(Resource):
     """Login routes."""
 
+    @swagger.operation()
     def post(self):
         """Handle post request."""
         try:
@@ -55,5 +57,5 @@ class Admin(Resource):
         return marshal(crud.create(User, args), user_fields)
 
 
-api.add_resource(Login, "/login/")
-api.add_resource(Admin, "/create-admin/")
+api.add_resource(Login, "/auth/login/")
+api.add_resource(Admin, "/auth/create-admin/")
