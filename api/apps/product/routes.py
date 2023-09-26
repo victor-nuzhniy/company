@@ -1,5 +1,6 @@
 """Routes for product apps."""
 from flask_restful import fields
+from flask_restful_swagger import swagger
 
 from api import Product, api
 from api.apps.product.models import ProductType
@@ -11,17 +12,27 @@ from api.apps.product.parsers import (
 )
 from api.model_routes import ModelRoute, ModelsRoute
 
-product_fields = {
-    "id": fields.Integer,
-    "name": fields.String,
-    "code": fields.String,
-    "units": fields.String,
-    "currency": fields.String,
-    "price": fields.Integer,
-    "product_type_id": fields.Integer,
-}
 
-product_type_fields = {"id": fields.Integer, "name": fields.String}
+@swagger.model
+class ProductFields:
+    """ProfudctFieldsRoute output fields."""
+
+    resource_fields = {
+        "id": fields.Integer,
+        "name": fields.String,
+        "code": fields.String,
+        "units": fields.String,
+        "currency": fields.String,
+        "price": fields.Integer,
+        "product_type_id": fields.Integer,
+    }
+
+
+@swagger.model
+class ProductTypeFields:
+    """ProductTypeRoute output fields."""
+
+    resource_fields = {"id": fields.Integer, "name": fields.String}
 
 
 class ProductRoute(ModelRoute):
@@ -30,7 +41,27 @@ class ProductRoute(ModelRoute):
     model = Product
     put_parser = product_parser
     patch_parser = product_patch_parser
-    model_fields = product_fields
+    model_fields = ProductFields.resource_fields
+
+    @swagger.operation()
+    def get(self, *args, **kwargs):
+        """Get model instance by id."""
+        return super().get(*args, **kwargs)
+
+    @swagger.operation()
+    def put(self, *args, **kwargs):
+        """Update instance by id."""
+        return super().put(*args, **kwargs)
+
+    @swagger.operation()
+    def patch(self, *args, **kwargs):
+        """Update instance bu id, partially."""
+        return super().patch(*args, **kwargs)
+
+    @swagger.operation()
+    def delete(self, *args, **kwargs):
+        """Delete instance by id."""
+        return super().delete(*args, **kwargs)
 
 
 class ProductsRoute(ModelsRoute):
@@ -38,7 +69,17 @@ class ProductsRoute(ModelsRoute):
 
     model = Product
     post_parser = product_parser
-    model_fields = product_fields
+    model_fields = ProductFields.resource_fields
+
+    @swagger.operation()
+    def post(self, *args, **kwargs):
+        """Create model instance."""
+        return super().post(*args, **kwargs)
+
+    @swagger.operation()
+    def get(self, *args, **kwargs):
+        """Get model instance list."""
+        return super().get(*args, **kwargs)
 
 
 class ProductTypeRoute(ModelRoute):
@@ -47,7 +88,27 @@ class ProductTypeRoute(ModelRoute):
     model = ProductType
     put_parser = product_type_parser
     patch_parser = product_type_patch_parser
-    model_fields = product_type_fields
+    model_fields = ProductTypeFields.resource_fields
+
+    @swagger.operation()
+    def get(self, *args, **kwargs):
+        """Get model instance by id."""
+        return super().get(*args, **kwargs)
+
+    @swagger.operation()
+    def put(self, *args, **kwargs):
+        """Update instance by id."""
+        return super().put(*args, **kwargs)
+
+    @swagger.operation()
+    def patch(self, *args, **kwargs):
+        """Update instance bu id, partially."""
+        return super().patch(*args, **kwargs)
+
+    @swagger.operation()
+    def delete(self, *args, **kwargs):
+        """Delete instance by id."""
+        return super().delete(*args, **kwargs)
 
 
 class ProductTypesRoute(ModelsRoute):
@@ -55,7 +116,17 @@ class ProductTypesRoute(ModelsRoute):
 
     model = ProductType
     post_parser = product_type_parser
-    model_fields = product_type_fields
+    model_fields = ProductTypeFields.resource_fields
+
+    @swagger.operation()
+    def post(self, *args, **kwargs):
+        """Create model instance."""
+        return super().post(*args, **kwargs)
+
+    @swagger.operation()
+    def get(self, *args, **kwargs):
+        """Get model instance list."""
+        return super().get(*args, **kwargs)
 
 
 api.add_resource(ProductRoute, "/product/<instance_id>")

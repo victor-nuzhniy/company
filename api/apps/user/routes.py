@@ -33,6 +33,26 @@ class UserRoute(ModelRoute):
     patch_parser = user_patch_parser
     model_fields = UserFields.resource_fields
 
+    @swagger.operation()
+    def get(self, *args, **kwargs):
+        """Get model instance by id."""
+        return super().get(*args, **kwargs)
+
+    @swagger.operation()
+    def put(self, *args, **kwargs):
+        """Update instance by id."""
+        return super().put(*args, **kwargs)
+
+    @swagger.operation()
+    def patch(self, *args, **kwargs):
+        """Update instance bu id, partially."""
+        return super().patch(*args, **kwargs)
+
+    @swagger.operation()
+    def delete(self, *args, **kwargs):
+        """Delete instance by id."""
+        return super().delete(*args, **kwargs)
+
 
 class UsersRoute(ModelsRoute):
     """Operations with many User isntances and instance creation."""
@@ -40,6 +60,16 @@ class UsersRoute(ModelsRoute):
     model = User
     post_parser = user_post_parser
     model_fields = UserFields.resource_fields
+
+    @swagger.operation()
+    def post(self, *args, **kwargs):
+        """Create model instance."""
+        return super().post(*args, **kwargs)
+
+    @swagger.operation()
+    def get(self, *args, **kwargs):
+        """Get model instance list."""
+        return super().get(*args, **kwargs)
 
 
 class AdminUserRoute(Resource):
