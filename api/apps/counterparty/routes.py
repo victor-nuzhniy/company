@@ -10,6 +10,26 @@ from api.apps.counterparty.parsers import (
     discount_parser,
     discount_patch_parser,
 )
+from api.apps.counterparty.schemas import (
+    agreement_delete_schema,
+    agreement_get_schema,
+    agreement_patch_schema,
+    agreement_post_schema,
+    agreement_put_schema,
+    agreements_get_schema,
+    counterparties_get_schema,
+    counterparty_delete_schema,
+    counterparty_get_schema,
+    counterparty_patch_schema,
+    counterparty_post_schema,
+    counterparty_put_schema,
+    discount_delete_schema,
+    discount_get_schema,
+    discount_patch_schema,
+    discount_post_schema,
+    discount_put_schema,
+    discounts_get_schema,
+)
 from api.model_routes import ModelRoute, ModelsRoute
 
 
@@ -59,22 +79,22 @@ class DiscountRoute(ModelRoute):
     patch_parser = discount_patch_parser
     model_fields = DiscountFields.resource_fields
 
-    @swagger.operation()
+    @swagger.operation(**discount_get_schema)
     def get(self, *args, **kwargs):
         """Get model instance by id."""
         return super().get(*args, **kwargs)
 
-    @swagger.operation()
+    @swagger.operation(**discount_put_schema)
     def put(self, *args, **kwargs):
         """Update instance by id."""
         return super().put(*args, **kwargs)
 
-    @swagger.operation()
+    @swagger.operation(**discount_patch_schema)
     def patch(self, *args, **kwargs):
         """Update instance bu id, partially."""
         return super().patch(*args, **kwargs)
 
-    @swagger.operation()
+    @swagger.operation(**discount_delete_schema)
     def delete(self, *args, **kwargs):
         """Delete instance by id."""
         return super().delete(*args, **kwargs)
@@ -87,12 +107,12 @@ class DiscountsRoute(ModelsRoute):
     post_parser = discount_parser
     model_fields = DiscountFields.resource_fields
 
-    @swagger.operation()
+    @swagger.operation(**discount_post_schema)
     def post(self, *args, **kwargs):
         """Create model instance."""
         return super().post(*args, **kwargs)
 
-    @swagger.operation()
+    @swagger.operation(**discounts_get_schema)
     def get(self, *args, **kwargs):
         """Get model instance list."""
         return super().get(*args, **kwargs)
@@ -106,22 +126,22 @@ class CounterpartyRoute(ModelRoute):
     patch_parser = counterparty_patch_parser
     model_fields = CounterpartyFields.resource_fields
 
-    @swagger.operation()
+    @swagger.operation(**counterparty_get_schema)
     def get(self, *args, **kwargs):
         """Get model instance by id."""
         return super().get(*args, **kwargs)
 
-    @swagger.operation()
+    @swagger.operation(**counterparty_put_schema)
     def put(self, *args, **kwargs):
         """Update instance by id."""
         return super().put(*args, **kwargs)
 
-    @swagger.operation()
+    @swagger.operation(**counterparty_patch_schema)
     def patch(self, *args, **kwargs):
         """Update instance bu id, partially."""
         return super().patch(*args, **kwargs)
 
-    @swagger.operation()
+    @swagger.operation(**counterparty_delete_schema)
     def delete(self, *args, **kwargs):
         """Delete instance by id."""
         return super().delete(*args, **kwargs)
@@ -134,12 +154,12 @@ class CounterpartiesRoute(ModelsRoute):
     post_parser = counterparty_parser
     model_fields = CounterpartyFields.resource_fields
 
-    @swagger.operation()
+    @swagger.operation(**counterparty_post_schema)
     def post(self, *args, **kwargs):
         """Create model instance."""
         return super().post(*args, **kwargs)
 
-    @swagger.operation()
+    @swagger.operation(**counterparties_get_schema)
     def get(self, *args, **kwargs):
         """Get model instance list."""
         return super().get(*args, **kwargs)
@@ -153,22 +173,22 @@ class AgreementRoute(ModelRoute):
     patch_parser = agreement_parser
     model_fields = AgreementFields.resource_fields
 
-    @swagger.operation()
+    @swagger.operation(**agreement_get_schema)
     def get(self, *args, **kwargs):
         """Get model instance by id."""
         return super().get(*args, **kwargs)
 
-    @swagger.operation()
+    @swagger.operation(**agreement_put_schema)
     def put(self, *args, **kwargs):
         """Update instance by id."""
         return super().put(*args, **kwargs)
 
-    @swagger.operation()
+    @swagger.operation(**agreement_patch_schema)
     def patch(self, *args, **kwargs):
         """Update instance bu id, partially."""
         return super().patch(*args, **kwargs)
 
-    @swagger.operation()
+    @swagger.operation(**agreement_delete_schema)
     def delete(self, *args, **kwargs):
         """Delete instance by id."""
         return super().delete(*args, **kwargs)
@@ -181,12 +201,12 @@ class AgreementsRoute(ModelsRoute):
     post_parser = agreement_parser
     model_fields = AgreementFields.resource_fields
 
-    @swagger.operation()
+    @swagger.operation(**agreement_post_schema)
     def post(self, *args, **kwargs):
         """Create model instance."""
         return super().post(*args, **kwargs)
 
-    @swagger.operation()
+    @swagger.operation(**agreements_get_schema)
     def get(self, *args, **kwargs):
         """Get model instance list."""
         return super().get(*args, **kwargs)
