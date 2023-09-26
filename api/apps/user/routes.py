@@ -1,4 +1,5 @@
 """User routers."""
+from flask import abort
 from flask_restful import Resource, fields, marshal_with
 from flask_restful_swagger import swagger
 
@@ -42,19 +43,25 @@ class UserRoute(ModelRoute):
     model_fields = UserFields.resource_fields
 
     @swagger.operation(**user_get_schema)
-    def get(self, *args, **kwargs):
+    def get(self, instance_id, *args, **kwargs):
         """Get model instance by id."""
-        return super().get(*args, **kwargs)
+        return super().get(instance_id, *args, **kwargs)
 
     @swagger.operation(**user_put_schema)
-    def put(self, *args, **kwargs):
+    def put(self, instance_id, *args, **kwargs):
         """Update instance by id."""
-        return super().put(*args, **kwargs)
+        try:
+            return super().put(instance_id, *args, **kwargs)
+        except Exception as ex:
+            abort(409, getattr(ex, "orig"))
 
     @swagger.operation(**user_patch_schema)
     def patch(self, *args, **kwargs):
         """Update instance bu id, partially."""
-        return super().patch(*args, **kwargs)
+        try:
+            return super().patch(*args, **kwargs)
+        except Exception as ex:
+            abort(409, getattr(ex, "orig"))
 
     @swagger.operation(**user_delete_schema)
     def delete(self, *args, **kwargs):
@@ -72,7 +79,10 @@ class UsersRoute(ModelsRoute):
     @swagger.operation(**user_post_schema)
     def post(self, *args, **kwargs):
         """Create model instance."""
-        return super().post(*args, **kwargs)
+        try:
+            return super().post(*args, **kwargs)
+        except Exception as ex:
+            abort(409, getattr(ex, "orig"))
 
     @swagger.operation(**users_get_schema)
     def get(self, *args, **kwargs):
