@@ -67,7 +67,6 @@ class ModelRoute(Resource):
         """Get model instance by id."""
         return marshal(crud.read(self.model, {"id": instance_id}), self.model_fields)
 
-    @token_required
     def put(self, instance_id, *args, **kwargs):
         """Update instance by id."""
         args = self.put_parser.parse_args()
