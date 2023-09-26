@@ -9,7 +9,15 @@ from api.apps.user.parsers import (
     user_post_parser,
     user_put_parser,
 )
-from api.apps.user.schemas import user_schema
+from api.apps.user.schemas import (
+    user_admin_schema,
+    user_delete_schema,
+    user_get_schema,
+    user_patch_schema,
+    user_post_schema,
+    user_put_schema,
+    users_get_schema,
+)
 from api.model_routes import ModelRoute, ModelsRoute, token_required
 from api.services import crud
 
@@ -33,22 +41,22 @@ class UserRoute(ModelRoute):
     patch_parser = user_patch_parser
     model_fields = UserFields.resource_fields
 
-    @swagger.operation()
+    @swagger.operation(**user_get_schema)
     def get(self, *args, **kwargs):
         """Get model instance by id."""
         return super().get(*args, **kwargs)
 
-    @swagger.operation()
+    @swagger.operation(**user_put_schema)
     def put(self, *args, **kwargs):
         """Update instance by id."""
         return super().put(*args, **kwargs)
 
-    @swagger.operation()
+    @swagger.operation(**user_patch_schema)
     def patch(self, *args, **kwargs):
         """Update instance bu id, partially."""
         return super().patch(*args, **kwargs)
 
-    @swagger.operation()
+    @swagger.operation(**user_delete_schema)
     def delete(self, *args, **kwargs):
         """Delete instance by id."""
         return super().delete(*args, **kwargs)
@@ -61,12 +69,12 @@ class UsersRoute(ModelsRoute):
     post_parser = user_post_parser
     model_fields = UserFields.resource_fields
 
-    @swagger.operation()
+    @swagger.operation(**user_post_schema)
     def post(self, *args, **kwargs):
         """Create model instance."""
         return super().post(*args, **kwargs)
 
-    @swagger.operation()
+    @swagger.operation(**users_get_schema)
     def get(self, *args, **kwargs):
         """Get model instance list."""
         return super().get(*args, **kwargs)
@@ -75,7 +83,7 @@ class UsersRoute(ModelsRoute):
 class AdminUserRoute(Resource):
     """Admin user operations."""
 
-    @swagger.operation(**user_schema)
+    @swagger.operation(**user_admin_schema)
     @token_required(is_admin=True)
     @marshal_with(UserFields.resource_fields)
     def patch(self, user_id, *args, **kwargs):
