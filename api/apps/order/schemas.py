@@ -41,12 +41,14 @@ order_patch_schema = {
     "parameters": [
         {
             "name": "Partially update order",
-            "description": "Order 'user_id', 'name' and 'customer_id' fields.",
+            "description": "Order 'user_id', 'name', 'created_at' and "
+            "'customer_id' fields.",
             "required": False,
             "allowMultiple": True,
             "dataType": "json",
             "paramType": "body",
-            "defaultValue": '{"user_id": 1, "name": "O-000234", "customer_id": 1}',
+            "defaultValue": '{"user_id": 1, "name": "O-000234", '
+            '"created_at": "2023-10-01", "customer_id": 1}',
         }
     ],
     "responseClass": "OrderFields",

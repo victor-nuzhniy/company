@@ -41,12 +41,14 @@ invoice_patch_schema = {
     "parameters": [
         {
             "name": "Partially update invoice",
-            "description": "Invoice 'name', 'order_id' and 'agreement_id' fields.",
+            "description": "Invoice 'name', 'order_id', 'created_at' "
+            "and 'agreement_id' fields.",
             "required": False,
             "allowMultiple": True,
             "dataType": "json",
             "paramType": "body",
-            "defaultValue": '{"name": "I-00357", "order_id": 1, "agreement_id": 1}',
+            "defaultValue": '{"name": "I-00357", "order_id": 1, '
+            '"created_at": "2023-10-01", "agreement_id": 1}',
         }
     ],
     "responseClass": "InvoiceFields",
