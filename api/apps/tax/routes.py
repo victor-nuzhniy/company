@@ -9,6 +9,20 @@ from api.apps.tax.parsers import (
     tax_invoice_product_parser,
     tax_invoice_product_patch_parser,
 )
+from api.apps.tax.schemas import (
+    tax_invoice_delete_schema,
+    tax_invoice_get_schema,
+    tax_invoice_patch_schema,
+    tax_invoice_post_schema,
+    tax_invoice_product_delete_schema,
+    tax_invoice_product_get_schema,
+    tax_invoice_product_patch_schema,
+    tax_invoice_product_post_schema,
+    tax_invoice_product_put_schema,
+    tax_invoice_products_get_schema,
+    tax_invoice_put_schema,
+    tax_invoices_get_schema,
+)
 from api.model_routes import ModelRoute, ModelsRoute
 
 
@@ -45,22 +59,22 @@ class TaxInvoiceRoute(ModelRoute):
     patch_parser = tax_invoice_patch_parser
     model_fields = TaxInvoiceFields.resource_fields
 
-    @swagger.operation()
+    @swagger.operation(**tax_invoice_get_schema)
     def get(self, *args, **kwargs):
         """Get model instance by id."""
         return super().get(*args, **kwargs)
 
-    @swagger.operation()
+    @swagger.operation(**tax_invoice_put_schema)
     def put(self, *args, **kwargs):
         """Update instance by id."""
         return super().put(*args, **kwargs)
 
-    @swagger.operation()
+    @swagger.operation(**tax_invoice_patch_schema)
     def patch(self, *args, **kwargs):
         """Update instance bu id, partially."""
         return super().patch(*args, **kwargs)
 
-    @swagger.operation()
+    @swagger.operation(**tax_invoice_delete_schema)
     def delete(self, *args, **kwargs):
         """Delete instance by id."""
         return super().delete(*args, **kwargs)
@@ -73,12 +87,12 @@ class TaxInvoicesRoute(ModelsRoute):
     post_parser = tax_invoice_parser
     model_fields = TaxInvoiceFields.resource_fields
 
-    @swagger.operation()
+    @swagger.operation(**tax_invoice_post_schema)
     def post(self, *args, **kwargs):
         """Create model instance."""
         return super().post(*args, **kwargs)
 
-    @swagger.operation()
+    @swagger.operation(**tax_invoices_get_schema)
     def get(self, *args, **kwargs):
         """Get model instance list."""
         return super().get(*args, **kwargs)
@@ -92,22 +106,22 @@ class TaxInvoiceProductRoute(ModelRoute):
     patch_parser = tax_invoice_product_patch_parser
     model_fields = TaxInvoiceProductFields.resource_fields
 
-    @swagger.operation()
+    @swagger.operation(**tax_invoice_product_get_schema)
     def get(self, *args, **kwargs):
         """Get model instance by id."""
         return super().get(*args, **kwargs)
 
-    @swagger.operation()
+    @swagger.operation(**tax_invoice_product_put_schema)
     def put(self, *args, **kwargs):
         """Update instance by id."""
         return super().put(*args, **kwargs)
 
-    @swagger.operation()
+    @swagger.operation(**tax_invoice_product_patch_schema)
     def patch(self, *args, **kwargs):
         """Update instance bu id, partially."""
         return super().patch(*args, **kwargs)
 
-    @swagger.operation()
+    @swagger.operation(**tax_invoice_product_delete_schema)
     def delete(self, *args, **kwargs):
         """Delete instance by id."""
         return super().delete(*args, **kwargs)
@@ -120,12 +134,12 @@ class TaxInvoiceProductsRoute(ModelsRoute):
     post_parser = tax_invoice_product_parser
     model_fields = TaxInvoiceProductFields.resource_fields
 
-    @swagger.operation()
+    @swagger.operation(**tax_invoice_product_post_schema)
     def post(self, *args, **kwargs):
         """Create model instance."""
         return super().post(*args, **kwargs)
 
-    @swagger.operation()
+    @swagger.operation(**tax_invoice_products_get_schema)
     def get(self, *args, **kwargs):
         """Get model instance list."""
         return super().get(*args, **kwargs)
