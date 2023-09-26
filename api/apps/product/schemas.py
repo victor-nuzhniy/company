@@ -100,8 +100,8 @@ product_post_schema = {
 
 
 products_get_schema = {
-    "notes": "Get all users.",
-    "nickname": "Get all users.",
+    "notes": "Get all products.",
+    "nickname": "Get all products.",
     "responseClass": "ProductFields",
     "responseMessages": [
         {"code": 200, "message": "Operation successfully performed"},
@@ -203,8 +203,8 @@ product_type_post_schema = {
 
 
 product_types_get_schema = {
-    "notes": "Get all users.",
-    "nickname": "Get all users.",
+    "notes": "Get all product types.",
+    "nickname": "Get all product types.",
     "responseClass": "ProductTypeFields",
     "responseMessages": [
         {"code": 200, "message": "Operation successfully performed"},

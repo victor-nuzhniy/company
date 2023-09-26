@@ -95,8 +95,8 @@ invoice_post_schema = {
 
 
 invoices_get_schema = {
-    "notes": "Get all users.",
-    "nickname": "Get all users.",
+    "notes": "Get all invoices.",
+    "nickname": "Get all invoices.",
     "responseClass": "InvoiceFields",
     "responseMessages": [
         {"code": 200, "message": "Operation successfully performed"},
@@ -204,8 +204,8 @@ invoice_product_post_schema = {
 
 
 invoice_products_get_schema = {
-    "notes": "Get all users.",
-    "nickname": "Get all users.",
+    "notes": "Get all invoice products.",
+    "nickname": "Get all invoice products.",
     "responseClass": "InvoiceProductFields",
     "responseMessages": [
         {"code": 200, "message": "Operation successfully performed"},

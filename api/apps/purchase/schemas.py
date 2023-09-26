@@ -96,8 +96,8 @@ purchase_invoice_post_schema = {
 
 
 purchase_invoices_get_schema = {
-    "notes": "Get all users.",
-    "nickname": "Get all users.",
+    "notes": "Get all purchase invoices.",
+    "nickname": "Get all purchase invoices.",
     "responseClass": "PurchaseInvoiceFields",
     "responseMessages": [
         {"code": 200, "message": "Operation successfully performed"},
@@ -205,8 +205,8 @@ purchase_invoice_product_post_schema = {
 
 
 purchase_invoice_products_get_schema = {
-    "notes": "Get all users.",
-    "nickname": "Get all users.",
+    "notes": "Get all purchase invoice products.",
+    "nickname": "Get all purchase invoice products.",
     "responseClass": "PurchaseInvoiceProductFields",
     "responseMessages": [
         {"code": 200, "message": "Operation successfully performed"},

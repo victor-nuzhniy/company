@@ -95,8 +95,8 @@ order_post_schema = {
 
 
 orders_get_schema = {
-    "notes": "Get all users.",
-    "nickname": "Get all users.",
+    "notes": "Get all orders.",
+    "nickname": "Get all orders.",
     "responseClass": "OrderFields",
     "responseMessages": [
         {"code": 200, "message": "Operation successfully performed"},
@@ -204,8 +204,8 @@ order_product_post_schema = {
 
 
 order_products_get_schema = {
-    "notes": "Get all users.",
-    "nickname": "Get all users.",
+    "notes": "Get all order products.",
+    "nickname": "Get all order products.",
     "responseClass": "OrderProductFields",
     "responseMessages": [
         {"code": 200, "message": "Operation successfully performed"},
