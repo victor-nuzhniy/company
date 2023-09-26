@@ -9,6 +9,20 @@ from api.apps.purchase.parsers import (
     purchase_invoice_product_parser,
     purchase_invoice_product_patch_parser,
 )
+from api.apps.purchase.schemas import (
+    purchase_invoice_delete_schema,
+    purchase_invoice_get_schema,
+    purchase_invoice_patch_schema,
+    purchase_invoice_post_schema,
+    purchase_invoice_product_delete_schema,
+    purchase_invoice_product_get_schema,
+    purchase_invoice_product_patch_schema,
+    purchase_invoice_product_post_schema,
+    purchase_invoice_product_put_schema,
+    purchase_invoice_products_get_schema,
+    purchase_invoice_put_schema,
+    purchase_invoices_get_schema,
+)
 from api.model_routes import ModelRoute, ModelsRoute
 
 
@@ -46,22 +60,22 @@ class PurchaseInvoiceRoute(ModelRoute):
     patch_parser = purchase_invoice_patch_parser
     model_fields = PurchaseInvoiceFields.resource_fields
 
-    @swagger.operation()
+    @swagger.operation(**purchase_invoice_get_schema)
     def get(self, *args, **kwargs):
         """Get model instance by id."""
         return super().get(*args, **kwargs)
 
-    @swagger.operation()
+    @swagger.operation(**purchase_invoice_put_schema)
     def put(self, *args, **kwargs):
         """Update instance by id."""
         return super().put(*args, **kwargs)
 
-    @swagger.operation()
+    @swagger.operation(**purchase_invoice_patch_schema)
     def patch(self, *args, **kwargs):
         """Update instance bu id, partially."""
         return super().patch(*args, **kwargs)
 
-    @swagger.operation()
+    @swagger.operation(**purchase_invoice_delete_schema)
     def delete(self, *args, **kwargs):
         """Delete instance by id."""
         return super().delete(*args, **kwargs)
@@ -74,12 +88,12 @@ class PurchaseInvoicesRoute(ModelsRoute):
     post_parser = purchase_invoice_parser
     model_fields = PurchaseInvoiceFields.resource_fields
 
-    @swagger.operation()
+    @swagger.operation(**purchase_invoice_post_schema)
     def post(self, *args, **kwargs):
         """Create model instance."""
         return super().post(*args, **kwargs)
 
-    @swagger.operation()
+    @swagger.operation(**purchase_invoices_get_schema)
     def get(self, *args, **kwargs):
         """Get model instance list."""
         return super().get(*args, **kwargs)
@@ -93,22 +107,22 @@ class PurchaseInvoiceProductRoute(ModelRoute):
     patch_parser = purchase_invoice_product_patch_parser
     model_fields = PurchaseInvoiceProductFields.resource_fields
 
-    @swagger.operation()
+    @swagger.operation(**purchase_invoice_product_get_schema)
     def get(self, *args, **kwargs):
         """Get model instance by id."""
         return super().get(*args, **kwargs)
 
-    @swagger.operation()
+    @swagger.operation(**purchase_invoice_product_put_schema)
     def put(self, *args, **kwargs):
         """Update instance by id."""
         return super().put(*args, **kwargs)
 
-    @swagger.operation()
+    @swagger.operation(**purchase_invoice_product_patch_schema)
     def patch(self, *args, **kwargs):
         """Update instance bu id, partially."""
         return super().patch(*args, **kwargs)
 
-    @swagger.operation()
+    @swagger.operation(**purchase_invoice_product_delete_schema)
     def delete(self, *args, **kwargs):
         """Delete instance by id."""
         return super().delete(*args, **kwargs)
@@ -121,12 +135,12 @@ class PurchaseInvoiceProductsRoute(ModelsRoute):
     post_parser = purchase_invoice_product_parser
     model_fields = PurchaseInvoiceProductFields.resource_fields
 
-    @swagger.operation()
+    @swagger.operation(**purchase_invoice_product_post_schema)
     def post(self, *args, **kwargs):
         """Create model instance."""
         return super().post(*args, **kwargs)
 
-    @swagger.operation()
+    @swagger.operation(**purchase_invoice_products_get_schema)
     def get(self, *args, **kwargs):
         """Get model instance list."""
         return super().get(*args, **kwargs)
