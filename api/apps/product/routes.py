@@ -10,6 +10,20 @@ from api.apps.product.parsers import (
     product_type_parser,
     product_type_patch_parser,
 )
+from api.apps.product.schemas import (
+    product_delete_schema,
+    product_get_schema,
+    product_patch_schema,
+    product_post_schema,
+    product_put_schema,
+    product_type_delete_schema,
+    product_type_get_schema,
+    product_type_patch_schema,
+    product_type_post_schema,
+    product_type_put_schema,
+    product_types_get_schema,
+    products_get_schema,
+)
 from api.model_routes import ModelRoute, ModelsRoute
 
 
@@ -43,22 +57,22 @@ class ProductRoute(ModelRoute):
     patch_parser = product_patch_parser
     model_fields = ProductFields.resource_fields
 
-    @swagger.operation()
+    @swagger.operation(**product_get_schema)
     def get(self, *args, **kwargs):
         """Get model instance by id."""
         return super().get(*args, **kwargs)
 
-    @swagger.operation()
+    @swagger.operation(**product_put_schema)
     def put(self, *args, **kwargs):
         """Update instance by id."""
         return super().put(*args, **kwargs)
 
-    @swagger.operation()
+    @swagger.operation(**product_patch_schema)
     def patch(self, *args, **kwargs):
         """Update instance bu id, partially."""
         return super().patch(*args, **kwargs)
 
-    @swagger.operation()
+    @swagger.operation(**product_delete_schema)
     def delete(self, *args, **kwargs):
         """Delete instance by id."""
         return super().delete(*args, **kwargs)
@@ -71,12 +85,12 @@ class ProductsRoute(ModelsRoute):
     post_parser = product_parser
     model_fields = ProductFields.resource_fields
 
-    @swagger.operation()
+    @swagger.operation(**product_post_schema)
     def post(self, *args, **kwargs):
         """Create model instance."""
         return super().post(*args, **kwargs)
 
-    @swagger.operation()
+    @swagger.operation(**products_get_schema)
     def get(self, *args, **kwargs):
         """Get model instance list."""
         return super().get(*args, **kwargs)
@@ -90,22 +104,22 @@ class ProductTypeRoute(ModelRoute):
     patch_parser = product_type_patch_parser
     model_fields = ProductTypeFields.resource_fields
 
-    @swagger.operation()
+    @swagger.operation(**product_type_get_schema)
     def get(self, *args, **kwargs):
         """Get model instance by id."""
         return super().get(*args, **kwargs)
 
-    @swagger.operation()
+    @swagger.operation(**product_type_put_schema)
     def put(self, *args, **kwargs):
         """Update instance by id."""
         return super().put(*args, **kwargs)
 
-    @swagger.operation()
+    @swagger.operation(**product_type_patch_schema)
     def patch(self, *args, **kwargs):
         """Update instance bu id, partially."""
         return super().patch(*args, **kwargs)
 
-    @swagger.operation()
+    @swagger.operation(**product_type_delete_schema)
     def delete(self, *args, **kwargs):
         """Delete instance by id."""
         return super().delete(*args, **kwargs)
@@ -118,12 +132,12 @@ class ProductTypesRoute(ModelsRoute):
     post_parser = product_type_parser
     model_fields = ProductTypeFields.resource_fields
 
-    @swagger.operation()
+    @swagger.operation(**product_type_post_schema)
     def post(self, *args, **kwargs):
         """Create model instance."""
         return super().post(*args, **kwargs)
 
-    @swagger.operation()
+    @swagger.operation(**product_types_get_schema)
     def get(self, *args, **kwargs):
         """Get model instance list."""
         return super().get(*args, **kwargs)
