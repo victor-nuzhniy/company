@@ -12,7 +12,7 @@ class UserFactory(BaseModelFactory):
     id = factory.Sequence(lambda x: x)
     username = factory.Faker("user_name")
     email = factory.Faker("email")
-    password = factory.Faker("pystr", min_chars=10, max_chars=20)
+    password = factory.Faker("pystr", min_chars=1, max_chars=120)
     is_admin = factory.Faker("pybool")
     is_active = factory.Faker("pybool")
     # orders = factory.RelatedFactoryList(
