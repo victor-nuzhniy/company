@@ -15,11 +15,11 @@ class UserFactory(BaseModelFactory):
     password = factory.Faker("pystr", min_chars=1, max_chars=120)
     is_admin = factory.Faker("pybool")
     is_active = factory.Faker("pybool")
-    # orders = factory.RelatedFactoryList(
-    #     factory="tests.apps.order.factories.OrderFactory",
-    #     factory_related_name="orders",
-    #     size=0,
-    # )
+    orders = factory.RelatedFactoryList(
+        factory="tests.apps.order.factories.OrderFactory",
+        factory_related_name="orders",
+        size=0,
+    )
 
     @classmethod
     def _setup_next_sequence(cls):
@@ -29,4 +29,4 @@ class UserFactory(BaseModelFactory):
         """Class Meta for UserFactory."""
 
         model = User
-        # exclude = ("orders",)
+        exclude = ("orders",)
