@@ -21,6 +21,8 @@ class Invoice(db.Model):
         db.ForeignKey("agreement.id", ondelete="CASCADE", onupdate="CASCADE"),
         nullable=False,
     )
+    agreements = db.relationship("Agreement", back_populates="invoices")
+    orders = db.relationship("Order", back_populates="invoies")
     invoice_products = db.relationship("InvoiceProduct")
     sale_invoices = db.relationship("SaleInvoice")
 
@@ -45,6 +47,8 @@ class InvoiceProduct(db.Model):
         db.ForeignKey("invoice.id", ondelete="CASCADE", onupdate="CASCADE"),
         nullable=False,
     )
+    products = db.relationship("Product", back_populates="invoice_products")
+    invoices = db.relationship("Invoice", back_populates="invoices")
 
     def __repr__(self) -> str:
         """Represent model instance."""
