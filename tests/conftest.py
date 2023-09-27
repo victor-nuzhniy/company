@@ -5,7 +5,6 @@ import typing
 
 import pytest
 from flask import Flask
-from flask_migrate import Migrate
 from flask_restful import Api
 
 from api import db
@@ -27,7 +26,6 @@ def app():
     app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///test.db"
     Api(app)
     db.init_app(app)
-    Migrate(app, db)
     with app.app_context():
         db.create_all()
         yield app
