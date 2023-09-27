@@ -1,23 +1,16 @@
 """Pytest fixtures."""
 import os
 import random
+import typing
 
 import pytest
 from flask import Flask
 from flask_migrate import Migrate
 from flask_restful import Api
-from flask_sqlalchemy import SQLAlchemy
 
-db = SQLAlchemy()
-
-from api.apps.counterparty.models import Agreement, Counterparty, Discount
-from api.apps.invoice.models import Invoice, InvoiceProduct
-from api.apps.order.models import Order, OrderProduct
-from api.apps.product.models import Product
-from api.apps.purchase.models import PurchaseInvoice, PurchaseInvoiceProduct
-from api.apps.sale.models import SaleInvoice, SaleInvoiceProduct
-from api.apps.tax.models import TaxInvoice, TaxInvoiceProduct
-from api.apps.user.models import User
+from api import db
+from tests.apps.user.factories import UserFactory
+from tests.bases import BaseModelFactory
 
 
 @pytest.fixture(scope="function", autouse=True)
@@ -26,15 +19,29 @@ def faker_seed() -> None:
     return random.seed(version=3)
 
 
-@pytest.fixture
+@pytest.fixture(autouse=True)
 def app():
     """Override dependencies for Flask and return flask instance."""
     app = Flask(__name__)
     app.config["SECRET_KEY"] = os.getenv("SECRET_KEY")
     app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///test.db"
     Api(app)
+    db.init_app(app)
     Migrate(app, db)
     with app.app_context():
         db.create_all()
         yield app
         db.drop_all()
+
+
+@pytest.fixture(autouse=True, scope="session")
+def set_session_for_factories() -> None:
+    """Register model factories to set up a scoped session during the test run."""
+    known_factories: typing.List[typing.Type[BaseModelFactory]] = [
+        UserFactory
+        # === Add new factory classes here!!! ===
+    ]
+
+    for factory_class in known_factories:
+        # Set up session to factory
+        factory_class._meta.sqlalchemy_session = db.session
