@@ -30,6 +30,7 @@ class Counterparty(db.Model):
         db.ForeignKey("discount.id", ondelete="CASCADE", onupdate="CASCADE"),
         nullable=True,
     )
+    dicounts = db.relationship("Discount", back_populates="counterparties")
     agreements = db.relationship("Agreement")
     orders = db.relationship("Order")
 
@@ -48,6 +49,7 @@ class Agreement(db.Model):
         db.ForeignKey("counterparty.id", ondelete="CASCADE", onupdate="CASCADE"),
         nullable=False,
     )
+    counterparties = db.relationship("Counterparty", back_populates="agreements")
     invoices = db.relationship("Invoice")
     purchase_invoices = db.relationship("PurchaseInvoice")
 
