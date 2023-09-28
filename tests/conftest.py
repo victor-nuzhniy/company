@@ -8,6 +8,20 @@ from flask import Flask
 from flask_restful import Api
 
 from api import db
+from tests.apps.counterparty.factories import (
+    AgreementFactory,
+    CounterpartyFactory,
+    DiscountFactory,
+)
+from tests.apps.invoice.factories import InvoiceFactory, InvoiceProductFactory
+from tests.apps.order.factories import OrderFactory, OrderProductFactory
+from tests.apps.product.factories import ProductFactory, ProductTypeFactory
+from tests.apps.purchase.factories import (
+    PurchaseInvoiceFactory,
+    PurchaseInvoiceProductFactory,
+)
+from tests.apps.sale.factories import SaleInvoiceFactory, SaleInvoiceProductFactory
+from tests.apps.tax.factories import TaxInvoiceFactory, TaxInvoiceProductFactory
 from tests.apps.user.factories import UserFactory
 from tests.bases import BaseModelFactory
 
@@ -36,7 +50,22 @@ def app():
 def set_session_for_factories() -> None:
     """Register model factories to set up a scoped session during the test run."""
     known_factories: typing.List[typing.Type[BaseModelFactory]] = [
-        UserFactory
+        AgreementFactory,
+        CounterpartyFactory,
+        DiscountFactory,
+        InvoiceFactory,
+        InvoiceProductFactory,
+        OrderFactory,
+        OrderProductFactory,
+        ProductFactory,
+        ProductTypeFactory,
+        PurchaseInvoiceFactory,
+        PurchaseInvoiceProductFactory,
+        SaleInvoiceFactory,
+        SaleInvoiceProductFactory,
+        TaxInvoiceFactory,
+        TaxInvoiceProductFactory,
+        UserFactory,
         # === Add new factory classes here!!! ===
     ]
 
