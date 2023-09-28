@@ -16,7 +16,7 @@ class PurchaseInvoice(db.Model):
     )
     created_at = db.Column(db.DateTime, default=func.now(), nullable=False)
     purchase_invoice_products = db.relationship("PurchaseInvoiceProduct")
-    agreements = db.relationship("Agreemet", back_populates="purchase_invoices")
+    agreements = db.relationship("Agreement", back_populates="purchase_invoices")
 
     def __repr__(self) -> str:
         """Represent model instance."""

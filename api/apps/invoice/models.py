@@ -22,9 +22,9 @@ class Invoice(db.Model):
         nullable=False,
     )
     agreements = db.relationship("Agreement", back_populates="invoices")
-    orders = db.relationship("Order", back_populates="invoies")
-    invoice_products = db.relationship("InvoiceProduct")
-    sale_invoices = db.relationship("SaleInvoice")
+    orders = db.relationship("Order", back_populates="invoices")
+    invoice_products = db.relationship("InvoiceProduct", back_populates="invoices")
+    sale_invoices = db.relationship("SaleInvoice", back_populates="invoices")
 
     def __repr__(self) -> str:
         """Represent model instance."""
@@ -48,7 +48,7 @@ class InvoiceProduct(db.Model):
         nullable=False,
     )
     products = db.relationship("Product", back_populates="invoice_products")
-    invoices = db.relationship("Invoice", back_populates="invoices")
+    invoices = db.relationship("Invoice", back_populates="invoice_products")
 
     def __repr__(self) -> str:
         """Represent model instance."""

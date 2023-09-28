@@ -49,10 +49,10 @@ class TaxInvoiceProduct(db.Model):
     quantity = db.Column(db.Integer, nullable=False)
     tax_invoices = db.relationship("TaxInvoice", back_populates="tax_invoice_products")
     sale_invoice_products = db.relationship(
-        "SaleInvoiceProducts", back_populates="tax_invoice_products"
+        "SaleInvoiceProduct", back_populates="tax_invoice_products"
     )
     purchase_invoice_products = db.relationship(
-        "PurchaseInvoiceProducts", back_populates="tax_invoice_products"
+        "PurchaseInvoiceProduct", back_populates="tax_invoice_products"
     )
 
     def __repr__(self) -> str:

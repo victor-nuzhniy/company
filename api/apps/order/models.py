@@ -21,7 +21,7 @@ class Order(db.Model):
         nullable=False,
     )
     order_products = db.relationship("OrderProduct")
-    invoices = db.relationship("Invoice")
+    invoices = db.relationship("Invoice", back_populates="orders")
     users = db.relationship("User", back_populates="orders")
     counterparties = db.relationship("Counterparty", back_populates="orders")
 
