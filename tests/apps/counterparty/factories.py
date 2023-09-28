@@ -41,17 +41,17 @@ class CounterpartyFactory(BaseModelFactory):
     phone_number = factory.Faker("phone_number")
     discount_id = factory.SubFactory(factory=DiscountFactory)
     discounts = factory.RelatedFactoryList(
-        factory="tests.apps.counterparty.DiscountFactory",
+        factory="tests.apps.counterparty.factories.DiscountFactory",
         factory_related_name="discounts",
         size=0,
     )
     agreements = factory.RelatedFactoryList(
-        factory="tests.apps.counterparty.AgreementFactory",
+        factory="tests.apps.counterparty.factories.AgreementFactory",
         factory_related_name="agreements",
         size=0,
     )
     orders = factory.RelatedFactoryList(
-        factory="tests.apps.order.OrderFactory",
+        factory="tests.apps.order.factories.OrderFactory",
         factory_related_name="orders",
         size=0,
     )
@@ -66,6 +66,7 @@ class CounterpartyFactory(BaseModelFactory):
 
         model = Counterparty
         exclude = ("discounts", "agreements", "orders")
+        sqlalchemy_get_or_create = ("discount_id",)
 
 
 class AgreementFactory(BaseModelFactory):
@@ -75,17 +76,17 @@ class AgreementFactory(BaseModelFactory):
     name = factory.Faker("pystr", min_chars=1, max_chars=200)
     counterparty_id = factory.SubFactory(CounterpartyFactory)
     counterparties = factory.RelatedFactoryList(
-        factory="tests.apps.counterparty.CounterpartyFactory",
+        factory="tests.apps.counterparty.factories.CounterpartyFactory",
         factory_related_name="counterparties",
         size=0,
     )
     invoices = factory.RelatedFactoryList(
-        factory="tests.apps.invoice.InvoiceFactory",
+        factory="tests.apps.invoice.factories.InvoiceFactory",
         factory_related_name="invoices",
         size=0,
     )
     purchase_invoices = factory.RelatedFactoryList(
-        factory="tests.apps.purchase.PurchaseInvoiceFactory",
+        factory="tests.apps.purchase.factories.PurchaseInvoiceFactory",
         factory_related_name="purchase_invoices",
         size=0,
     )
@@ -100,3 +101,4 @@ class AgreementFactory(BaseModelFactory):
 
         model = Agreement
         exclude = ("counterparties", "invoices", "purchase_invoices")
+        sqlalchemy_get_or_create = ("counterparty_id",)

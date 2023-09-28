@@ -32,6 +32,7 @@ class Product(db.Model):
     invoice_products = db.relationship("InvoiceProduct")
     sale_invoice_products = db.relationship("SaleInvoiceProduct")
     purchase_invoice_products = db.relationship("PurchaseInvoiceProduct")
+    product_types = db.relationship("ProductType", back_populates="products")
 
     def __repr__(self) -> str:
         """Represent model instance."""

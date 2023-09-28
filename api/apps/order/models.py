@@ -22,6 +22,8 @@ class Order(db.Model):
     )
     order_products = db.relationship("OrderProduct")
     invoices = db.relationship("Invoice")
+    users = db.relationship("User", back_populates="orders")
+    counterparties = db.relationship("Counterparty", back_populates="orders")
 
     def __repr__(self) -> str:
         """Represent model instance."""
@@ -44,6 +46,8 @@ class OrderProduct(db.Model):
         db.ForeignKey("order.id", ondelete="CASCADE", onupdate="CASCADE"),
         nullable=False,
     )
+    products = db.relationship("Product", back_populates="order_products")
+    orders = db.relationship("Order", back_populates="order_products")
 
     def __repr__(self) -> str:
         """Represent model instance."""
