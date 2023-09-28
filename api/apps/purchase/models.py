@@ -16,6 +16,7 @@ class PurchaseInvoice(db.Model):
     )
     created_at = db.Column(db.DateTime, default=func.now(), nullable=False)
     purchase_invoice_products = db.relationship("PurchaseInvoiceProduct")
+    agreements = db.relationship("Agreemet", back_populates="purchase_invoices")
 
     def __repr__(self) -> str:
         """Represent model instance."""
@@ -40,6 +41,10 @@ class PurchaseInvoiceProduct(db.Model):
     )
     products_left = db.Column(db.Integer, nullable=False)
     tax_invoice_products = db.relationship("TaxInvoiceProduct")
+    products = db.relationship("Product", back_populates="purchase_invoice_products")
+    purchase_invoices = db.relationship(
+        "PurchaseInvoice", back_populates="purchase_invoice_products"
+    )
 
     def __repr__(self) -> str:
         """Represent model instance."""
