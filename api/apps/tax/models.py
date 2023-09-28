@@ -16,6 +16,7 @@ class TaxInvoice(db.Model):
     )
     created_at = db.Column(db.DateTime, default=func.now(), nullable=False)
     tax_invoice_products = db.relationship("TaxInvoiceProduct")
+    sale_invoices = db.relationship("SaleInvoice", back_populates="tax_invoices")
 
     def __repr__(self) -> str:
         """Represent model instance."""
@@ -46,6 +47,13 @@ class TaxInvoiceProduct(db.Model):
         nullable=False,
     )
     quantity = db.Column(db.Integer, nullable=False)
+    tax_invoices = db.relationship("TaxInvoice", back_populates="tax_invoice_products")
+    sale_invoice_products = db.relationship(
+        "SaleInvoiceProducts", back_populates="tax_invoice_products"
+    )
+    purchase_invoice_products = db.relationship(
+        "PurchaseInvoiceProducts", back_populates="tax_invoice_products"
+    )
 
     def __repr__(self) -> str:
         """Represent model instance."""
