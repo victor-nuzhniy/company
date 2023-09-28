@@ -14,10 +14,12 @@ class InvoiceFactory(BaseModelFactory):
 
     id = factory.Sequence(lambda x: x)
     name = factory.Faker("pystr", min_chars=1, max_chars=100)
-    order_id = factory.SubFactory(OrderFactory)
+    order = factory.SubFactory(OrderFactory)
+    order_id = factory.SelfAttribute(attribute_name="order.id")
     created_at = factory.Faker("date_time")
     paid = factory.Faker("boolean")
-    agreement_id = factory.SubFactory(AgreementFactory)
+    agreement = factory.SubFactory(AgreementFactory)
+    agreement_id = factory.SelfAttribute(attribute_name="agreement.id")
     agreements = factory.RelatedFactoryList(
         factory="tests.apps.counterparty.factories.AgreementFactory",
         factory_related_name="agreements",
@@ -47,7 +49,14 @@ class InvoiceFactory(BaseModelFactory):
         """Class Meta for UserFactory."""
 
         model = Invoice
-        exclude = ("orders", "agreements", "invoice_products", "sale_invoices")
+        exclude = (
+            "orders",
+            "order",
+            "agreement",
+            "agreements",
+            "invoice_products",
+            "sale_invoices",
+        )
         sqlalchemy_get_or_create = ("agreement_id",)
 
 
@@ -55,10 +64,12 @@ class InvoiceProductFactory(BaseModelFactory):
     """Factory for testing InvoiceProduct model."""
 
     id = factory.Sequence(lambda x: x)
-    product_id = factory.SubFactory(ProductFactory)
+    product = factory.SubFactory(ProductFactory)
+    product_id = factory.SelfAttribute(attribute_name="product.id")
     quantity = factory.Faker("pyint")
     price = factory.Faker("pyint")
-    invoice_id = factory.SubFactory(InvoiceFactory)
+    invoice = factory.SubFactory(InvoiceFactory)
+    invoice_id = factory.SelfAttribute(attribute_name="invoice.id")
     products = factory.RelatedFactoryList(
         factory="tests.apps.product.factories.ProductFactory",
         factory_related_name="products",
@@ -78,5 +89,5 @@ class InvoiceProductFactory(BaseModelFactory):
         """Class Meta for UserFactory."""
 
         model = InvoiceProduct
-        exclude = ("products", "invoices")
+        exclude = ("products", "product", "invoice", "invoices")
         sqlalchemy_get_or_create = ("product_id", "invoice_id")

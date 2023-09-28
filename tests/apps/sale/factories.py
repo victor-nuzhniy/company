@@ -12,7 +12,8 @@ class SaleInvoiceFactory(BaseModelFactory):
 
     id = factory.Sequence(lambda x: x)
     name = factory.Faker("pystr", min_chars=1, max_chars=100)
-    invoice_id = factory.SubFactory(InvoiceFactory)
+    invoice = factory.SubFactory(InvoiceFactory)
+    invoice_id = factory.SelfAttribute(attribute_name="invoice.id")
     created_at = factory.Faker("date_time")
     done = factory.Faker("pybool")
     tax_invoices = factory.RelatedFactoryList(
@@ -48,10 +49,12 @@ class SaleInvoiceProductFactory(BaseModelFactory):
     """Factory for SaleInvoiceProduct model."""
 
     id = factory.Sequence(lambda x: x)
-    product_id = factory.SubFactory(ProductFactory)
+    product = factory.SubFactory(ProductFactory)
+    product_id = factory.SelfAttribute(attribute_name="product.id")
     quantity = factory.Faker("pyint")
     price = factory.Faker("pyint")
-    sale_invoice_id = factory.SubFactory(SaleInvoiceFactory)
+    sale_invoice = factory.SubFactory(SaleInvoiceFactory)
+    sale_invoice_id = factory.SelfAttribute(attribute_name="sale_invoice.id")
     products = factory.RelatedFactoryList(
         factory="tests.apps.product.factories.ProductFactory",
         factory_related_name="products",
@@ -77,5 +80,11 @@ class SaleInvoiceProductFactory(BaseModelFactory):
         """Class Meta for UserFactory."""
 
         model = SaleInvoiceProduct
-        exclude = ("products", "tax_invoice_products", "sale_invoices")
+        exclude = (
+            "products",
+            "product",
+            "sale_invoice",
+            "tax_invoice_products",
+            "sale_invoices",
+        )
         sqlalchemy_get_or_create = ("sale_invoice_id",)

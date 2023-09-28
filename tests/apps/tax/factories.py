@@ -12,7 +12,8 @@ class TaxInvoiceFactory(BaseModelFactory):
 
     id = factory.Sequence(lambda x: x)
     name = factory.Faker("pystr", min_chars=1, max_chars=100)
-    sale_invoice_id = factory.SubFactory(SaleInvoiceFactory)
+    sale_invoice = factory.SubFactory(SaleInvoiceFactory)
+    sale_invoice_id = factory.SelfAttribute(attribute_name="sale_invoice.id")
     created_at = factory.Faker("date_time")
     tax_invoice_products = factory.RelatedFactoryList(
         factory="tests.apps.tax.factories.TaxInvoiceProductFactory",
@@ -33,7 +34,7 @@ class TaxInvoiceFactory(BaseModelFactory):
         """Class Meta for UserFactory."""
 
         model = TaxInvoice
-        exclude = ("tax_invoice_products", "sale_invoices")
+        exclude = ("tax_invoice_products", "sale_invoice", "sale_invoices")
         sqlalchemy_get_or_create = ("sale_invoice_id",)
 
 
@@ -41,9 +42,16 @@ class TaxInvoiceProductFactory(BaseModelFactory):
     """Factory for PurchaseInvoiceProduct model."""
 
     id = factory.Sequence(lambda x: x)
-    tax_invoice_id = factory.SubFactory(TaxInvoiceFactory)
-    sale_invoice_product_id = factory.SubFactory(SaleInvoiceProductFactory)
-    purchase_invoice_product_id = factory.SubFactory(PurchaseInvoiceProductFactory)
+    tax_invoice = factory.SubFactory(TaxInvoiceFactory)
+    tax_invoice_id = factory.SelfAttribute(attribute_name="tax_invoice.id")
+    sale_invoice_product = factory.SubFactory(SaleInvoiceProductFactory)
+    sale_invoice_product_id = factory.SelfAttribute(
+        attribute_name="sale_invoice_product.id"
+    )
+    purchase_invoice_product = factory.SubFactory(PurchaseInvoiceProductFactory)
+    purchase_invoice_product_id = factory.SelfAttribute(
+        attribute_name="purchase_invoice_product.id"
+    )
     quantity = factory.Faker("pyint")
     tax_invoices = factory.RelatedFactoryList(
         factory="tests.apps.tax.factories.TaxInvoiceFactory",
@@ -69,7 +77,14 @@ class TaxInvoiceProductFactory(BaseModelFactory):
         """Class Meta for UserFactory."""
 
         model = TaxInvoiceProduct
-        exclude = ("tax_invoices", "sale_invoice_products", "purchase_invoice_products")
+        exclude = (
+            "tax_invoices",
+            "tax_invoice",
+            "sale_invoice_product",
+            "sale_invoice_products",
+            "purchase_invoice_products",
+            "purchase_invoice_product",
+        )
         sqlalchemy_get_or_create = (
             "tax_invoice_id",
             "sale_invoice_product_id",

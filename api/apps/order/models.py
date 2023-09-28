@@ -23,7 +23,7 @@ class Order(db.Model):
     order_products = db.relationship("OrderProduct")
     invoices = db.relationship("Invoice", back_populates="orders")
     users = db.relationship("User", back_populates="orders")
-    counterparties = db.relationship("Counterparty", back_populates="orders")
+    customers = db.relationship("Counterparty", back_populates="orders")
 
     def __repr__(self) -> str:
         """Represent model instance."""

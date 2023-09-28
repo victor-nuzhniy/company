@@ -12,7 +12,8 @@ class PurchaseInvoiceFactory(BaseModelFactory):
 
     id = factory.Sequence(lambda x: x)
     name = factory.Faker("pystr", min_chars=1, max_chars=100)
-    agreement_id = factory.SubFactory(AgreementFactory)
+    agreement = factory.SubFactory(AgreementFactory)
+    agreement_id = factory.SelfAttribute(attribute_name="agreement.id")
     created_at = factory.Faker("date_time")
     purchase_invoice_products = factory.RelatedFactoryList(
         factory="tests.apps.purchase.factories.PurchaseInvoiceProductFactory",
@@ -33,7 +34,7 @@ class PurchaseInvoiceFactory(BaseModelFactory):
         """Class Meta for UserFactory."""
 
         model = PurchaseInvoice
-        exclude = ("purchase_invoice_products", "agreements")
+        exclude = ("purchase_invoice_products", "agreements", "agreement")
         sqlalchemy_get_or_create = ("agreement_id",)
 
 
@@ -41,10 +42,12 @@ class PurchaseInvoiceProductFactory(BaseModelFactory):
     """Factory for PurchaseInvoiceProduct model."""
 
     id = factory.Sequence(lambda x: x)
-    product_id = factory.SubFactory(ProductFactory)
+    product = factory.SubFactory(ProductFactory)
+    product_id = factory.SelfAttribute(attribute_name="product.id")
     quantity = factory.Faker("pyint")
     price = factory.Faker("pyint")
-    purchase_invoice_id = factory.SubFactory(PurchaseInvoiceFactory)
+    purchase_invoice = factory.SubFactory(PurchaseInvoiceFactory)
+    purchase_invoice_id = factory.SelfAttribute(attribute_name="purchase_invoice.id")
     products_left = factory.Faker("pyint")
     products = factory.RelatedFactoryList(
         factory="tests.apps.product.factories.ProductFactory",
@@ -70,5 +73,11 @@ class PurchaseInvoiceProductFactory(BaseModelFactory):
         """Class Meta for UserFactory."""
 
         model = PurchaseInvoiceProduct
-        exclude = ("products", "tax_invoice_products", "purchase_invoices")
+        exclude = (
+            "products",
+            "product",
+            "purchase_invoice",
+            "tax_invoice_products",
+            "purchase_invoices",
+        )
         sqlalchemy_get_or_create = ("product_id", "purchase_invoice_id")

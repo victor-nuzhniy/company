@@ -37,7 +37,8 @@ class ProductFactory(BaseModelFactory):
     units = factory.Faker("pystr", min_chars=1, max_chars=100)
     currency = factory.Faker("pystr", min_chars=1, max_chars=15)
     price = factory.Faker("pyint")
-    product_type_id = factory.SubFactory(ProductTypeFactory)
+    product_type = factory.SubFactory(ProductTypeFactory)
+    product_type_id = factory.SelfAttribute(attribute_name="product_type.id")
     order_products = factory.RelatedFactoryList(
         factory="tests.apps.order.factories.OrderProductFactory",
         factory_related_name="order_products",
@@ -79,5 +80,6 @@ class ProductFactory(BaseModelFactory):
             "sale_invoice_products",
             "purchase_invoice_products",
             "product_types",
+            "product_type",
         )
         sqlalchemy_get_or_create = ("product_type_id",)
