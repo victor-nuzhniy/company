@@ -21,6 +21,12 @@ For db creation using only flask functionality we need:
 2. ADMIN_PASSWORD should be set for admin user creation, used in AdminUserRoute endpoint
     and then deleted with reloading app.
 
+### Performing commits
+
+1. Pre-commit hook installed, settings are in .pre-commit-config.yaml
+2. To instantiate new hook settings change .pre-commit-config.yaml file
+     and run     pre-commit install
+3. To bypass hook checking run      git commit -m "..." --no-verify
 
 ### Testing app
 
