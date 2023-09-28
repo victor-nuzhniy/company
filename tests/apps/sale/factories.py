@@ -41,7 +41,7 @@ class SaleInvoiceFactory(BaseModelFactory):
         """Class Meta for UserFactory."""
 
         model = SaleInvoice
-        exclude = ("tax_invoices", "sale_invoice_products", "invoices")
+        exclude = ("tax_invoices", "sale_invoice_products", "invoices", "invoice")
         sqlalchemy_get_or_create = ("invoice_id",)
 
 

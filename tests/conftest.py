@@ -66,7 +66,6 @@ def set_session_for_factories() -> None:
         TaxInvoiceFactory,
         TaxInvoiceProductFactory,
         UserFactory,
-        # === Add new factory classes here!!! ===
     ]
 
     for factory_class in known_factories:
