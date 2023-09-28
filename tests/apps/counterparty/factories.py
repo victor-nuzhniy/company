@@ -13,7 +13,7 @@ class DiscountFactory(BaseModelFactory):
     rate = factory.Faker("random_int", min=0, max=100)
     counterparties = factory.RelatedFactoryList(
         factory="tests.apps.counterparty.CounterpartyFactory",
-        factory_related_name="counterparties",
+        factory_related_name="discount",
         size=0,
     )
 
@@ -39,20 +39,21 @@ class CounterpartyFactory(BaseModelFactory):
     city = factory.Faker("city")
     address = factory.Faker("address")
     phone_number = factory.Faker("phone_number")
-    discount_id = factory.SubFactory(factory=DiscountFactory)
+    discount = factory.SubFactory(factory=DiscountFactory)
+    discount_id = factory.SelfAttribute(attribute_name="discount.id")
     discounts = factory.RelatedFactoryList(
         factory="tests.apps.counterparty.factories.DiscountFactory",
-        factory_related_name="discounts",
+        factory_related_name="counterparty",
         size=0,
     )
     agreements = factory.RelatedFactoryList(
         factory="tests.apps.counterparty.factories.AgreementFactory",
-        factory_related_name="agreements",
+        factory_related_name="counterparty",
         size=0,
     )
     orders = factory.RelatedFactoryList(
         factory="tests.apps.order.factories.OrderFactory",
-        factory_related_name="orders",
+        factory_related_name="counterparty",
         size=0,
     )
 
@@ -65,7 +66,7 @@ class CounterpartyFactory(BaseModelFactory):
         """Class Meta for UserFactory."""
 
         model = Counterparty
-        exclude = ("discounts", "agreements", "orders")
+        exclude = ("discounts", "discount", "agreements", "orders")
         sqlalchemy_get_or_create = ("discount_id",)
 
 
@@ -74,20 +75,21 @@ class AgreementFactory(BaseModelFactory):
 
     id = factory.Sequence(lambda x: x)
     name = factory.Faker("pystr", min_chars=1, max_chars=200)
-    counterparty_id = factory.SubFactory(CounterpartyFactory)
+    counterparty = factory.SubFactory(CounterpartyFactory)
+    counterparty_id = factory.SelfAttribute(attribute_name="counterparty.id")
     counterparties = factory.RelatedFactoryList(
         factory="tests.apps.counterparty.factories.CounterpartyFactory",
-        factory_related_name="counterparties",
+        factory_related_name="agreement",
         size=0,
     )
     invoices = factory.RelatedFactoryList(
         factory="tests.apps.invoice.factories.InvoiceFactory",
-        factory_related_name="invoices",
+        factory_related_name="agreement",
         size=0,
     )
     purchase_invoices = factory.RelatedFactoryList(
         factory="tests.apps.purchase.factories.PurchaseInvoiceFactory",
-        factory_related_name="purchase_invoices",
+        factory_related_name="agreement",
         size=0,
     )
 
@@ -100,5 +102,5 @@ class AgreementFactory(BaseModelFactory):
         """Class Meta for UserFactory."""
 
         model = Agreement
-        exclude = ("counterparties", "invoices", "purchase_invoices")
+        exclude = ("counterparties", "counterparty", "invoices", "purchase_invoices")
         sqlalchemy_get_or_create = ("counterparty_id",)
