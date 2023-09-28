@@ -23,7 +23,7 @@ db = SQLAlchemy(app)
 from api.apps.counterparty.models import Agreement, Counterparty, Discount
 from api.apps.invoice.models import Invoice, InvoiceProduct
 from api.apps.order.models import Order, OrderProduct
-from api.apps.product.models import Product
+from api.apps.product.models import Product, ProductType
 from api.apps.purchase.models import PurchaseInvoice, PurchaseInvoiceProduct
 from api.apps.sale.models import SaleInvoice, SaleInvoiceProduct
 from api.apps.tax.models import TaxInvoice, TaxInvoiceProduct
