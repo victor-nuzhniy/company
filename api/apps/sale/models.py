@@ -18,6 +18,7 @@ class SaleInvoice(db.Model):
     done = db.Column(db.Boolean, default=False)
     tax_invoices = db.relationship("TaxInvoice")
     sale_invoice_products = db.relationship("SaleInvoiceProduct")
+    invoices = db.relationship("Invoice", back_populates="sale_invoices")
 
     def __repr__(self) -> str:
         """Represent model instance."""
@@ -41,6 +42,10 @@ class SaleInvoiceProduct(db.Model):
         nullable=False,
     )
     tax_invoice_products = db.relationship("TaxInvoiceProduct")
+    products = db.relationship("Product", back_populates="sale_invoice_products")
+    sale_invoices = db.relationship(
+        "SaleInvoice", back_populates="sale_invoice_products"
+    )
 
     def __repr__(self) -> str:
         """Represent model instance."""
