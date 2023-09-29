@@ -24,3 +24,17 @@ def counterparty_id(counterparty_id_int) -> int:
     if db_utils.is_exists(Counterparty, {"id": counterparty_id_int}):
         return counterparty_id_int
     abort(409, f"Counterparty with id {counterparty_id_int} does not exist.")
+
+
+def str_length_150(name_str: str) -> str:
+    """Validate arg length."""
+    if len(name_str) > 150:
+        abort(422, f"{name_str} length should be lower then 150 character.")
+    return name_str
+
+
+def str_length_255(name_str: str) -> str:
+    """Validate arg length."""
+    if len(name_str) > 255:
+        abort(422, f"{name_str} length should be lower then 255 character.")
+    return name_str
