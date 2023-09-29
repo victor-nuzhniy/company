@@ -3,11 +3,13 @@ import os
 import random
 import typing
 
+import jwt
 import pytest
+from faker import Faker
 from flask import Flask
 from flask_restful import Api
 
-from api import db
+from api import User, db
 from api.apps.account.routes import (
     IncomeForPeriodRoute,
     PeriodReportRoute,
@@ -15,6 +17,7 @@ from api.apps.account.routes import (
     ProductsLeftoversRoute,
 )
 from api.apps.auth.routes import AdminRoute, LoginRoute
+from api.apps.auth.utils import encrypt_password
 from api.apps.counterparty.routes import (
     AgreementRoute,
     AgreementsRoute,
@@ -60,6 +63,7 @@ from api.apps.tax.routes import (
     TaxInvoicesRoute,
 )
 from api.apps.user.routes import AdminUserRoute, UserRoute, UsersRoute
+from api.services import crud
 from tests.apps.counterparty.factories import (
     AgreementFactory,
     CounterpartyFactory,
@@ -142,6 +146,31 @@ def app():
         db.create_all()
         yield app
         db.drop_all()
+
+
+@pytest.fixture
+def admin_user(faker: Faker) -> User:
+    """Create admin user."""
+    admin = crud.create(
+        User,
+        {
+            "username": faker.user_name(),
+            "email": faker.email(),
+            "password": encrypt_password("11111"),
+            "is_admin": True,
+            "is_active": True,
+        },
+    )
+    return admin
+
+
+@pytest.fixture
+def auth_header(admin_user: User, app: Flask) -> typing.Dict:
+    """Get admin user authorization token."""
+    token = jwt.encode(
+        {"user_id": admin_user.id}, app.config["SECRET_KEY"], algorithm="HS256"
+    )
+    return {"Authorization": f"Bearer {token}", "Content-Type": "application/json"}
 
 
 @pytest.fixture(autouse=True, scope="session")
