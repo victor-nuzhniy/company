@@ -1,5 +1,4 @@
 """User routers."""
-from flask import abort
 from flask_restful import Resource, fields, marshal_with
 from flask_restful_swagger import swagger
 
@@ -52,23 +51,17 @@ class UserRoute(ModelRoute):
     @token_required()
     def put(self, instance_id, *args, **kwargs):
         """Update instance by id."""
-        try:
-            return super().put(instance_id, *args, **kwargs)
-        except Exception as ex:
-            abort(409, getattr(ex, "orig"))
+        return super().put(instance_id, *args, **kwargs)
 
     @swagger.operation(**user_patch_schema)
     @token_required()
-    def patch(self, *args, **kwargs):
+    def patch(self, instance_id, *args, **kwargs):
         """Update instance bu id, partially."""
-        try:
-            return super().patch(*args, **kwargs)
-        except Exception as ex:
-            abort(409, getattr(ex, "orig"))
+        return super().patch(*args, **kwargs)
 
     @swagger.operation(**user_delete_schema)
     @token_required()
-    def delete(self, *args, **kwargs):
+    def delete(self, instance_id, *args, **kwargs):
         """Delete instance by id."""
         return super().delete(*args, **kwargs)
 
@@ -84,10 +77,7 @@ class UsersRoute(ModelsRoute):
     @token_required()
     def post(self, *args, **kwargs):
         """Create model instance."""
-        try:
-            return super().post(*args, **kwargs)
-        except Exception as ex:
-            abort(409, getattr(ex, "orig"))
+        return super().post(*args, **kwargs)
 
     @swagger.operation(**users_get_schema)
     @token_required()
