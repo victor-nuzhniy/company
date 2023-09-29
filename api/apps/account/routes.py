@@ -30,6 +30,7 @@ from api.apps.account.utils import (
     create_income_products_dict,
     get_product_leftovers_on_date,
 )
+from api.model_routes import token_required
 from api.services import crud
 
 
@@ -81,6 +82,7 @@ class ProcessSaleInvoiceRoute(Resource):
     """Operations with saling process."""
 
     @swagger.operation(**process_sale_invoice_schema)
+    @token_required()
     def post(self, *args, **kwargs):
         """
         Approve saling and create tax invoice.
@@ -113,6 +115,7 @@ class PeriodReportRoute(Resource):
     """Create period report."""
 
     @swagger.operation(**period_report_schema)
+    @token_required()
     @marshal_with(PeriodReport.resource_fields)
     def post(self, *args, **kwargs):
         """
@@ -131,6 +134,7 @@ class ProductsLeftoversRoute(Resource):
     """Product leftovers to particular date."""
 
     @swagger.operation(**product_leftovers_schema)
+    @token_required()
     def post(self, *args, **kwargs):
         """Create product leftovers report."""
         args = product_leftovers_parser.parse_args()
@@ -145,6 +149,7 @@ class IncomeForPeriodRoute(Resource):
     """Calculate income for given period."""
 
     @swagger.operation(**income_for_period_schema)
+    @token_required()
     def post(self, *args, **kwargs):
         """
         Calculate income for given period.
