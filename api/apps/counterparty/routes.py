@@ -30,7 +30,7 @@ from api.apps.counterparty.schemas import (
     discount_put_schema,
     discounts_get_schema,
 )
-from api.model_routes import ModelRoute, ModelsRoute
+from api.model_routes import ModelRoute, ModelsRoute, token_required
 
 
 @swagger.model
@@ -80,21 +80,25 @@ class DiscountRoute(ModelRoute):
     model_fields = DiscountFields.resource_fields
 
     @swagger.operation(**discount_get_schema)
+    @token_required()
     def get(self, *args, **kwargs):
         """Get model instance by id."""
         return super().get(*args, **kwargs)
 
     @swagger.operation(**discount_put_schema)
+    @token_required()
     def put(self, *args, **kwargs):
         """Update instance by id."""
         return super().put(*args, **kwargs)
 
     @swagger.operation(**discount_patch_schema)
+    @token_required()
     def patch(self, *args, **kwargs):
         """Update instance bu id, partially."""
         return super().patch(*args, **kwargs)
 
     @swagger.operation(**discount_delete_schema)
+    @token_required()
     def delete(self, *args, **kwargs):
         """Delete instance by id."""
         return super().delete(*args, **kwargs)
@@ -108,11 +112,13 @@ class DiscountsRoute(ModelsRoute):
     model_fields = DiscountFields.resource_fields
 
     @swagger.operation(**discount_post_schema)
+    @token_required()
     def post(self, *args, **kwargs):
         """Create model instance."""
         return super().post(*args, **kwargs)
 
     @swagger.operation(**discounts_get_schema)
+    @token_required()
     def get(self, *args, **kwargs):
         """Get model instance list."""
         return super().get(*args, **kwargs)
@@ -127,21 +133,25 @@ class CounterpartyRoute(ModelRoute):
     model_fields = CounterpartyFields.resource_fields
 
     @swagger.operation(**counterparty_get_schema)
+    @token_required()
     def get(self, *args, **kwargs):
         """Get model instance by id."""
         return super().get(*args, **kwargs)
 
     @swagger.operation(**counterparty_put_schema)
+    @token_required()
     def put(self, *args, **kwargs):
         """Update instance by id."""
         return super().put(*args, **kwargs)
 
     @swagger.operation(**counterparty_patch_schema)
+    @token_required()
     def patch(self, *args, **kwargs):
         """Update instance bu id, partially."""
         return super().patch(*args, **kwargs)
 
     @swagger.operation(**counterparty_delete_schema)
+    @token_required()
     def delete(self, *args, **kwargs):
         """Delete instance by id."""
         return super().delete(*args, **kwargs)
@@ -155,11 +165,13 @@ class CounterpartiesRoute(ModelsRoute):
     model_fields = CounterpartyFields.resource_fields
 
     @swagger.operation(**counterparty_post_schema)
+    @token_required()
     def post(self, *args, **kwargs):
         """Create model instance."""
         return super().post(*args, **kwargs)
 
     @swagger.operation(**counterparties_get_schema)
+    @token_required()
     def get(self, *args, **kwargs):
         """Get model instance list."""
         return super().get(*args, **kwargs)
@@ -174,21 +186,25 @@ class AgreementRoute(ModelRoute):
     model_fields = AgreementFields.resource_fields
 
     @swagger.operation(**agreement_get_schema)
+    @token_required()
     def get(self, *args, **kwargs):
         """Get model instance by id."""
         return super().get(*args, **kwargs)
 
     @swagger.operation(**agreement_put_schema)
+    @token_required()
     def put(self, *args, **kwargs):
         """Update instance by id."""
         return super().put(*args, **kwargs)
 
     @swagger.operation(**agreement_patch_schema)
+    @token_required()
     def patch(self, *args, **kwargs):
         """Update instance bu id, partially."""
         return super().patch(*args, **kwargs)
 
     @swagger.operation(**agreement_delete_schema)
+    @token_required()
     def delete(self, *args, **kwargs):
         """Delete instance by id."""
         return super().delete(*args, **kwargs)
@@ -202,11 +218,13 @@ class AgreementsRoute(ModelsRoute):
     model_fields = AgreementFields.resource_fields
 
     @swagger.operation(**agreement_post_schema)
+    @token_required()
     def post(self, *args, **kwargs):
         """Create model instance."""
         return super().post(*args, **kwargs)
 
     @swagger.operation(**agreements_get_schema)
+    @token_required()
     def get(self, *args, **kwargs):
         """Get model instance list."""
         return super().get(*args, **kwargs)

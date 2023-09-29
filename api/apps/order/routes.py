@@ -23,7 +23,7 @@ from api.apps.order.schemas import (
     order_put_schema,
     orders_get_schema,
 )
-from api.model_routes import ModelRoute, ModelsRoute
+from api.model_routes import ModelRoute, ModelsRoute, token_required
 
 
 @swagger.model
@@ -61,21 +61,25 @@ class OrderRoute(ModelRoute):
     model_fields = OrderFields.resource_fields
 
     @swagger.operation(**order_get_schema)
+    @token_required()
     def get(self, *args, **kwargs):
         """Get model instance by id."""
         return super().get(*args, **kwargs)
 
     @swagger.operation(**order_put_schema)
+    @token_required()
     def put(self, *args, **kwargs):
         """Update instance by id."""
         return super().put(*args, **kwargs)
 
     @swagger.operation(**order_patch_schema)
+    @token_required()
     def patch(self, *args, **kwargs):
         """Update instance bu id, partially."""
         return super().patch(*args, **kwargs)
 
     @swagger.operation(**order_delete_schema)
+    @token_required()
     def delete(self, *args, **kwargs):
         """Delete instance by id."""
         return super().delete(*args, **kwargs)
@@ -89,11 +93,13 @@ class OrdersRoute(ModelsRoute):
     model_fields = OrderFields.resource_fields
 
     @swagger.operation(**order_post_schema)
+    @token_required()
     def post(self, *args, **kwargs):
         """Create model instance."""
         return super().post(*args, **kwargs)
 
     @swagger.operation(**orders_get_schema)
+    @token_required()
     def get(self, *args, **kwargs):
         """Get model instance list."""
         return super().get(*args, **kwargs)
@@ -108,21 +114,25 @@ class OrderProductRoute(ModelRoute):
     model_fields = OrderProductFields.resource_fields
 
     @swagger.operation(**order_product_get_schema)
+    @token_required()
     def get(self, *args, **kwargs):
         """Get model instance by id."""
         return super().get(*args, **kwargs)
 
     @swagger.operation(**order_product_put_schema)
+    @token_required()
     def put(self, *args, **kwargs):
         """Update instance by id."""
         return super().put(*args, **kwargs)
 
     @swagger.operation(**order_product_patch_schema)
+    @token_required()
     def patch(self, *args, **kwargs):
         """Update instance bu id, partially."""
         return super().patch(*args, **kwargs)
 
     @swagger.operation(**order_product_delete_schema)
+    @token_required()
     def delete(self, *args, **kwargs):
         """Delete instance by id."""
         return super().delete(*args, **kwargs)
@@ -136,11 +146,13 @@ class OrderProductsRoute(ModelsRoute):
     model_fields = OrderProductFields.resource_fields
 
     @swagger.operation(**order_product_post_schema)
+    @token_required()
     def post(self, *args, **kwargs):
         """Create model instance."""
         return super().post(*args, **kwargs)
 
     @swagger.operation(**order_products_get_schema)
+    @token_required()
     def get(self, *args, **kwargs):
         """Get model instance list."""
         return super().get(*args, **kwargs)

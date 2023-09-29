@@ -23,7 +23,7 @@ from api.apps.tax.schemas import (
     tax_invoice_put_schema,
     tax_invoices_get_schema,
 )
-from api.model_routes import ModelRoute, ModelsRoute
+from api.model_routes import ModelRoute, ModelsRoute, token_required
 
 
 @swagger.model
@@ -60,21 +60,25 @@ class TaxInvoiceRoute(ModelRoute):
     model_fields = TaxInvoiceFields.resource_fields
 
     @swagger.operation(**tax_invoice_get_schema)
+    @token_required()
     def get(self, *args, **kwargs):
         """Get model instance by id."""
         return super().get(*args, **kwargs)
 
     @swagger.operation(**tax_invoice_put_schema)
+    @token_required()
     def put(self, *args, **kwargs):
         """Update instance by id."""
         return super().put(*args, **kwargs)
 
     @swagger.operation(**tax_invoice_patch_schema)
+    @token_required()
     def patch(self, *args, **kwargs):
         """Update instance bu id, partially."""
         return super().patch(*args, **kwargs)
 
     @swagger.operation(**tax_invoice_delete_schema)
+    @token_required()
     def delete(self, *args, **kwargs):
         """Delete instance by id."""
         return super().delete(*args, **kwargs)
@@ -88,11 +92,13 @@ class TaxInvoicesRoute(ModelsRoute):
     model_fields = TaxInvoiceFields.resource_fields
 
     @swagger.operation(**tax_invoice_post_schema)
+    @token_required()
     def post(self, *args, **kwargs):
         """Create model instance."""
         return super().post(*args, **kwargs)
 
     @swagger.operation(**tax_invoices_get_schema)
+    @token_required()
     def get(self, *args, **kwargs):
         """Get model instance list."""
         return super().get(*args, **kwargs)
@@ -107,21 +113,25 @@ class TaxInvoiceProductRoute(ModelRoute):
     model_fields = TaxInvoiceProductFields.resource_fields
 
     @swagger.operation(**tax_invoice_product_get_schema)
+    @token_required()
     def get(self, *args, **kwargs):
         """Get model instance by id."""
         return super().get(*args, **kwargs)
 
     @swagger.operation(**tax_invoice_product_put_schema)
+    @token_required()
     def put(self, *args, **kwargs):
         """Update instance by id."""
         return super().put(*args, **kwargs)
 
     @swagger.operation(**tax_invoice_product_patch_schema)
+    @token_required()
     def patch(self, *args, **kwargs):
         """Update instance bu id, partially."""
         return super().patch(*args, **kwargs)
 
     @swagger.operation(**tax_invoice_product_delete_schema)
+    @token_required()
     def delete(self, *args, **kwargs):
         """Delete instance by id."""
         return super().delete(*args, **kwargs)
@@ -135,11 +145,13 @@ class TaxInvoiceProductsRoute(ModelsRoute):
     model_fields = TaxInvoiceProductFields.resource_fields
 
     @swagger.operation(**tax_invoice_product_post_schema)
+    @token_required()
     def post(self, *args, **kwargs):
         """Create model instance."""
         return super().post(*args, **kwargs)
 
     @swagger.operation(**tax_invoice_products_get_schema)
+    @token_required()
     def get(self, *args, **kwargs):
         """Get model instance list."""
         return super().get(*args, **kwargs)

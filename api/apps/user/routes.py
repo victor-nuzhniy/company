@@ -43,11 +43,13 @@ class UserRoute(ModelRoute):
     model_fields = UserFields.resource_fields
 
     @swagger.operation(**user_get_schema)
+    @token_required()
     def get(self, instance_id, *args, **kwargs):
         """Get model instance by id."""
         return super().get(instance_id, *args, **kwargs)
 
     @swagger.operation(**user_put_schema)
+    @token_required()
     def put(self, instance_id, *args, **kwargs):
         """Update instance by id."""
         try:
@@ -56,6 +58,7 @@ class UserRoute(ModelRoute):
             abort(409, getattr(ex, "orig"))
 
     @swagger.operation(**user_patch_schema)
+    @token_required()
     def patch(self, *args, **kwargs):
         """Update instance bu id, partially."""
         try:
@@ -64,6 +67,7 @@ class UserRoute(ModelRoute):
             abort(409, getattr(ex, "orig"))
 
     @swagger.operation(**user_delete_schema)
+    @token_required()
     def delete(self, *args, **kwargs):
         """Delete instance by id."""
         return super().delete(*args, **kwargs)
@@ -77,6 +81,7 @@ class UsersRoute(ModelsRoute):
     model_fields = UserFields.resource_fields
 
     @swagger.operation(**user_post_schema)
+    @token_required()
     def post(self, *args, **kwargs):
         """Create model instance."""
         try:
@@ -85,6 +90,7 @@ class UsersRoute(ModelsRoute):
             abort(409, getattr(ex, "orig"))
 
     @swagger.operation(**users_get_schema)
+    @token_required()
     def get(self, *args, **kwargs):
         """Get model instance list."""
         return super().get(*args, **kwargs)
