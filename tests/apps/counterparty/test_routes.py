@@ -80,3 +80,41 @@ class TestPutDiscountRoute:
             "rate": f"Invalid argument: {expected_data.get('rate')}. "
             f"argument must be within the range 0 - 100"
         }
+
+    def test_put_route_without_rage(self, faker: Faker, auth_header: Dict) -> None:
+        """Test put route. Same name."""
+        discount: Discount = DiscountFactory()
+        expected_data: Dict = {
+            "name": faker.pystr(min_chars=4, max_chars=10),
+        }
+        response = self.client.put(
+            url_for("discountroute", instance_id=discount.id),
+            headers=auth_header,
+            data=json.dumps(expected_data),
+        )
+        result = response.get_json()
+        assert response.status_code == 400
+        assert result.get("message") == {
+            "rate": "Missing required parameter in the JSON "
+            "body or the post body or the query string"
+        }
+
+    def test_put_route_same_name(self, faker: Faker, auth_header: Dict) -> None:
+        """Test put route. Without rate."""
+        discount: Discount = DiscountFactory()
+        another_discount: Discount = DiscountFactory()
+        expected_data: Dict = {
+            "name": another_discount.name,
+            "rate": faker.random_int(min=0, max=100),
+        }
+        response = self.client.put(
+            url_for("discountroute", instance_id=discount.id),
+            headers=auth_header,
+            data=json.dumps(expected_data),
+        )
+        result = response.get_json()
+        assert response.status_code == 409
+        assert (
+            result.get("message")
+            == f"Field name already has {another_discount.name} value in discount table"
+        )
