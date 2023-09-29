@@ -40,8 +40,8 @@ admin_schema = {
             "allowMultiple": False,
             "dataType": "json",
             "paramType": "body",
-            "defaultValue": '{"email": "ab@abc.com", "password": "111",'
-            ' "admin_password": "123"}',
+            "defaultValue": '{"username": "Vasja", "email": "ab@abc.com", '
+            '"password": "111", "admin_password": "123"}',
         }
     ],
     "responseClass": "UserFields",
