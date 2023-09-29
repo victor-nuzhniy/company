@@ -9,6 +9,7 @@ from flask_restful.reqparse import RequestParser
 
 from api import User, db
 from api.services import crud
+from api.utils import check_unique
 
 
 def token_required(is_admin: bool = False):
@@ -70,6 +71,7 @@ class ModelRoute(Resource):
     def put(self, instance_id, *args, **kwargs):
         """Update instance by id."""
         args = self.put_parser.parse_args()
+        check_unique(self.model, args, instance_id)
         return marshal(
             crud.update(self.model, args, {"id": instance_id}), self.model_fields
         )
@@ -78,6 +80,7 @@ class ModelRoute(Resource):
         """Update instance bu id, partially."""
         args = self.patch_parser.parse_args()
         args = {key: value for key, value in args.items() if value is not None}
+        check_unique(self.model, args, instance_id)
         return marshal(
             crud.update(self.model, args, {"id": instance_id}), self.model_fields
         )
@@ -100,6 +103,7 @@ class ModelsRoute(Resource):
     def post(self, *args, **kwargs):
         """Create model instance."""
         args = self.post_parser.parse_args()
+        check_unique(self.model, args)
         return marshal(crud.create(self.model, args), self.model_fields)
 
     def get(self, *args, **kwargs):
