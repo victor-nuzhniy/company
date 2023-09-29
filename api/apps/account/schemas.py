@@ -13,7 +13,16 @@ process_sale_invoice_schema = {
             "dataType": "json",
             "paramType": "body",
             "defaultValue": '{"sale_invoice_id": 1}',
-        }
+        },
+        {
+            "name": "Authorization",
+            "description": "Authorization: Bearer token",
+            "required": True,
+            "allowMultiple": False,
+            "dataType": "String",
+            "paramType": "header",
+            "defaultValue": "Bearer ",
+        },
     ],
     "responseClass": "{'message': 'info'}",
     "responseMessages": [
@@ -38,6 +47,15 @@ period_report_schema = {
             "paramType": "body",
             "defaultValue": '{"date_from": "2020-01-01", "date_to": "2024-01-01"}',
         },
+        {
+            "name": "Authorization",
+            "description": "Authorization: Bearer token",
+            "required": True,
+            "allowMultiple": False,
+            "dataType": "String",
+            "paramType": "header",
+            "defaultValue": "Bearer ",
+        },
     ],
     "responseMessages": [
         {"code": 200, "message": "Operation successfully performed"},
@@ -61,6 +79,15 @@ product_leftovers_schema = {
             "paramType": "body",
             "defaultValue": '{"date": "2024-01-01"}',
         },
+        {
+            "name": "Authorization",
+            "description": "Authorization: Bearer token",
+            "required": True,
+            "allowMultiple": False,
+            "dataType": "String",
+            "paramType": "header",
+            "defaultValue": "Bearer ",
+        },
     ],
     "responseMessages": [
         {"code": 200, "message": "Operation successfully performed"},
@@ -82,6 +109,15 @@ income_for_period_schema = {
             "dataType": "json",
             "paramType": "body",
             "defaultValue": '{"date_from": "2020-01-01", "date_to": "2024-01-01"}',
+        },
+        {
+            "name": "Authorization",
+            "description": "Authorization: Bearer token",
+            "required": True,
+            "allowMultiple": False,
+            "dataType": "String",
+            "paramType": "header",
+            "defaultValue": "Bearer ",
         },
     ],
     "responseMessages": [
