@@ -26,8 +26,11 @@ user_admin_schema = {
     "responseClass": "UserFields",
     "responseMessages": [
         {"code": 200, "message": "Operation successfully performed"},
+        {"code": 400, "message": "Invalid input (specified)."},
+        {"code": 401, "message": "Unauthorized."},
+        {"code": 403, "message": "Forbidden."},
         {"code": 409, "message": "Instance with id does not exist."},
-        {"code": 415, "message": "Invalid input."},
+        {"code": 422, "message": "Invalid input (specified)."},
     ],
 }
 
@@ -49,8 +52,10 @@ user_get_schema = {
     ],
     "responseMessages": [
         {"code": 200, "message": "Operation successfully performed"},
+        {"code": 400, "message": "Invalid input (specified)."},
+        {"code": 401, "message": "Unauthorized."},
         {"code": 409, "message": "Instance with id does not exist."},
-        {"code": 415, "message": "Invalid input."},
+        {"code": 422, "message": "Invalid input (specified)."},
     ],
 }
 
@@ -81,8 +86,10 @@ user_put_schema = {
     "responseClass": "UserFields",
     "responseMessages": [
         {"code": 200, "message": "Operation successfully performed"},
+        {"code": 400, "message": "Invalid input (specified)."},
+        {"code": 401, "message": "Unauthorized."},
         {"code": 409, "message": "Instance with id does not exist."},
-        {"code": 415, "message": "Invalid input."},
+        {"code": 422, "message": "Invalid input (specified)."},
     ],
 }
 
@@ -113,8 +120,10 @@ user_patch_schema = {
     "responseClass": "UserFields",
     "responseMessages": [
         {"code": 200, "message": "Operation successfully performed"},
+        {"code": 400, "message": "Invalid input (specified)."},
+        {"code": 401, "message": "Unauthorized."},
         {"code": 409, "message": "Instance with id does not exist."},
-        {"code": 415, "message": "Invalid input."},
+        {"code": 422, "message": "Invalid input (specified)."},
     ],
 }
 
@@ -136,6 +145,7 @@ user_delete_schema = {
     ],
     "responseMessages": [
         {"code": 200, "message": "Deleted instance with id."},
+        {"code": 401, "message": "Unauthorized."},
         {"code": 409, "message": "Instance with id does not exist."},
     ],
 }
@@ -168,8 +178,10 @@ user_post_schema = {
     "responseClass": "UserFields",
     "responseMessages": [
         {"code": 200, "message": "Operation successfully performed"},
+        {"code": 400, "message": "Invalid input (specified)."},
+        {"code": 401, "message": "Unauthorized."},
         {"code": 409, "message": "Instance with id does not exist."},
-        {"code": 415, "message": "Invalid input."},
+        {"code": 422, "message": "Invalid input (specified)."},
     ],
 }
 
@@ -191,6 +203,7 @@ users_get_schema = {
     ],
     "responseMessages": [
         {"code": 200, "message": "Operation successfully performed"},
+        {"code": 401, "message": "Unauthorized."},
         {"code": 409, "message": "Instance with id does not exist."},
     ],
 }

@@ -17,8 +17,10 @@ invoice_get_schema = {
     ],
     "responseMessages": [
         {"code": 200, "message": "Operation successfully performed"},
+        {"code": 400, "message": "Invalid input (specified)."},
+        {"code": 401, "message": "Unauthorized."},
         {"code": 409, "message": "Instance with id does not exist."},
-        {"code": 415, "message": "Invalid input."},
+        {"code": 422, "message": "Invalid input (specified)."},
     ],
 }
 
@@ -49,8 +51,10 @@ invoice_put_schema = {
     "responseClass": "InvoiceFields",
     "responseMessages": [
         {"code": 200, "message": "Operation successfully performed"},
+        {"code": 400, "message": "Invalid input (specified)."},
+        {"code": 401, "message": "Unauthorized."},
         {"code": 409, "message": "Instance with id does not exist."},
-        {"code": 415, "message": "Invalid input."},
+        {"code": 422, "message": "Invalid input (specified)."},
     ],
 }
 
@@ -83,8 +87,10 @@ invoice_patch_schema = {
     "responseClass": "InvoiceFields",
     "responseMessages": [
         {"code": 200, "message": "Operation successfully performed"},
+        {"code": 400, "message": "Invalid input (specified)."},
+        {"code": 401, "message": "Unauthorized."},
         {"code": 409, "message": "Instance with id does not exist."},
-        {"code": 415, "message": "Invalid input."},
+        {"code": 422, "message": "Invalid input (specified)."},
     ],
 }
 
@@ -106,6 +112,7 @@ invoice_delete_schema = {
     ],
     "responseMessages": [
         {"code": 200, "message": "Deleted instance with id."},
+        {"code": 401, "message": "Unauthorized."},
         {"code": 409, "message": "Instance with id does not exist."},
     ],
 }
@@ -137,8 +144,10 @@ invoice_post_schema = {
     "responseClass": "InvoiceFields",
     "responseMessages": [
         {"code": 200, "message": "Operation successfully performed"},
+        {"code": 400, "message": "Invalid input (specified)."},
+        {"code": 401, "message": "Unauthorized."},
         {"code": 409, "message": "Instance with id does not exist."},
-        {"code": 415, "message": "Invalid input."},
+        {"code": 422, "message": "Invalid input (specified)."},
     ],
 }
 
@@ -160,6 +169,7 @@ invoices_get_schema = {
     ],
     "responseMessages": [
         {"code": 200, "message": "Operation successfully performed"},
+        {"code": 401, "message": "Unauthorized."},
         {"code": 409, "message": "Instance with id does not exist."},
     ],
 }
@@ -182,8 +192,10 @@ invoice_product_get_schema = {
     ],
     "responseMessages": [
         {"code": 200, "message": "Operation successfully performed"},
+        {"code": 400, "message": "Invalid input (specified)."},
+        {"code": 401, "message": "Unauthorized."},
         {"code": 409, "message": "Instance with id does not exist."},
-        {"code": 415, "message": "Invalid input."},
+        {"code": 422, "message": "Invalid input (specified)."},
     ],
 }
 
@@ -216,8 +228,10 @@ invoice_product_put_schema = {
     "responseClass": "InvoiceProductFields",
     "responseMessages": [
         {"code": 200, "message": "Operation successfully performed"},
+        {"code": 400, "message": "Invalid input (specified)."},
+        {"code": 401, "message": "Unauthorized."},
         {"code": 409, "message": "Instance with id does not exist."},
-        {"code": 415, "message": "Invalid input."},
+        {"code": 422, "message": "Invalid input (specified)."},
     ],
 }
 
@@ -250,8 +264,10 @@ invoice_product_patch_schema = {
     "responseClass": "InvoiceProductFields",
     "responseMessages": [
         {"code": 200, "message": "Operation successfully performed"},
+        {"code": 400, "message": "Invalid input (specified)."},
+        {"code": 401, "message": "Unauthorized."},
         {"code": 409, "message": "Instance with id does not exist."},
-        {"code": 415, "message": "Invalid input."},
+        {"code": 422, "message": "Invalid input (specified)."},
     ],
 }
 
@@ -273,6 +289,7 @@ invoice_product_delete_schema = {
     ],
     "responseMessages": [
         {"code": 200, "message": "Deleted instance with id."},
+        {"code": 401, "message": "Unauthorized."},
         {"code": 409, "message": "Instance with id does not exist."},
     ],
 }
@@ -306,8 +323,10 @@ invoice_product_post_schema = {
     "responseClass": "InvoiceProductFields",
     "responseMessages": [
         {"code": 200, "message": "Operation successfully performed"},
+        {"code": 400, "message": "Invalid input (specified)."},
+        {"code": 401, "message": "Unauthorized."},
         {"code": 409, "message": "Instance with id does not exist."},
-        {"code": 415, "message": "Invalid input."},
+        {"code": 422, "message": "Invalid input (specified)."},
     ],
 }
 
@@ -329,6 +348,7 @@ invoice_products_get_schema = {
     ],
     "responseMessages": [
         {"code": 200, "message": "Operation successfully performed"},
+        {"code": 401, "message": "Unauthorized."},
         {"code": 409, "message": "Instance with id does not exist."},
     ],
 }

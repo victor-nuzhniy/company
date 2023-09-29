@@ -18,8 +18,10 @@ product_get_schema = {
     ],
     "responseMessages": [
         {"code": 200, "message": "Operation successfully performed"},
+        {"code": 400, "message": "Invalid input (specified)."},
+        {"code": 401, "message": "Unauthorized."},
         {"code": 409, "message": "Instance with id does not exist."},
-        {"code": 415, "message": "Invalid input."},
+        {"code": 422, "message": "Invalid input (specified)."},
     ],
 }
 
@@ -52,8 +54,10 @@ product_put_schema = {
     "responseClass": "ProductFields",
     "responseMessages": [
         {"code": 200, "message": "Operation successfully performed"},
+        {"code": 400, "message": "Invalid input (specified)."},
+        {"code": 401, "message": "Unauthorized."},
         {"code": 409, "message": "Instance with id does not exist."},
-        {"code": 415, "message": "Invalid input."},
+        {"code": 422, "message": "Invalid input (specified)."},
     ],
 }
 
@@ -86,8 +90,10 @@ product_patch_schema = {
     "responseClass": "ProductFields",
     "responseMessages": [
         {"code": 200, "message": "Operation successfully performed"},
+        {"code": 400, "message": "Invalid input (specified)."},
+        {"code": 401, "message": "Unauthorized."},
         {"code": 409, "message": "Instance with id does not exist."},
-        {"code": 415, "message": "Invalid input."},
+        {"code": 422, "message": "Invalid input (specified)."},
     ],
 }
 
@@ -109,6 +115,7 @@ product_delete_schema = {
     ],
     "responseMessages": [
         {"code": 200, "message": "Deleted instance with id."},
+        {"code": 401, "message": "Unauthorized."},
         {"code": 409, "message": "Instance with id does not exist."},
     ],
 }
@@ -142,8 +149,10 @@ product_post_schema = {
     "responseClass": "ProductFields",
     "responseMessages": [
         {"code": 200, "message": "Operation successfully performed"},
+        {"code": 400, "message": "Invalid input (specified)."},
+        {"code": 401, "message": "Unauthorized."},
         {"code": 409, "message": "Instance with id does not exist."},
-        {"code": 415, "message": "Invalid input."},
+        {"code": 422, "message": "Invalid input (specified)."},
     ],
 }
 
@@ -165,6 +174,7 @@ products_get_schema = {
     ],
     "responseMessages": [
         {"code": 200, "message": "Operation successfully performed"},
+        {"code": 401, "message": "Unauthorized."},
         {"code": 409, "message": "Instance with id does not exist."},
     ],
 }
@@ -187,8 +197,10 @@ product_type_get_schema = {
     ],
     "responseMessages": [
         {"code": 200, "message": "Operation successfully performed"},
+        {"code": 400, "message": "Invalid input (specified)."},
+        {"code": 401, "message": "Unauthorized."},
         {"code": 409, "message": "Instance with id does not exist."},
-        {"code": 415, "message": "Invalid input."},
+        {"code": 422, "message": "Invalid input (specified)."},
     ],
 }
 
@@ -219,8 +231,10 @@ product_type_put_schema = {
     "responseClass": "ProductTypeFields",
     "responseMessages": [
         {"code": 200, "message": "Operation successfully performed"},
+        {"code": 400, "message": "Invalid input (specified)."},
+        {"code": 401, "message": "Unauthorized."},
         {"code": 409, "message": "Instance with id does not exist."},
-        {"code": 415, "message": "Invalid input."},
+        {"code": 422, "message": "Invalid input (specified)."},
     ],
 }
 
@@ -251,8 +265,10 @@ product_type_patch_schema = {
     "responseClass": "ProductTypeFields",
     "responseMessages": [
         {"code": 200, "message": "Operation successfully performed"},
+        {"code": 400, "message": "Invalid input (specified)."},
+        {"code": 401, "message": "Unauthorized."},
         {"code": 409, "message": "Instance with id does not exist."},
-        {"code": 415, "message": "Invalid input."},
+        {"code": 422, "message": "Invalid input (specified)."},
     ],
 }
 
@@ -274,6 +290,7 @@ product_type_delete_schema = {
     ],
     "responseMessages": [
         {"code": 200, "message": "Deleted instance with id."},
+        {"code": 401, "message": "Unauthorized."},
         {"code": 409, "message": "Instance with id does not exist."},
     ],
 }
@@ -305,8 +322,10 @@ product_type_post_schema = {
     "responseClass": "ProductTypeFields",
     "responseMessages": [
         {"code": 200, "message": "Operation successfully performed"},
+        {"code": 400, "message": "Invalid input (specified)."},
+        {"code": 401, "message": "Unauthorized."},
         {"code": 409, "message": "Instance with id does not exist."},
-        {"code": 415, "message": "Invalid input."},
+        {"code": 422, "message": "Invalid input (specified)."},
     ],
 }
 
@@ -328,6 +347,7 @@ product_types_get_schema = {
     ],
     "responseMessages": [
         {"code": 200, "message": "Operation successfully performed"},
+        {"code": 401, "message": "Unauthorized."},
         {"code": 409, "message": "Instance with id does not exist."},
     ],
 }

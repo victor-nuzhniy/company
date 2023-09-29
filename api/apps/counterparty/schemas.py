@@ -19,6 +19,7 @@ discount_get_schema = {
     "responseMessages": [
         {"code": 200, "message": "Operation successfully performed"},
         {"code": 400, "message": "Invalid input (specified)."},
+        {"code": 401, "message": "Unauthorized."},
         {"code": 409, "message": "Instance with id does not exist."},
         {"code": 422, "message": "Invalid input (specified)."},
     ],
@@ -52,6 +53,7 @@ discount_put_schema = {
     "responseMessages": [
         {"code": 200, "message": "Operation successfully performed"},
         {"code": 400, "message": "Invalid input (specified)."},
+        {"code": 401, "message": "Unauthorized."},
         {"code": 409, "message": "Instance with id does not exist."},
         {"code": 422, "message": "Invalid input (specified)."},
     ],
@@ -85,6 +87,7 @@ discount_patch_schema = {
     "responseMessages": [
         {"code": 200, "message": "Operation successfully performed"},
         {"code": 400, "message": "Invalid input (specified)."},
+        {"code": 401, "message": "Unauthorized."},
         {"code": 409, "message": "Instance with id does not exist."},
         {"code": 422, "message": "Invalid input (specified)."},
     ],
@@ -108,6 +111,7 @@ discount_delete_schema = {
     ],
     "responseMessages": [
         {"code": 200, "message": "Deleted instance with id."},
+        {"code": 401, "message": "Unauthorized."},
         {"code": 409, "message": "Instance with id does not exist."},
     ],
 }
@@ -140,6 +144,7 @@ discount_post_schema = {
     "responseMessages": [
         {"code": 200, "message": "Operation successfully performed"},
         {"code": 400, "message": "Invalid input (specified)."},
+        {"code": 401, "message": "Unauthorized."},
         {"code": 409, "message": "Instance with id does not exist."},
         {"code": 422, "message": "Invalid input (specified)."},
     ],
@@ -163,6 +168,7 @@ discounts_get_schema = {
     ],
     "responseMessages": [
         {"code": 200, "message": "Operation successfully performed"},
+        {"code": 401, "message": "Unauthorized."},
         {"code": 409, "message": "Instance with id does not exist."},
     ],
 }
@@ -186,6 +192,7 @@ counterparty_get_schema = {
     "responseMessages": [
         {"code": 200, "message": "Operation successfully performed"},
         {"code": 400, "message": "Invalid input (specified)."},
+        {"code": 401, "message": "Unauthorized."},
         {"code": 409, "message": "Instance with id does not exist."},
         {"code": 422, "message": "Invalid input (specified)."},
     ],
@@ -223,6 +230,7 @@ counterparty_put_schema = {
     "responseMessages": [
         {"code": 200, "message": "Operation successfully performed"},
         {"code": 400, "message": "Invalid input (specified)."},
+        {"code": 401, "message": "Unauthorized."},
         {"code": 409, "message": "Instance with id does not exist."},
         {"code": 422, "message": "Invalid input (specified)."},
     ],
@@ -260,6 +268,7 @@ counterparty_patch_schema = {
     "responseMessages": [
         {"code": 200, "message": "Operation successfully performed"},
         {"code": 400, "message": "Invalid input (specified)."},
+        {"code": 401, "message": "Unauthorized."},
         {"code": 409, "message": "Instance with id does not exist."},
         {"code": 422, "message": "Invalid input (specified)."},
     ],
@@ -282,6 +291,7 @@ counterparty_delete_schema = {
     ],
     "responseMessages": [
         {"code": 200, "message": "Deleted instance with id."},
+        {"code": 401, "message": "Unauthorized."},
         {"code": 409, "message": "Instance with id does not exist."},
     ],
 }
@@ -318,6 +328,7 @@ counterparty_post_schema = {
     "responseMessages": [
         {"code": 200, "message": "Operation successfully performed"},
         {"code": 400, "message": "Invalid input (specified)."},
+        {"code": 401, "message": "Unauthorized."},
         {"code": 409, "message": "Instance with id does not exist."},
         {"code": 422, "message": "Invalid input (specified)."},
     ],
@@ -340,6 +351,7 @@ counterparties_get_schema = {
     ],
     "responseMessages": [
         {"code": 200, "message": "Operation successfully performed"},
+        {"code": 401, "message": "Unauthorized."},
         {"code": 409, "message": "Instance with id does not exist."},
     ],
 }
@@ -363,6 +375,7 @@ agreement_get_schema = {
     "responseMessages": [
         {"code": 200, "message": "Operation successfully performed"},
         {"code": 400, "message": "Invalid input (specified)."},
+        {"code": 401, "message": "Unauthorized."},
         {"code": 409, "message": "Instance with id does not exist."},
         {"code": 422, "message": "Invalid input (specified)."},
     ],
@@ -396,6 +409,7 @@ agreement_put_schema = {
     "responseMessages": [
         {"code": 200, "message": "Operation successfully performed"},
         {"code": 400, "message": "Invalid input (specified)."},
+        {"code": 401, "message": "Unauthorized."},
         {"code": 409, "message": "Instance with id does not exist."},
         {"code": 422, "message": "Invalid input (specified)."},
     ],
@@ -429,6 +443,7 @@ agreement_patch_schema = {
     "responseMessages": [
         {"code": 200, "message": "Operation successfully performed"},
         {"code": 400, "message": "Invalid input (specified)."},
+        {"code": 401, "message": "Unauthorized."},
         {"code": 409, "message": "Instance with id does not exist."},
         {"code": 422, "message": "Invalid input (specified)."},
     ],
@@ -452,6 +467,7 @@ agreement_delete_schema = {
     ],
     "responseMessages": [
         {"code": 200, "message": "Deleted instance with id."},
+        {"code": 401, "message": "Unauthorized."},
         {"code": 409, "message": "Instance with id does not exist."},
     ],
 }
@@ -484,6 +500,7 @@ agreement_post_schema = {
     "responseMessages": [
         {"code": 200, "message": "Operation successfully performed"},
         {"code": 400, "message": "Invalid input (specified)."},
+        {"code": 401, "message": "Unauthorized."},
         {"code": 409, "message": "Instance with id does not exist."},
         {"code": 422, "message": "Invalid input (specified)."},
     ],
@@ -507,6 +524,7 @@ agreements_get_schema = {
     ],
     "responseMessages": [
         {"code": 200, "message": "Operation successfully performed"},
+        {"code": 401, "message": "Unauthorized."},
         {"code": 409, "message": "Instance with id does not exist."},
     ],
 }

@@ -27,8 +27,10 @@ process_sale_invoice_schema = {
     "responseClass": "{'message': 'info'}",
     "responseMessages": [
         {"code": 200, "message": "Operation successfully performed"},
+        {"code": 400, "message": "Invalid input (specified)."},
+        {"code": 401, "message": "Unauthorized."},
         {"code": 409, "message": "Instance with id does not exist."},
-        {"code": 415, "message": "Invalid input."},
+        {"code": 422, "message": "Invalid input (specified)."},
     ],
 }
 
@@ -59,8 +61,10 @@ period_report_schema = {
     ],
     "responseMessages": [
         {"code": 200, "message": "Operation successfully performed"},
-        {"code": 409, "message": "Product not enough to process invoice with id."},
-        {"code": 415, "message": "Invalid input."},
+        {"code": 400, "message": "Invalid input (specified)."},
+        {"code": 401, "message": "Unauthorized."},
+        {"code": 409, "message": "Instance with id does not exist."},
+        {"code": 422, "message": "Invalid input (specified)."},
     ],
 }
 
@@ -91,6 +95,7 @@ product_leftovers_schema = {
     ],
     "responseMessages": [
         {"code": 200, "message": "Operation successfully performed"},
+        {"code": 401, "message": "Unauthorized."},
         {"code": 415, "message": "Invalid input."},
     ],
 }
@@ -122,6 +127,7 @@ income_for_period_schema = {
     ],
     "responseMessages": [
         {"code": 200, "message": "Operation successfully performed"},
+        {"code": 401, "message": "Unauthorized."},
         {"code": 415, "message": "Invalid input."},
     ],
 }
