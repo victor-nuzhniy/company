@@ -10,7 +10,7 @@ from api.services import crud
 def login(email: str, password: str) -> Optional[User]:
     """Login and return user."""
     user = crud.read(User, {"email": email})
-    if not user or check_password_hash(user.password, password):
+    if not user or not check_password_hash(user.password, password):
         return
     return user
 
@@ -22,4 +22,4 @@ def disable_account(user_id: int) -> User:
 
 def encrypt_password(password: str) -> str:
     """Encrypt password."""
-    return generate_password_hash(password, salt_length=4)  # TODO change length
+    return generate_password_hash(password)
