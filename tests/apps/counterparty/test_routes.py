@@ -81,7 +81,7 @@ class TestPutDiscountRoute:
             f"argument must be within the range 0 - 100"
         }
 
-    def test_put_route_without_rage(self, faker: Faker, auth_header: Dict) -> None:
+    def test_put_route_without_rate(self, faker: Faker, auth_header: Dict) -> None:
         """Test put route. Same name."""
         discount: Discount = DiscountFactory()
         expected_data: Dict = {
@@ -118,3 +118,22 @@ class TestPutDiscountRoute:
             result.get("message")
             == f"Field name already has {another_discount.name} value in discount table"
         )
+
+    def test_put_route_long_name(self, faker: Faker, auth_header: Dict) -> None:
+        """Test put route."""
+        discount: Discount = DiscountFactory()
+        expected_data: Dict = {
+            "name": faker.pystr(min_chars=31, max_chars=40),
+            "rate": faker.random_int(min=0, max=100),
+        }
+        response = self.client.put(
+            url_for("discountroute", instance_id=discount.id),
+            headers=auth_header,
+            data=json.dumps(expected_data),
+        )
+        result = response.get_json()
+        assert response.status_code == 400
+        assert result.get("message") == {
+            "name": f"{expected_data.get('name')} length should be lower"
+            f" than 30 character."
+        }
