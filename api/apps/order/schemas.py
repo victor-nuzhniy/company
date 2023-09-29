@@ -4,6 +4,17 @@ order_get_schema = {
     "notes": "Get order by id.",
     "nickname": "Get order.",
     "responseClass": "OrderFields",
+    "parameters": [
+        {
+            "name": "Authorization",
+            "description": "Authorization: Bearer token",
+            "required": True,
+            "allowMultiple": False,
+            "dataType": "String",
+            "paramType": "header",
+            "defaultValue": "Bearer ",
+        },
+    ],
     "responseMessages": [
         {"code": 200, "message": "Operation successfully performed"},
         {"code": 409, "message": "Instance with id does not exist."},
@@ -24,7 +35,16 @@ order_put_schema = {
             "dataType": "json",
             "paramType": "body",
             "defaultValue": '{"user_id": 1, "name": "O-000234", "customer_id": 1}',
-        }
+        },
+        {
+            "name": "Authorization",
+            "description": "Authorization: Bearer token",
+            "required": True,
+            "allowMultiple": False,
+            "dataType": "String",
+            "paramType": "header",
+            "defaultValue": "Bearer ",
+        },
     ],
     "responseClass": "OrderFields",
     "responseMessages": [
@@ -49,7 +69,16 @@ order_patch_schema = {
             "paramType": "body",
             "defaultValue": '{"user_id": 1, "name": "O-000234", '
             '"created_at": "2023-10-01", "customer_id": 1}',
-        }
+        },
+        {
+            "name": "Authorization",
+            "description": "Authorization: Bearer token",
+            "required": True,
+            "allowMultiple": False,
+            "dataType": "String",
+            "paramType": "header",
+            "defaultValue": "Bearer ",
+        },
     ],
     "responseClass": "OrderFields",
     "responseMessages": [
@@ -64,6 +93,17 @@ order_delete_schema = {
     "notes": "Delete order data by id.",
     "nickname": "Delete order.",
     "responseClass": '{"message": "Deleted instance with id"}',
+    "parameters": [
+        {
+            "name": "Authorization",
+            "description": "Authorization: Bearer token",
+            "required": True,
+            "allowMultiple": False,
+            "dataType": "String",
+            "paramType": "header",
+            "defaultValue": "Bearer ",
+        },
+    ],
     "responseMessages": [
         {"code": 200, "message": "Deleted instance with id."},
         {"code": 409, "message": "Instance with id does not exist."},
@@ -83,7 +123,16 @@ order_post_schema = {
             "dataType": "json",
             "paramType": "body",
             "defaultValue": '{"user_id": 1, "name": "O-000234", "customer_id": 1}',
-        }
+        },
+        {
+            "name": "Authorization",
+            "description": "Authorization: Bearer token",
+            "required": True,
+            "allowMultiple": False,
+            "dataType": "String",
+            "paramType": "header",
+            "defaultValue": "Bearer ",
+        },
     ],
     "responseClass": "OrderFields",
     "responseMessages": [
@@ -98,6 +147,17 @@ orders_get_schema = {
     "notes": "Get all orders.",
     "nickname": "Get all orders.",
     "responseClass": "OrderFields",
+    "parameters": [
+        {
+            "name": "Authorization",
+            "description": "Authorization: Bearer token",
+            "required": True,
+            "allowMultiple": False,
+            "dataType": "String",
+            "paramType": "header",
+            "defaultValue": "Bearer ",
+        },
+    ],
     "responseMessages": [
         {"code": 200, "message": "Operation successfully performed"},
         {"code": 409, "message": "Instance with id does not exist."},
@@ -109,6 +169,17 @@ order_product_get_schema = {
     "notes": "Get order product by id.",
     "nickname": "Get order product.",
     "responseClass": "OrderProductFields",
+    "parameters": [
+        {
+            "name": "Authorization",
+            "description": "Authorization: Bearer token",
+            "required": True,
+            "allowMultiple": False,
+            "dataType": "String",
+            "paramType": "header",
+            "defaultValue": "Bearer ",
+        },
+    ],
     "responseMessages": [
         {"code": 200, "message": "Operation successfully performed"},
         {"code": 409, "message": "Instance with id does not exist."},
@@ -131,7 +202,16 @@ order_product_put_schema = {
             "paramType": "body",
             "defaultValue": '{"product_id": 1, "quantity": 2, "price": 100,'
             ' "order_id": 1}',
-        }
+        },
+        {
+            "name": "Authorization",
+            "description": "Authorization: Bearer token",
+            "required": True,
+            "allowMultiple": False,
+            "dataType": "String",
+            "paramType": "header",
+            "defaultValue": "Bearer ",
+        },
     ],
     "responseClass": "OrderProductFields",
     "responseMessages": [
@@ -156,7 +236,16 @@ order_product_patch_schema = {
             "paramType": "body",
             "defaultValue": '{"product_id": 1, "quantity": 2, "price": 100,'
             ' "order_id": 1}',
-        }
+        },
+        {
+            "name": "Authorization",
+            "description": "Authorization: Bearer token",
+            "required": True,
+            "allowMultiple": False,
+            "dataType": "String",
+            "paramType": "header",
+            "defaultValue": "Bearer ",
+        },
     ],
     "responseClass": "OrderProductFields",
     "responseMessages": [
@@ -171,6 +260,17 @@ order_product_delete_schema = {
     "notes": "Delete order product data by id.",
     "nickname": "Delete order product.",
     "responseClass": '{"message": "Deleted instance with id"}',
+    "parameters": [
+        {
+            "name": "Authorization",
+            "description": "Authorization: Bearer token",
+            "required": True,
+            "allowMultiple": False,
+            "dataType": "String",
+            "paramType": "header",
+            "defaultValue": "Bearer ",
+        },
+    ],
     "responseMessages": [
         {"code": 200, "message": "Deleted instance with id."},
         {"code": 409, "message": "Instance with id does not exist."},
@@ -192,7 +292,16 @@ order_product_post_schema = {
             "paramType": "body",
             "defaultValue": '{"product_id": 1, "quantity": 2, "price": 100,'
             ' "order_id": 1}',
-        }
+        },
+        {
+            "name": "Authorization",
+            "description": "Authorization: Bearer token",
+            "required": True,
+            "allowMultiple": False,
+            "dataType": "String",
+            "paramType": "header",
+            "defaultValue": "Bearer ",
+        },
     ],
     "responseClass": "OrderProductFields",
     "responseMessages": [
@@ -207,6 +316,17 @@ order_products_get_schema = {
     "notes": "Get all order products.",
     "nickname": "Get all order products.",
     "responseClass": "OrderProductFields",
+    "parameters": [
+        {
+            "name": "Authorization",
+            "description": "Authorization: Bearer token",
+            "required": True,
+            "allowMultiple": False,
+            "dataType": "String",
+            "paramType": "header",
+            "defaultValue": "Bearer ",
+        },
+    ],
     "responseMessages": [
         {"code": 200, "message": "Operation successfully performed"},
         {"code": 409, "message": "Instance with id does not exist."},

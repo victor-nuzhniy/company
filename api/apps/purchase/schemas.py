@@ -5,6 +5,17 @@ purchase_invoice_get_schema = {
     "notes": "Get purchase invoice by id.",
     "nickname": "Get purchase invoice.",
     "responseClass": "PurchaseInvoiceFields",
+    "parameters": [
+        {
+            "name": "Authorization",
+            "description": "Authorization: Bearer token",
+            "required": True,
+            "allowMultiple": False,
+            "dataType": "String",
+            "paramType": "header",
+            "defaultValue": "Bearer ",
+        },
+    ],
     "responseMessages": [
         {"code": 200, "message": "Operation successfully performed"},
         {"code": 409, "message": "Instance with id does not exist."},
@@ -25,7 +36,16 @@ purchase_invoice_put_schema = {
             "dataType": "json",
             "paramType": "body",
             "defaultValue": '{"name": "P-000012345", "agreement_id": 1}',
-        }
+        },
+        {
+            "name": "Authorization",
+            "description": "Authorization: Bearer token",
+            "required": True,
+            "allowMultiple": False,
+            "dataType": "String",
+            "paramType": "header",
+            "defaultValue": "Bearer ",
+        },
     ],
     "responseClass": "PurchaseInvoiceFields",
     "responseMessages": [
@@ -50,7 +70,16 @@ purchase_invoice_patch_schema = {
             "paramType": "body",
             "defaultValue": '{"name": "P-000012345", "agreement_id": 1, '
             '"created_at": "2023-09-20"}',
-        }
+        },
+        {
+            "name": "Authorization",
+            "description": "Authorization: Bearer token",
+            "required": True,
+            "allowMultiple": False,
+            "dataType": "String",
+            "paramType": "header",
+            "defaultValue": "Bearer ",
+        },
     ],
     "responseClass": "PurchaseInvoiceFields",
     "responseMessages": [
@@ -65,6 +94,17 @@ purchase_invoice_delete_schema = {
     "notes": "Delete purchase invoice data by id.",
     "nickname": "Delete purchase invoice.",
     "responseClass": '{"message": "Deleted instance with id"}',
+    "parameters": [
+        {
+            "name": "Authorization",
+            "description": "Authorization: Bearer token",
+            "required": True,
+            "allowMultiple": False,
+            "dataType": "String",
+            "paramType": "header",
+            "defaultValue": "Bearer ",
+        },
+    ],
     "responseMessages": [
         {"code": 200, "message": "Deleted instance with id."},
         {"code": 409, "message": "Instance with id does not exist."},
@@ -84,7 +124,16 @@ purchase_invoice_post_schema = {
             "dataType": "json",
             "paramType": "body",
             "defaultValue": '{"name": "P-000012345", "agreement_id": 1}',
-        }
+        },
+        {
+            "name": "Authorization",
+            "description": "Authorization: Bearer token",
+            "required": True,
+            "allowMultiple": False,
+            "dataType": "String",
+            "paramType": "header",
+            "defaultValue": "Bearer ",
+        },
     ],
     "responseClass": "PurchaseInvoiceFields",
     "responseMessages": [
@@ -99,6 +148,17 @@ purchase_invoices_get_schema = {
     "notes": "Get all purchase invoices.",
     "nickname": "Get all purchase invoices.",
     "responseClass": "PurchaseInvoiceFields",
+    "parameters": [
+        {
+            "name": "Authorization",
+            "description": "Authorization: Bearer token",
+            "required": True,
+            "allowMultiple": False,
+            "dataType": "String",
+            "paramType": "header",
+            "defaultValue": "Bearer ",
+        },
+    ],
     "responseMessages": [
         {"code": 200, "message": "Operation successfully performed"},
         {"code": 409, "message": "Instance with id does not exist."},
@@ -110,6 +170,17 @@ purchase_invoice_product_get_schema = {
     "notes": "Get purchase invoice product by id.",
     "nickname": "Get purchase invoice product.",
     "responseClass": "PurchaseInvoiceProductFields",
+    "parameters": [
+        {
+            "name": "Authorization",
+            "description": "Authorization: Bearer token",
+            "required": True,
+            "allowMultiple": False,
+            "dataType": "String",
+            "paramType": "header",
+            "defaultValue": "Bearer ",
+        },
+    ],
     "responseMessages": [
         {"code": 200, "message": "Operation successfully performed"},
         {"code": 409, "message": "Instance with id does not exist."},
@@ -132,7 +203,16 @@ purchase_invoice_product_put_schema = {
             "paramType": "body",
             "defaultValue": '{"product_id": 1, "quantity": 2, "price": 100, '
             '"purchase_invoice_id": 1, "products_left": 100}',
-        }
+        },
+        {
+            "name": "Authorization",
+            "description": "Authorization: Bearer token",
+            "required": True,
+            "allowMultiple": False,
+            "dataType": "String",
+            "paramType": "header",
+            "defaultValue": "Bearer ",
+        },
     ],
     "responseClass": "PurchaseInvoiceProductFields",
     "responseMessages": [
@@ -157,7 +237,16 @@ purchase_invoice_product_patch_schema = {
             "paramType": "body",
             "defaultValue": '{"product_id": 1, "quantity": 2, "price": 100, '
             '"purchase_invoice_id": 1, "products_left": 100}',
-        }
+        },
+        {
+            "name": "Authorization",
+            "description": "Authorization: Bearer token",
+            "required": True,
+            "allowMultiple": False,
+            "dataType": "String",
+            "paramType": "header",
+            "defaultValue": "Bearer ",
+        },
     ],
     "responseClass": "PurchaseInvoiceProductFields",
     "responseMessages": [
@@ -172,6 +261,17 @@ purchase_invoice_product_delete_schema = {
     "notes": "Delete purchase invoice product data by id.",
     "nickname": "Delete purchase invoice product.",
     "responseClass": '{"message": "Deleted instance with id"}',
+    "parameters": [
+        {
+            "name": "Authorization",
+            "description": "Authorization: Bearer token",
+            "required": True,
+            "allowMultiple": False,
+            "dataType": "String",
+            "paramType": "header",
+            "defaultValue": "Bearer ",
+        },
+    ],
     "responseMessages": [
         {"code": 200, "message": "Deleted instance with id."},
         {"code": 409, "message": "Instance with id does not exist."},
@@ -193,7 +293,16 @@ purchase_invoice_product_post_schema = {
             "paramType": "body",
             "defaultValue": '{"product_id": 1, "quantity": 2, "price": 100, '
             '"purchase_invoice_id": 1, "products_left": 100}',
-        }
+        },
+        {
+            "name": "Authorization",
+            "description": "Authorization: Bearer token",
+            "required": True,
+            "allowMultiple": False,
+            "dataType": "String",
+            "paramType": "header",
+            "defaultValue": "Bearer ",
+        },
     ],
     "responseClass": "PurchaseInvoiceProductFields",
     "responseMessages": [
@@ -208,6 +317,17 @@ purchase_invoice_products_get_schema = {
     "notes": "Get all purchase invoice products.",
     "nickname": "Get all purchase invoice products.",
     "responseClass": "PurchaseInvoiceProductFields",
+    "parameters": [
+        {
+            "name": "Authorization",
+            "description": "Authorization: Bearer token",
+            "required": True,
+            "allowMultiple": False,
+            "dataType": "String",
+            "paramType": "header",
+            "defaultValue": "Bearer ",
+        },
+    ],
     "responseMessages": [
         {"code": 200, "message": "Operation successfully performed"},
         {"code": 409, "message": "Instance with id does not exist."},

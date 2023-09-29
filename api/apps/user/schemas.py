@@ -12,7 +12,16 @@ user_admin_schema = {
             "dataType": "json",
             "paramType": "body",
             "defaultValue": '{"is_active": 1, "is_amdin": 1}',
-        }
+        },
+        {
+            "name": "Authorization",
+            "description": "Authorization: Bearer token",
+            "required": True,
+            "allowMultiple": False,
+            "dataType": "String",
+            "paramType": "header",
+            "defaultValue": "Bearer ",
+        },
     ],
     "responseClass": "UserFields",
     "responseMessages": [
@@ -27,6 +36,17 @@ user_get_schema = {
     "notes": "Get user by id.",
     "nickname": "Get user.",
     "responseClass": "UserFields",
+    "parameters": [
+        {
+            "name": "Authorization",
+            "description": "Authorization: Bearer token",
+            "required": True,
+            "allowMultiple": False,
+            "dataType": "String",
+            "paramType": "header",
+            "defaultValue": "Bearer ",
+        },
+    ],
     "responseMessages": [
         {"code": 200, "message": "Operation successfully performed"},
         {"code": 409, "message": "Instance with id does not exist."},
@@ -47,7 +67,16 @@ user_put_schema = {
             "dataType": "json",
             "paramType": "body",
             "defaultValue": '{"username": "Alex", "email": "a@a.com"}',
-        }
+        },
+        {
+            "name": "Authorization",
+            "description": "Authorization: Bearer token",
+            "required": True,
+            "allowMultiple": False,
+            "dataType": "String",
+            "paramType": "header",
+            "defaultValue": "Bearer ",
+        },
     ],
     "responseClass": "UserFields",
     "responseMessages": [
@@ -70,7 +99,16 @@ user_patch_schema = {
             "dataType": "json",
             "paramType": "body",
             "defaultValue": '{"username": "Alex", "email": "a@a.com"}',
-        }
+        },
+        {
+            "name": "Authorization",
+            "description": "Authorization: Bearer token",
+            "required": True,
+            "allowMultiple": False,
+            "dataType": "String",
+            "paramType": "header",
+            "defaultValue": "Bearer ",
+        },
     ],
     "responseClass": "UserFields",
     "responseMessages": [
@@ -85,6 +123,17 @@ user_delete_schema = {
     "notes": "Delete user data by id.",
     "nickname": "Delete user.",
     "responseClass": '{"message": "Deleted instance with id"}',
+    "parameters": [
+        {
+            "name": "Authorization",
+            "description": "Authorization: Bearer token",
+            "required": True,
+            "allowMultiple": False,
+            "dataType": "String",
+            "paramType": "header",
+            "defaultValue": "Bearer ",
+        },
+    ],
     "responseMessages": [
         {"code": 200, "message": "Deleted instance with id."},
         {"code": 409, "message": "Instance with id does not exist."},
@@ -105,7 +154,16 @@ user_post_schema = {
             "paramType": "body",
             "defaultValue": '{"username": "Alex", "email": "a@a.com",'
             ' "password": "111"}',
-        }
+        },
+        {
+            "name": "Authorization",
+            "description": "Authorization: Bearer token",
+            "required": True,
+            "allowMultiple": False,
+            "dataType": "String",
+            "paramType": "header",
+            "defaultValue": "Bearer ",
+        },
     ],
     "responseClass": "UserFields",
     "responseMessages": [
@@ -120,6 +178,17 @@ users_get_schema = {
     "notes": "Get all users.",
     "nickname": "Get all users.",
     "responseClass": "UserFields",
+    "parameters": [
+        {
+            "name": "Authorization",
+            "description": "Authorization: Bearer token",
+            "required": True,
+            "allowMultiple": False,
+            "dataType": "String",
+            "paramType": "header",
+            "defaultValue": "Bearer ",
+        },
+    ],
     "responseMessages": [
         {"code": 200, "message": "Operation successfully performed"},
         {"code": 409, "message": "Instance with id does not exist."},

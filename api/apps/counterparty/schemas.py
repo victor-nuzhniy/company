@@ -5,6 +5,17 @@ discount_get_schema = {
     "notes": "Get discount by id.",
     "nickname": "Get discount.",
     "responseClass": "DiscountFields",
+    "parameters": [
+        {
+            "name": "Authorization",
+            "description": "Authorization: Bearer token",
+            "required": True,
+            "allowMultiple": False,
+            "dataType": "String",
+            "paramType": "header",
+            "defaultValue": "Bearer ",
+        },
+    ],
     "responseMessages": [
         {"code": 200, "message": "Operation successfully performed"},
         {"code": 409, "message": "Instance with id does not exist."},
@@ -25,7 +36,16 @@ discount_put_schema = {
             "dataType": "json",
             "paramType": "body",
             "defaultValue": '{"name": "enterprise", "rate": 10}',
-        }
+        },
+        {
+            "name": "Authorization",
+            "description": "Authorization: Bearer token",
+            "required": True,
+            "allowMultiple": False,
+            "dataType": "String",
+            "paramType": "header",
+            "defaultValue": "Bearer ",
+        },
     ],
     "responseClass": "DiscountFields",
     "responseMessages": [
@@ -48,7 +68,16 @@ discount_patch_schema = {
             "dataType": "json",
             "paramType": "body",
             "defaultValue": '{"name": "enterprise", "rate": 10}',
-        }
+        },
+        {
+            "name": "Authorization",
+            "description": "Authorization: Bearer token",
+            "required": True,
+            "allowMultiple": False,
+            "dataType": "String",
+            "paramType": "header",
+            "defaultValue": "Bearer ",
+        },
     ],
     "responseClass": "DiscountFields",
     "responseMessages": [
@@ -63,6 +92,17 @@ discount_delete_schema = {
     "notes": "Delete discount data by id.",
     "nickname": "Delete discount.",
     "responseClass": '{"message": "Deleted instance with id"}',
+    "parameters": [
+        {
+            "name": "Authorization",
+            "description": "Authorization: Bearer token",
+            "required": True,
+            "allowMultiple": False,
+            "dataType": "String",
+            "paramType": "header",
+            "defaultValue": "Bearer ",
+        },
+    ],
     "responseMessages": [
         {"code": 200, "message": "Deleted instance with id."},
         {"code": 409, "message": "Instance with id does not exist."},
@@ -82,7 +122,16 @@ discount_post_schema = {
             "dataType": "json",
             "paramType": "body",
             "defaultValue": '{"name": "enterprise", "rate": 10}',
-        }
+        },
+        {
+            "name": "Authorization",
+            "description": "Authorization: Bearer token",
+            "required": True,
+            "allowMultiple": False,
+            "dataType": "String",
+            "paramType": "header",
+            "defaultValue": "Bearer ",
+        },
     ],
     "responseClass": "DiscountFields",
     "responseMessages": [
@@ -97,6 +146,17 @@ discounts_get_schema = {
     "notes": "Get all users.",
     "nickname": "Get all users.",
     "responseClass": "DiscountFields",
+    "parameters": [
+        {
+            "name": "Authorization",
+            "description": "Authorization: Bearer token",
+            "required": True,
+            "allowMultiple": False,
+            "dataType": "String",
+            "paramType": "header",
+            "defaultValue": "Bearer ",
+        },
+    ],
     "responseMessages": [
         {"code": 200, "message": "Operation successfully performed"},
         {"code": 409, "message": "Instance with id does not exist."},
@@ -108,6 +168,17 @@ counterparty_get_schema = {
     "notes": "Get counterparty by id.",
     "nickname": "Get counterparty.",
     "responseClass": "CounterpartyFields",
+    "parameters": [
+        {
+            "name": "Authorization",
+            "description": "Authorization: Bearer token",
+            "required": True,
+            "allowMultiple": False,
+            "dataType": "String",
+            "paramType": "header",
+            "defaultValue": "Bearer ",
+        },
+    ],
     "responseMessages": [
         {"code": 200, "message": "Operation successfully performed"},
         {"code": 409, "message": "Instance with id does not exist."},
@@ -132,7 +203,16 @@ counterparty_put_schema = {
             '"country": "Poland", "city": "Krakow, '
             '"address": "Nova str, 23/3/8", "phone_number":'
             ' "357 335", "dicount_id": 1}',
-        }
+        },
+        {
+            "name": "Authorization",
+            "description": "Authorization: Bearer token",
+            "required": True,
+            "allowMultiple": False,
+            "dataType": "String",
+            "paramType": "header",
+            "defaultValue": "Bearer ",
+        },
     ],
     "responseClass": "CounterpartyFields",
     "responseMessages": [
@@ -159,7 +239,16 @@ counterparty_patch_schema = {
             '"country": "Poland", "city": "Krakow, '
             '"address": "Nova str, 23/3/8", "phone_number":'
             ' "357 335", "dicount_id": 1}',
-        }
+        },
+        {
+            "name": "Authorization",
+            "description": "Authorization: Bearer token",
+            "required": True,
+            "allowMultiple": False,
+            "dataType": "String",
+            "paramType": "header",
+            "defaultValue": "Bearer ",
+        },
     ],
     "responseClass": "CounterpartyFields",
     "responseMessages": [
@@ -173,6 +262,17 @@ counterparty_delete_schema = {
     "notes": "Delete counterparty data by id.",
     "nickname": "Delete counterparty.",
     "responseClass": '{"message": "Deleted instance with id"}',
+    "parameters": [
+        {
+            "name": "Authorization",
+            "description": "Authorization: Bearer token",
+            "required": True,
+            "allowMultiple": False,
+            "dataType": "String",
+            "paramType": "header",
+            "defaultValue": "Bearer ",
+        },
+    ],
     "responseMessages": [
         {"code": 200, "message": "Deleted instance with id."},
         {"code": 409, "message": "Instance with id does not exist."},
@@ -196,7 +296,16 @@ counterparty_post_schema = {
             '"country": "Poland", "city": "Krakow, '
             '"address": "Nova str, 23/3/8", "phone_number":'
             ' "357 335", "dicount_id": 1}',
-        }
+        },
+        {
+            "name": "Authorization",
+            "description": "Authorization: Bearer token",
+            "required": True,
+            "allowMultiple": False,
+            "dataType": "String",
+            "paramType": "header",
+            "defaultValue": "Bearer ",
+        },
     ],
     "responseClass": "CounterpartyFields",
     "responseMessages": [
@@ -210,6 +319,17 @@ counterparties_get_schema = {
     "notes": "Get all counterparties.",
     "nickname": "Get all counterparties.",
     "responseClass": "CounterpartyFields",
+    "parameters": [
+        {
+            "name": "Authorization",
+            "description": "Authorization: Bearer token",
+            "required": True,
+            "allowMultiple": False,
+            "dataType": "String",
+            "paramType": "header",
+            "defaultValue": "Bearer ",
+        },
+    ],
     "responseMessages": [
         {"code": 200, "message": "Operation successfully performed"},
         {"code": 409, "message": "Instance with id does not exist."},
@@ -221,6 +341,17 @@ agreement_get_schema = {
     "notes": "Get agreement by id.",
     "nickname": "Get agreement.",
     "responseClass": "AgreementFields",
+    "parameters": [
+        {
+            "name": "Authorization",
+            "description": "Authorization: Bearer token",
+            "required": True,
+            "allowMultiple": False,
+            "dataType": "String",
+            "paramType": "header",
+            "defaultValue": "Bearer ",
+        },
+    ],
     "responseMessages": [
         {"code": 200, "message": "Operation successfully performed"},
         {"code": 409, "message": "Instance with id does not exist."},
@@ -241,7 +372,16 @@ agreement_put_schema = {
             "dataType": "json",
             "paramType": "body",
             "defaultValue": '{"name": "Agreement 1", "counterparty_id": 1}',
-        }
+        },
+        {
+            "name": "Authorization",
+            "description": "Authorization: Bearer token",
+            "required": True,
+            "allowMultiple": False,
+            "dataType": "String",
+            "paramType": "header",
+            "defaultValue": "Bearer ",
+        },
     ],
     "responseClass": "AgreementFields",
     "responseMessages": [
@@ -264,7 +404,16 @@ agreement_patch_schema = {
             "dataType": "json",
             "paramType": "body",
             "defaultValue": '{"name": "Agreement 1", "counterparty_id": 1}',
-        }
+        },
+        {
+            "name": "Authorization",
+            "description": "Authorization: Bearer token",
+            "required": True,
+            "allowMultiple": False,
+            "dataType": "String",
+            "paramType": "header",
+            "defaultValue": "Bearer ",
+        },
     ],
     "responseClass": "AgreementFields",
     "responseMessages": [
@@ -279,6 +428,17 @@ agreement_delete_schema = {
     "notes": "Delete agreement data by id.",
     "nickname": "Delete agreement.",
     "responseClass": '{"message": "Deleted instance with id"}',
+    "parameters": [
+        {
+            "name": "Authorization",
+            "description": "Authorization: Bearer token",
+            "required": True,
+            "allowMultiple": False,
+            "dataType": "String",
+            "paramType": "header",
+            "defaultValue": "Bearer ",
+        },
+    ],
     "responseMessages": [
         {"code": 200, "message": "Deleted instance with id."},
         {"code": 409, "message": "Instance with id does not exist."},
@@ -298,7 +458,16 @@ agreement_post_schema = {
             "dataType": "json",
             "paramType": "body",
             "defaultValue": '{"name": "Agreement 1", "counterparty_id": 1}',
-        }
+        },
+        {
+            "name": "Authorization",
+            "description": "Authorization: Bearer token",
+            "required": True,
+            "allowMultiple": False,
+            "dataType": "String",
+            "paramType": "header",
+            "defaultValue": "Bearer ",
+        },
     ],
     "responseClass": "AgreementFields",
     "responseMessages": [
@@ -313,6 +482,17 @@ agreements_get_schema = {
     "notes": "Get all agreements.",
     "nickname": "Get all agreements.",
     "responseClass": "AgreementFields",
+    "parameters": [
+        {
+            "name": "Authorization",
+            "description": "Authorization: Bearer token",
+            "required": True,
+            "allowMultiple": False,
+            "dataType": "String",
+            "paramType": "header",
+            "defaultValue": "Bearer ",
+        },
+    ],
     "responseMessages": [
         {"code": 200, "message": "Operation successfully performed"},
         {"code": 409, "message": "Instance with id does not exist."},

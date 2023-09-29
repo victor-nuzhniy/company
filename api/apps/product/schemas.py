@@ -5,6 +5,17 @@ product_get_schema = {
     "notes": "Get product by id.",
     "nickname": "Get product.",
     "responseClass": "ProductFields",
+    "parameters": [
+        {
+            "name": "Authorization",
+            "description": "Authorization: Bearer token",
+            "required": True,
+            "allowMultiple": False,
+            "dataType": "String",
+            "paramType": "header",
+            "defaultValue": "Bearer ",
+        },
+    ],
     "responseMessages": [
         {"code": 200, "message": "Operation successfully performed"},
         {"code": 409, "message": "Instance with id does not exist."},
@@ -27,7 +38,16 @@ product_put_schema = {
             "paramType": "body",
             "defaultValue": '{"name": "sugar", "code": "123456", "units": "kg",'
             ' "currency": "uah", "price": 100, "product_type_id": 1}',
-        }
+        },
+        {
+            "name": "Authorization",
+            "description": "Authorization: Bearer token",
+            "required": True,
+            "allowMultiple": False,
+            "dataType": "String",
+            "paramType": "header",
+            "defaultValue": "Bearer ",
+        },
     ],
     "responseClass": "ProductFields",
     "responseMessages": [
@@ -52,7 +72,16 @@ product_patch_schema = {
             "paramType": "body",
             "defaultValue": '{"name": "sugar", "code": "123456", "units": "kg",'
             ' "currency": "uah", "price": 100, "product_type_id": 1}',
-        }
+        },
+        {
+            "name": "Authorization",
+            "description": "Authorization: Bearer token",
+            "required": True,
+            "allowMultiple": False,
+            "dataType": "String",
+            "paramType": "header",
+            "defaultValue": "Bearer ",
+        },
     ],
     "responseClass": "ProductFields",
     "responseMessages": [
@@ -67,6 +96,17 @@ product_delete_schema = {
     "notes": "Delete product data by id.",
     "nickname": "Delete product.",
     "responseClass": '{"message": "Deleted instance with id"}',
+    "parameters": [
+        {
+            "name": "Authorization",
+            "description": "Authorization: Bearer token",
+            "required": True,
+            "allowMultiple": False,
+            "dataType": "String",
+            "paramType": "header",
+            "defaultValue": "Bearer ",
+        },
+    ],
     "responseMessages": [
         {"code": 200, "message": "Deleted instance with id."},
         {"code": 409, "message": "Instance with id does not exist."},
@@ -88,7 +128,16 @@ product_post_schema = {
             "paramType": "body",
             "defaultValue": '{"name": "sugar", "code": "123456", "units": "kg",'
             ' "currency": "uah", "price": 100, "product_type_id": 1}',
-        }
+        },
+        {
+            "name": "Authorization",
+            "description": "Authorization: Bearer token",
+            "required": True,
+            "allowMultiple": False,
+            "dataType": "String",
+            "paramType": "header",
+            "defaultValue": "Bearer ",
+        },
     ],
     "responseClass": "ProductFields",
     "responseMessages": [
@@ -103,6 +152,17 @@ products_get_schema = {
     "notes": "Get all products.",
     "nickname": "Get all products.",
     "responseClass": "ProductFields",
+    "parameters": [
+        {
+            "name": "Authorization",
+            "description": "Authorization: Bearer token",
+            "required": True,
+            "allowMultiple": False,
+            "dataType": "String",
+            "paramType": "header",
+            "defaultValue": "Bearer ",
+        },
+    ],
     "responseMessages": [
         {"code": 200, "message": "Operation successfully performed"},
         {"code": 409, "message": "Instance with id does not exist."},
@@ -114,6 +174,17 @@ product_type_get_schema = {
     "notes": "Get product type by id.",
     "nickname": "Get product type.",
     "responseClass": "ProductTypeFields",
+    "parameters": [
+        {
+            "name": "Authorization",
+            "description": "Authorization: Bearer token",
+            "required": True,
+            "allowMultiple": False,
+            "dataType": "String",
+            "paramType": "header",
+            "defaultValue": "Bearer ",
+        },
+    ],
     "responseMessages": [
         {"code": 200, "message": "Operation successfully performed"},
         {"code": 409, "message": "Instance with id does not exist."},
@@ -134,7 +205,16 @@ product_type_put_schema = {
             "dataType": "json",
             "paramType": "body",
             "defaultValue": '{"name": "product"}',
-        }
+        },
+        {
+            "name": "Authorization",
+            "description": "Authorization: Bearer token",
+            "required": True,
+            "allowMultiple": False,
+            "dataType": "String",
+            "paramType": "header",
+            "defaultValue": "Bearer ",
+        },
     ],
     "responseClass": "ProductTypeFields",
     "responseMessages": [
@@ -157,7 +237,16 @@ product_type_patch_schema = {
             "dataType": "json",
             "paramType": "body",
             "defaultValue": '{"name": "product"}',
-        }
+        },
+        {
+            "name": "Authorization",
+            "description": "Authorization: Bearer token",
+            "required": True,
+            "allowMultiple": False,
+            "dataType": "String",
+            "paramType": "header",
+            "defaultValue": "Bearer ",
+        },
     ],
     "responseClass": "ProductTypeFields",
     "responseMessages": [
@@ -172,6 +261,17 @@ product_type_delete_schema = {
     "notes": "Delete product type data by id.",
     "nickname": "Delete product type.",
     "responseClass": '{"message": "Deleted instance with id"}',
+    "parameters": [
+        {
+            "name": "Authorization",
+            "description": "Authorization: Bearer token",
+            "required": True,
+            "allowMultiple": False,
+            "dataType": "String",
+            "paramType": "header",
+            "defaultValue": "Bearer ",
+        },
+    ],
     "responseMessages": [
         {"code": 200, "message": "Deleted instance with id."},
         {"code": 409, "message": "Instance with id does not exist."},
@@ -191,7 +291,16 @@ product_type_post_schema = {
             "dataType": "json",
             "paramType": "body",
             "defaultValue": '{"name": "product"}',
-        }
+        },
+        {
+            "name": "Authorization",
+            "description": "Authorization: Bearer token",
+            "required": True,
+            "allowMultiple": False,
+            "dataType": "String",
+            "paramType": "header",
+            "defaultValue": "Bearer ",
+        },
     ],
     "responseClass": "ProductTypeFields",
     "responseMessages": [
@@ -206,6 +315,17 @@ product_types_get_schema = {
     "notes": "Get all product types.",
     "nickname": "Get all product types.",
     "responseClass": "ProductTypeFields",
+    "parameters": [
+        {
+            "name": "Authorization",
+            "description": "Authorization: Bearer token",
+            "required": True,
+            "allowMultiple": False,
+            "dataType": "String",
+            "paramType": "header",
+            "defaultValue": "Bearer ",
+        },
+    ],
     "responseMessages": [
         {"code": 200, "message": "Operation successfully performed"},
         {"code": 409, "message": "Instance with id does not exist."},

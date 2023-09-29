@@ -5,6 +5,17 @@ sale_invoice_get_schema = {
     "notes": "Get sale invoice by id.",
     "nickname": "Get sale invoice.",
     "responseClass": "SaleInvoiceFields",
+    "parameters": [
+        {
+            "name": "Authorization",
+            "description": "Authorization: Bearer token",
+            "required": True,
+            "allowMultiple": False,
+            "dataType": "String",
+            "paramType": "header",
+            "defaultValue": "Bearer ",
+        },
+    ],
     "responseMessages": [
         {"code": 200, "message": "Operation successfully performed"},
         {"code": 409, "message": "Instance with id does not exist."},
@@ -25,7 +36,16 @@ sale_invoice_put_schema = {
             "dataType": "json",
             "paramType": "body",
             "defaultValue": '{"name": "S-000012345", "invoice_id": 1}',
-        }
+        },
+        {
+            "name": "Authorization",
+            "description": "Authorization: Bearer token",
+            "required": True,
+            "allowMultiple": False,
+            "dataType": "String",
+            "paramType": "header",
+            "defaultValue": "Bearer ",
+        },
     ],
     "responseClass": "SaleInvoiceFields",
     "responseMessages": [
@@ -50,7 +70,16 @@ sale_invoice_patch_schema = {
             "paramType": "body",
             "defaultValue": '{"name": "S-000012345", "invoice_id": 1, '
             '"created_at": "2023-10-01", "done": 0}',
-        }
+        },
+        {
+            "name": "Authorization",
+            "description": "Authorization: Bearer token",
+            "required": True,
+            "allowMultiple": False,
+            "dataType": "String",
+            "paramType": "header",
+            "defaultValue": "Bearer ",
+        },
     ],
     "responseClass": "SaleInvoiceFields",
     "responseMessages": [
@@ -65,6 +94,17 @@ sale_invoice_delete_schema = {
     "notes": "Delete sale invoice data by id.",
     "nickname": "Delete sale invoice.",
     "responseClass": '{"message": "Deleted instance with id"}',
+    "parameters": [
+        {
+            "name": "Authorization",
+            "description": "Authorization: Bearer token",
+            "required": True,
+            "allowMultiple": False,
+            "dataType": "String",
+            "paramType": "header",
+            "defaultValue": "Bearer ",
+        },
+    ],
     "responseMessages": [
         {"code": 200, "message": "Deleted instance with id."},
         {"code": 409, "message": "Instance with id does not exist."},
@@ -84,7 +124,16 @@ sale_invoice_post_schema = {
             "dataType": "json",
             "paramType": "body",
             "defaultValue": '{"name": "S-000012345", "invoice_id": 1}',
-        }
+        },
+        {
+            "name": "Authorization",
+            "description": "Authorization: Bearer token",
+            "required": True,
+            "allowMultiple": False,
+            "dataType": "String",
+            "paramType": "header",
+            "defaultValue": "Bearer ",
+        },
     ],
     "responseClass": "SaleInvoiceFields",
     "responseMessages": [
@@ -99,6 +148,17 @@ sale_invoices_get_schema = {
     "notes": "Get all sale invoices.",
     "nickname": "Get all sale invoices.",
     "responseClass": "SaleInvoiceFields",
+    "parameters": [
+        {
+            "name": "Authorization",
+            "description": "Authorization: Bearer token",
+            "required": True,
+            "allowMultiple": False,
+            "dataType": "String",
+            "paramType": "header",
+            "defaultValue": "Bearer ",
+        },
+    ],
     "responseMessages": [
         {"code": 200, "message": "Operation successfully performed"},
         {"code": 409, "message": "Instance with id does not exist."},
@@ -110,6 +170,17 @@ sale_invoice_product_get_schema = {
     "notes": "Get sale invoice product by id.",
     "nickname": "Get sale invoice product.",
     "responseClass": "SaleInvoiceProductFields",
+    "parameters": [
+        {
+            "name": "Authorization",
+            "description": "Authorization: Bearer token",
+            "required": True,
+            "allowMultiple": False,
+            "dataType": "String",
+            "paramType": "header",
+            "defaultValue": "Bearer ",
+        },
+    ],
     "responseMessages": [
         {"code": 200, "message": "Operation successfully performed"},
         {"code": 409, "message": "Instance with id does not exist."},
@@ -132,7 +203,16 @@ sale_invoice_product_put_schema = {
             "paramType": "body",
             "defaultValue": '{"product_id": 1, "quantity": 1, "price": 100, '
             '"sale_invoice_id": 1}',
-        }
+        },
+        {
+            "name": "Authorization",
+            "description": "Authorization: Bearer token",
+            "required": True,
+            "allowMultiple": False,
+            "dataType": "String",
+            "paramType": "header",
+            "defaultValue": "Bearer ",
+        },
     ],
     "responseClass": "SaleInvoiceProductFields",
     "responseMessages": [
@@ -156,7 +236,16 @@ sale_invoice_product_patch_schema = {
             "dataType": "json",
             "paramType": "body",
             "defaultValue": '{"username": "Alex", "email": "a@a.com"}',
-        }
+        },
+        {
+            "name": "Authorization",
+            "description": "Authorization: Bearer token",
+            "required": True,
+            "allowMultiple": False,
+            "dataType": "String",
+            "paramType": "header",
+            "defaultValue": "Bearer ",
+        },
     ],
     "responseClass": "SaleInvoiceProductFields",
     "responseMessages": [
@@ -171,6 +260,17 @@ sale_invoice_product_delete_schema = {
     "notes": "Delete sale invoice product data by id.",
     "nickname": "Delete sale invoice product.",
     "responseClass": '{"message": "Deleted instance with id"}',
+    "parameters": [
+        {
+            "name": "Authorization",
+            "description": "Authorization: Bearer token",
+            "required": True,
+            "allowMultiple": False,
+            "dataType": "String",
+            "paramType": "header",
+            "defaultValue": "Bearer ",
+        },
+    ],
     "responseMessages": [
         {"code": 200, "message": "Deleted instance with id."},
         {"code": 409, "message": "Instance with id does not exist."},
@@ -192,7 +292,16 @@ sale_invoice_product_post_schema = {
             "paramType": "body",
             "defaultValue": '{"username": "Alex", "email": "a@a.com",'
             ' "password": "111"}',
-        }
+        },
+        {
+            "name": "Authorization",
+            "description": "Authorization: Bearer token",
+            "required": True,
+            "allowMultiple": False,
+            "dataType": "String",
+            "paramType": "header",
+            "defaultValue": "Bearer ",
+        },
     ],
     "responseClass": "SaleInvoiceProductFields",
     "responseMessages": [
@@ -207,6 +316,17 @@ sale_invoice_products_get_schema = {
     "notes": "Get all sale invoice products.",
     "nickname": "Get all sale invoice products.",
     "responseClass": "SaleInvoiceProductFields",
+    "parameters": [
+        {
+            "name": "Authorization",
+            "description": "Authorization: Bearer token",
+            "required": True,
+            "allowMultiple": False,
+            "dataType": "String",
+            "paramType": "header",
+            "defaultValue": "Bearer ",
+        },
+    ],
     "responseMessages": [
         {"code": 200, "message": "Operation successfully performed"},
         {"code": 409, "message": "Instance with id does not exist."},
