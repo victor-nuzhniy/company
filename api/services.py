@@ -1,5 +1,5 @@
 """Db service functionality for api."""
-from typing import Dict, List, Optional, Sequence
+from typing import Any, Dict, List, Optional, Sequence
 
 from flask_restful import abort
 from sqlalchemy import (
@@ -144,6 +144,17 @@ class DbUtils:
         statement = select(model.id)
         for k, v in data.items():
             statement = statement.where(getattr(model, k) == v)
+        result: CursorResult = db.session.execute(statement=statement)
+        return result.first() is not None
+
+    @staticmethod
+    def check_unique_constraits(
+        model: db.Model, name: str, value: Any, instance_id: Optional[int]
+    ) -> bool:
+        """Check unique constraits for model field with given value."""
+        statement = select(model.id).where(getattr(model, name) == value)
+        if instance_id:
+            statement = statement.where(id != instance_id)
         result: CursorResult = db.session.execute(statement=statement)
         return result.first() is not None
 
