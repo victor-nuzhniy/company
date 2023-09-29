@@ -34,10 +34,10 @@ def token_required(is_admin: bool = False):
                 current_user = crud.read(User, {"id": data.get("user_id")})
             except Exception as e:
                 return {
-                    "message": "Something went wrong",
+                    "message": "Authentication token is invalid",
                     "data": None,
                     "error": str(e),
-                }, 500
+                }, 400
             if current_user is None:
                 return {
                     "message": "Invalid Authentication token!",
