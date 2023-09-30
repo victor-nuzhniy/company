@@ -1,61 +1,39 @@
 """Module for testing counterparty routes."""
 import json
-from typing import Dict, List
+from typing import Dict
 
 import pytest
 from faker import Faker
 from flask import url_for
 
-from api import Discount
-from tests.apps.counterparty.factories import DiscountFactory
-from tests.conftest import check_instance_expected_data
+from api import Agreement, Counterparty, Discount
+from tests.apps.counterparty.conftest import (
+    create_agreement_data,
+    create_counterparty_data,
+    create_discount_data,
+)
+from tests.apps.counterparty.factories import (
+    AgreementFactory,
+    CounterpartyFactory,
+    DiscountFactory,
+)
+from tests.testing_classes import SampleTestRoute
 
 
-@pytest.mark.usefixtures("client_class")
-class TestGetDiscountRoute:
-    """Class for testing discount get single instance by id route."""
+class TestDiscountRoute(SampleTestRoute):
+    """Class with methods for testing Discount routes."""
 
-    def test_get_route(self, auth_header: Dict) -> None:
-        """Test get route."""
-        discount: Discount = DiscountFactory()
-        response = self.client.get(
-            url_for("discountroute", instance_id=discount.id),
-            headers=auth_header,
-        )
-        check_instance_expected_data(response, discount)
+    model = Discount
+    factory = DiscountFactory
 
-    def test_get_route_not_exist(self, faker: Faker, auth_header: Dict) -> None:
-        """Test get route with not existed instance."""
-        discount_id: int = faker.random_int(min=9000)
-        response = self.client.get(
-            url_for("discountroute", instance_id=discount_id),
-            headers=auth_header,
-        )
-        result = response.get_json()
-        assert response.status_code == 404
-        assert (
-            result.get("message")
-            == f"Discount with data ['id: {discount_id}'] doesn't exist"
-        )
+    def get_fake_data(self, faker: Faker) -> Dict:
+        """Get Discount fake data dict."""
+        return create_discount_data(faker)
 
 
 @pytest.mark.usefixtures("client_class")
 class TestPutDiscountRoute:
     """Class for testing Discount put single instance route."""
-
-    def test_put_route(self, faker: Faker, auth_header: Dict) -> None:
-        """Test put route."""
-        discount: Discount = DiscountFactory()
-        expected_data: Dict = {
-            "name": faker.pystr(min_chars=4, max_chars=10),
-            "rate": faker.random_int(min=0, max=100),
-        }
-        response = self.client.put(
-            url_for("discountroute", instance_id=discount.id),
-            headers=auth_header,
-            data=json.dumps(expected_data),
-        )
-        check_instance_expected_data(response, expected_data)
 
     def test_put_route_invalid_rate(self, faker: Faker, auth_header: Dict) -> None:
         """Test put route. Involid rate."""
@@ -134,83 +112,23 @@ class TestPutDiscountRoute:
         }
 
 
-@pytest.mark.usefixtures("client_class")
-class TestPatchDiscountRoute:
-    """Class for testing Discount patch single instance route."""
+class TestAgreementRoute(SampleTestRoute):
+    """Test AgreementRoute routes."""
 
-    def test_patch_route(self, faker: Faker, auth_header: Dict) -> None:
-        """Test patch route."""
-        discount: Discount = DiscountFactory()
-        expected_data: Dict = {
-            "name": faker.pystr(min_chars=1, max_chars=30),
-            "rate": faker.random_int(min=0, max=100),
-        }
-        response = self.client.patch(
-            url_for("discountroute", instance_id=discount.id),
-            headers=auth_header,
-            data=json.dumps(expected_data),
-        )
-        check_instance_expected_data(response, expected_data)
+    model = Agreement
+    factory = AgreementFactory
 
-    def test_patch_route_only_name(self, faker: Faker, auth_header: Dict) -> None:
-        """Test patch route. Only name."""
-        discount: Discount = DiscountFactory()
-        expected_data: Dict = {
-            "name": faker.pystr(min_chars=1, max_chars=30),
-        }
-        response = self.client.patch(
-            url_for("discountroute", instance_id=discount.id),
-            headers=auth_header,
-            data=json.dumps(expected_data),
-        )
-        check_instance_expected_data(response, expected_data)
+    def get_fake_data(self, faker: Faker) -> Dict:
+        """Get Agreement fake data dict."""
+        return create_agreement_data(faker)
 
 
-@pytest.mark.usefixtures("client_class")
-class TestDeleteDiscountRoute:
-    """Class for testing Discount delete single instance route."""
+class TestCounterpartyRoute(SampleTestRoute):
+    """Test CounterpartyRoute routes."""
 
-    def test_delete_route(self, auth_header: Dict) -> None:
-        """Test delete route."""
-        discount: Discount = DiscountFactory()
-        response = self.client.delete(
-            url_for("discountroute", instance_id=discount.id), headers=auth_header
-        )
-        assert response.status_code == 200
-        assert not Discount.query.all()
+    model = Counterparty
+    factory = CounterpartyFactory
 
-
-@pytest.mark.usefixtures("client_class")
-class TestPostDiscountsRoute:
-    """Class for testing Discount post instance route."""
-
-    def test_post_route(self, faker: Faker, auth_header: Dict) -> None:
-        """Test post route."""
-        expected_data: Dict = {
-            "name": faker.pystr(min_chars=1, max_chars=30),
-            "rate": faker.random_int(min=0, max=100),
-        }
-        response = self.client.post(
-            url_for("discountsroute"),
-            headers=auth_header,
-            data=json.dumps(expected_data),
-        )
-        check_instance_expected_data(response, expected_data)
-
-
-@pytest.mark.usefixtures("client_class")
-class TestGetDiscountsRoute:
-    """Class for testing Discount post instance route."""
-
-    def test_get_route(self, auth_header: Dict) -> None:
-        """Test get route. Discount list expected."""
-        discounts: List[Discount] = DiscountFactory.create_batch(size=5)
-        response = self.client.get(
-            url_for("discountsroute"),
-            headers=auth_header,
-        )
-        result = response.get_json()
-        assert response.status_code == 200
-        for i, discount in enumerate(discounts):
-            for key, value in result[i].items():
-                assert getattr(discount, key) == value
+    def get_fake_data(self, faker: Faker) -> Dict:
+        """Get Counterparty fake data dict."""
+        return create_counterparty_data(faker)
