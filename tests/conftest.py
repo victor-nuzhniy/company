@@ -220,6 +220,7 @@ def check_instance_expected_data(
 
 def delete_random_dict_key(data: typing.Dict) -> typing.Dict:
     """Delete random dict key."""
-    key = random.choice(list(data.keys()))
-    data.pop(key)
+    if len(data) > 1:
+        key = random.choice(list(data.keys()))
+        data.pop(key)
     return data
