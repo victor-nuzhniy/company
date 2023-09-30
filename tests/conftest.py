@@ -21,8 +21,8 @@ from api.apps.auth.utils import encrypt_password
 from api.apps.counterparty.routes import (
     AgreementRoute,
     AgreementsRoute,
-    CounterpartiesRoute,
     CounterpartyRoute,
+    CounterpartysRoute,
     DiscountRoute,
     DiscountsRoute,
 )
@@ -108,7 +108,7 @@ def app():
     api.add_resource(DiscountsRoute, "/discount/")
     api.add_resource(DiscountRoute, "/discount/<instance_id>")
     api.add_resource(CounterpartyRoute, "/counterpary/,<instance_id>")
-    api.add_resource(CounterpartiesRoute, "/counterparty/")
+    api.add_resource(CounterpartysRoute, "/counterparty/")
     api.add_resource(AgreementRoute, "/agreement/<instance_id>")
     api.add_resource(AgreementsRoute, "/agreement/")
     api.add_resource(InvoiceRoute, "/invoice/<instance_id>")
@@ -216,3 +216,10 @@ def check_instance_expected_data(
     else:
         for key, value in result.items():
             assert getattr(expected_data, key) == value
+
+
+def delete_random_dict_key(data: typing.Dict) -> typing.Dict:
+    """Delete random dict key."""
+    key = random.choice(list(data.keys()))
+    data.pop(key)
+    return data

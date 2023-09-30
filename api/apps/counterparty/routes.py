@@ -5,6 +5,7 @@ from flask_restful_swagger import swagger
 from api import Agreement, Counterparty, Discount, api
 from api.apps.counterparty.parsers import (
     agreement_parser,
+    agreement_patch_parser,
     counterparty_parser,
     counterparty_patch_parser,
     discount_parser,
@@ -157,7 +158,7 @@ class CounterpartyRoute(ModelRoute):
         return super().delete(*args, **kwargs)
 
 
-class CounterpartiesRoute(ModelsRoute):
+class CounterpartysRoute(ModelsRoute):
     """Operations with many Counterparty instances and instance creation."""
 
     model = Counterparty
@@ -182,7 +183,7 @@ class AgreementRoute(ModelRoute):
 
     model = Agreement
     put_parser = agreement_parser
-    patch_parser = agreement_parser
+    patch_parser = agreement_patch_parser
     model_fields = AgreementFields.resource_fields
 
     @swagger.operation(**agreement_get_schema)
@@ -233,6 +234,6 @@ class AgreementsRoute(ModelsRoute):
 api.add_resource(DiscountRoute, "/discount/<instance_id>")
 api.add_resource(DiscountsRoute, "/discount/")
 api.add_resource(CounterpartyRoute, "/counterpary/,<instance_id>")
-api.add_resource(CounterpartiesRoute, "/counterparty/")
+api.add_resource(CounterpartysRoute, "/counterparty/")
 api.add_resource(AgreementRoute, "/agreement/<instance_id>")
 api.add_resource(AgreementsRoute, "/agreement/")
