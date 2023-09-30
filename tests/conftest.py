@@ -198,3 +198,21 @@ def set_session_for_factories() -> None:
     for factory_class in known_factories:
         # Set up session to factory
         factory_class._meta.sqlalchemy_session = db.session
+
+
+def check_instance_expected_data(
+    response: typing.Any, expected_data: typing.Dict | db.Model
+) -> None:
+    """
+    Check response status whether it's 200.
+
+    Compare instance data with expected.
+    """
+    result = response.get_json()
+    assert response.status_code == 200
+    if isinstance(expected_data, typing.Dict):
+        for key, value in expected_data.items():
+            assert result[key] == value
+    else:
+        for key, value in result.items():
+            assert getattr(expected_data, key) == value
