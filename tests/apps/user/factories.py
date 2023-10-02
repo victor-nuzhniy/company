@@ -9,7 +9,7 @@ from tests.bases import BaseModelFactory
 class UserFactory(BaseModelFactory):
     """Factory for testing User model."""
 
-    id = factory.Sequence(lambda x: x)
+    id = factory.Sequence(lambda x: x + 1)
     username = factory.Faker("user_name")
     email = factory.Faker("email")
     password = factory.Faker("pystr", min_chars=1, max_chars=120)
