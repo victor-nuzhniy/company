@@ -16,8 +16,12 @@ product_patch_parser = reqparse.RequestParser()
 product_patch_parser.add_argument("name", type=str_length_200, required=False)
 product_patch_parser.add_argument("code", type=str_length_100, required=False)
 product_patch_parser.add_argument("units", type=str_length_100, required=False)
-product_parser.add_argument("currency", type=str_length_15, required=False)
+product_patch_parser.add_argument("currency", type=str_length_15, required=False)
 product_patch_parser.add_argument("price", type=int, required=False)
+product_patch_parser.add_argument(
+    "product_type_id", type=product_type_id, required=False
+)
+
 
 product_type_parser = reqparse.RequestParser()
 product_type_parser.add_argument("name", type=str_length_100, required=True)
