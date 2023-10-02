@@ -71,7 +71,8 @@ user_put_schema = {
             "allowMultiple": True,
             "dataType": "json",
             "paramType": "body",
-            "defaultValue": '{"username": "Alex", "email": "a@a.com"}',
+            "defaultValue": '{"username": "Alex", "email": "a@a.com", '
+            '"password": "111", "is_admin": 0, "is_active": 0}',
         },
         {
             "name": "Authorization",
@@ -105,7 +106,8 @@ user_patch_schema = {
             "allowMultiple": True,
             "dataType": "json",
             "paramType": "body",
-            "defaultValue": '{"username": "Alex", "email": "a@a.com"}',
+            "defaultValue": '{"username": "Alex", "email": "a@a.com", '
+            '"password": "111", "is_admin": 0, "is_active": 0}',
         },
         {
             "name": "Authorization",
@@ -162,8 +164,8 @@ user_post_schema = {
             "allowMultiple": True,
             "dataType": "json",
             "paramType": "body",
-            "defaultValue": '{"username": "Alex", "email": "a@a.com",'
-            ' "password": "111"}',
+            "defaultValue": '{"username": "Alex", "email": "a@a.com", '
+            '"password": "111", "is_admin": 0, "is_active": 0}',
         },
         {
             "name": "Authorization",
