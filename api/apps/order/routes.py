@@ -130,7 +130,7 @@ class OrderProductRoute(ModelRoute):
     @swagger.operation(**order_product_patch_schema)
     @token_required()
     def patch(self, *args, **kwargs):
-        """Update instance bu id, partially."""
+        """Update instance by id, partially."""
         return super().patch(*args, **kwargs)
 
     @swagger.operation(**order_product_delete_schema)

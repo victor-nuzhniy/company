@@ -77,7 +77,7 @@ class ModelRoute(Resource):
         )
 
     def patch(self, instance_id, *args, **kwargs):  # TODO add token_decorator to all
-        """Update instance bu id, partially."""
+        """Update instance by id, partially."""
         args = self.patch_parser.parse_args()
         args = {key: value for key, value in args.items() if value is not None}
         check_unique(self.model, args, instance_id)
