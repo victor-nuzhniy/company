@@ -57,7 +57,7 @@ class InvoiceFactory(BaseModelFactory):
             "invoice_products",
             "sale_invoices",
         )
-        sqlalchemy_get_or_create = ("agreement_id",)
+        sqlalchemy_get_or_create = ("agreement_id", "order_id")
 
 
 class InvoiceProductFactory(BaseModelFactory):
