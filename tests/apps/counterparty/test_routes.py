@@ -30,6 +30,10 @@ class TestDiscountRoute(SampleTestRoute):
         """Get Discount fake data dict."""
         return create_discount_data(faker)
 
+    def get_fake_put_data(self, faker: Faker) -> Dict:
+        """Get Discount fake data dict for put and patch methods."""
+        return create_discount_data(faker)
+
 
 @pytest.mark.usefixtures("client_class")
 class TestPutDiscountRoute:
@@ -122,6 +126,10 @@ class TestAgreementRoute(SampleTestRoute):
         """Get Agreement fake data dict."""
         return create_agreement_data(faker)
 
+    def get_fake_put_data(self, faker: Faker) -> Dict:
+        """Get Agreement fake data dict for put and patch methods."""
+        return create_agreement_data(faker)
+
 
 class TestCounterpartyRoute(SampleTestRoute):
     """Test CounterpartyRoute routes."""
@@ -131,4 +139,8 @@ class TestCounterpartyRoute(SampleTestRoute):
 
     def get_fake_data(self, faker: Faker) -> Dict:
         """Get Counterparty fake data dict."""
+        return create_counterparty_data(faker)
+
+    def get_fake_put_data(self, faker: Faker) -> Dict:
+        """Get CounterParty fake data dict for put and patch methods."""
         return create_counterparty_data(faker)
