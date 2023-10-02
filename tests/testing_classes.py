@@ -24,6 +24,11 @@ class SampleTestRoute:
         """Implement getting instance fake data."""
         pass
 
+    @abstractmethod
+    def get_fake_put_data(self, faker: Faker):
+        """Implement getting instance fake data for patch method."""
+        pass
+
     def test_get_route(self, auth_header: Dict) -> None:
         """Test get route."""
         instance: db.Model = self.factory()
@@ -50,7 +55,7 @@ class SampleTestRoute:
     def test_put_route(self, faker: Faker, auth_header: Dict) -> None:
         """Test put route."""
         instance: db.Model = self.factory()
-        expected_data: Dict = self.get_fake_data(faker)
+        expected_data: Dict = self.get_fake_put_data(faker)
         response = self.client.put(
             url_for(f"{self.model.__name__.lower()}route", instance_id=instance.id),
             headers=auth_header,
@@ -61,8 +66,8 @@ class SampleTestRoute:
     def test_patch_route(self, faker: Faker, auth_header: Dict) -> None:
         """Test patch_route."""
         instance: db.Model = self.factory()
-        expected_data: Dict = self.get_fake_data(faker)
-        delete_random_dict_key(expected_data)
+        expected_data: Dict = self.get_fake_put_data(faker)
+        expected_data = delete_random_dict_key(expected_data)
         response = self.client.patch(
             url_for(f"{self.model.__name__.lower()}route", instance_id=instance.id),
             headers=auth_header,
@@ -83,6 +88,7 @@ class SampleTestRoute:
     def test_post_route(self, faker: Faker, auth_header: Dict) -> None:
         """Test post route."""
         expected_data: Dict = self.get_fake_data(faker)
+        expected_data.pop("created_at", None)
         response = self.client.post(
             url_for(f"{self.model.__name__.lower()}sroute"),
             headers=auth_header,
@@ -101,4 +107,7 @@ class SampleTestRoute:
         assert response.status_code == 200
         for i, instance in enumerate(instances):
             for key, value in result[i].items():
-                assert getattr(instance, key) == value
+                if key == "created_at":
+                    assert getattr(instance, key).strftime("%Y-%m-%dT%H:%M:%S") == value
+                else:
+                    assert getattr(instance, key) == value
