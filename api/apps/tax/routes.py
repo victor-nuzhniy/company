@@ -47,8 +47,8 @@ class TaxInvoiceProductFields:
     resource_fields = {
         "id": fields.Integer,
         "tax_invoice_id": fields.Integer,
-        "sale_invoice_products_id": fields.Integer,
-        "purchase_invoice_products_id": fields.Integer,
+        "sale_invoice_product_id": fields.Integer,
+        "purchase_invoice_product_id": fields.Integer,
         "quantity": fields.Integer,
     }
 

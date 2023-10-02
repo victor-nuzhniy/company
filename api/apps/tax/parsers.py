@@ -4,8 +4,8 @@ from flask_restful.inputs import datetime_from_iso8601
 
 from api.apps.invoice.validators import invoice_id, str_length_100
 from api.apps.tax.validators import (
-    invoice_products_id,
     purchase_invoice_products_id,
+    sale_invoice_products_id,
     tax_invoice_id,
 )
 
@@ -34,10 +34,10 @@ tax_invoice_product_parser.add_argument(
     "tax_invoice_id", type=tax_invoice_id, required=True
 )
 tax_invoice_product_parser.add_argument(
-    "sale_invoice_products_id", type=invoice_products_id, required=True
+    "sale_invoice_product_id", type=sale_invoice_products_id, required=True
 )
 tax_invoice_product_parser.add_argument(
-    "purchase_invoice_products_id", type=purchase_invoice_products_id, required=True
+    "purchase_invoice_product_id", type=purchase_invoice_products_id, required=True
 )
 tax_invoice_product_parser.add_argument("quantity", type=int, required=True)
 
@@ -46,9 +46,9 @@ tax_invoice_product_patch_parser.add_argument(
     "tax_invoice_id", type=tax_invoice_id, required=False
 )
 tax_invoice_product_patch_parser.add_argument(
-    "sale_invoice_products_id", type=invoice_products_id, required=False
+    "sale_invoice_product_id", type=sale_invoice_products_id, required=False
 )
 tax_invoice_product_patch_parser.add_argument(
-    "purchase_invoice_products_id", type=purchase_invoice_products_id, required=False
+    "purchase_invoice_product_id", type=purchase_invoice_products_id, required=False
 )
 tax_invoice_product_patch_parser.add_argument("quantity", type=int, required=False)
