@@ -1,6 +1,5 @@
 """Auth routes."""
 import jwt
-from flask import abort
 from flask_restful import Resource, marshal
 from flask_restful_swagger import swagger
 
@@ -10,6 +9,7 @@ from api.apps.auth.schemas import admin_schema, login_schema
 from api.apps.auth.utils import login
 from api.apps.user.routes import UserFields
 from api.services import crud
+from api.utils import check_unique
 
 
 class LoginRoute(Resource):
@@ -61,10 +61,8 @@ class AdminRoute(Resource):
         args = admin_parser.parse_args()
         args.update({"is_active": True, "is_admin": True})
         args.pop("admin_password")
-        try:
-            return marshal(crud.create(User, args), UserFields.resource_fields)
-        except Exception as ex:
-            abort(409, getattr(ex, "orig"))
+        check_unique(User, args)
+        return marshal(crud.create(User, args), UserFields.resource_fields)
 
 
 api.add_resource(LoginRoute, "/auth/login/")
