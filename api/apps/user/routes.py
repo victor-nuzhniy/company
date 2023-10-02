@@ -5,9 +5,8 @@ from flask_restful_swagger import swagger
 from api import User, api
 from api.apps.user.parsers import (
     user_admin_patch_parser,
+    user_parser,
     user_patch_parser,
-    user_post_parser,
-    user_put_parser,
 )
 from api.apps.user.schemas import (
     user_admin_schema,
@@ -37,31 +36,31 @@ class UserRoute(ModelRoute):
     """Operations with single User isntance."""
 
     model = User
-    put_parser = user_put_parser
+    put_parser = user_parser
     patch_parser = user_patch_parser
     model_fields = UserFields.resource_fields
 
     @swagger.operation(**user_get_schema)
     @token_required()
-    def get(self, instance_id, *args, **kwargs):
+    def get(self, *args, **kwargs):
         """Get model instance by id."""
-        return super().get(instance_id, *args, **kwargs)
+        return super().get(*args, **kwargs)
 
     @swagger.operation(**user_put_schema)
-    @token_required()
-    def put(self, instance_id, *args, **kwargs):
+    @token_required(is_admin=True)
+    def put(self, *args, **kwargs):
         """Update instance by id."""
-        return super().put(instance_id, *args, **kwargs)
+        return super().put(*args, **kwargs)
 
     @swagger.operation(**user_patch_schema)
-    @token_required()
-    def patch(self, instance_id, *args, **kwargs):
+    @token_required(is_admin=True)
+    def patch(self, *args, **kwargs):
         """Update instance bu id, partially."""
         return super().patch(*args, **kwargs)
 
     @swagger.operation(**user_delete_schema)
-    @token_required()
-    def delete(self, instance_id, *args, **kwargs):
+    @token_required(is_admin=True)
+    def delete(self, *args, **kwargs):
         """Delete instance by id."""
         return super().delete(*args, **kwargs)
 
@@ -70,11 +69,11 @@ class UsersRoute(ModelsRoute):
     """Operations with many User isntances and instance creation."""
 
     model = User
-    post_parser = user_post_parser
+    post_parser = user_parser
     model_fields = UserFields.resource_fields
 
     @swagger.operation(**user_post_schema)
-    @token_required()
+    @token_required(is_admin=True)
     def post(self, *args, **kwargs):
         """Create model instance."""
         return super().post(*args, **kwargs)
