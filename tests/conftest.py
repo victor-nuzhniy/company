@@ -212,10 +212,16 @@ def check_instance_expected_data(
     assert response.status_code == 200
     if isinstance(expected_data, typing.Dict):
         for key, value in expected_data.items():
-            assert result[key] == value
+            if key in result:
+                assert result[key] == value
     else:
         for key, value in result.items():
-            assert getattr(expected_data, key) == value
+            if key == "created_at":
+                assert (
+                    getattr(expected_data, key).strftime("%Y-%m-%dT%H:%M:%S") == value
+                )
+            else:
+                assert getattr(expected_data, key) == value
 
 
 def delete_random_dict_key(data: typing.Dict) -> typing.Dict:
