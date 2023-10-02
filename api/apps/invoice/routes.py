@@ -4,10 +4,11 @@ from flask_restful_swagger import swagger
 
 from api import Invoice, InvoiceProduct, api
 from api.apps.invoice.parsers import (
-    invoice_parser,
     invoice_patch_parser,
+    invoice_post_parser,
     invoice_product_parser,
     invoice_product_patch_parser,
+    invoice_put_parser,
 )
 from api.apps.invoice.schemas import (
     invoice_delete_schema,
@@ -23,6 +24,7 @@ from api.apps.invoice.schemas import (
     invoice_put_schema,
     invoices_get_schema,
 )
+from api.common import CustomDateTimeFormat
 from api.model_routes import ModelRoute, ModelsRoute, token_required
 
 
@@ -34,7 +36,7 @@ class InvoiceFields:
         "id": fields.Integer,
         "name": fields.String,
         "order_id": fields.Integer,
-        "created_at": fields.DateTime,
+        "created_at": CustomDateTimeFormat,
         "paid": fields.Boolean,
         "agreement_id": fields.Integer,
     }
@@ -57,7 +59,7 @@ class InvoiceRoute(ModelRoute):
     """Operations with single Invoice instance."""
 
     model = Invoice
-    put_parser = invoice_parser
+    put_parser = invoice_put_parser
     patch_parser = invoice_patch_parser
     model_fields = InvoiceFields.resource_fields
 
@@ -90,7 +92,7 @@ class InvoicesRoute(ModelsRoute):
     """Operations with many Invoice isntances and instance creation."""
 
     model = Invoice
-    post_parser = invoice_parser
+    post_parser = invoice_post_parser
     model_fields = InvoiceFields.resource_fields
 
     @swagger.operation(**invoice_post_schema)
