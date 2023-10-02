@@ -17,7 +17,18 @@ def create_order_data(faker: Faker) -> Dict:
     return {
         "user_id": user.id,
         "name": faker.user_name(),
-        "created_at": faker.date_time(),
+        "customer_id": counterparty.id,
+    }
+
+
+def create_order_put_data(faker: Faker) -> Dict:
+    """Create Order fake data for put and patch methods.."""
+    user: User = UserFactory()
+    counterparty: Counterparty = CounterpartyFactory()
+    return {
+        "user_id": user.id,
+        "name": faker.user_name(),
+        "created_at": faker.date_time().strftime("%Y-%m-%dT%H:%M:%S"),
         "customer_id": counterparty.id,
     }
 

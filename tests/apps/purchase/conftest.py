@@ -15,7 +15,16 @@ def create_purchase_invoice_data(faker: Faker) -> Dict:
     return {
         "name": faker.pystr(min_chars=1, max_chars=100),
         "agreement_id": agreement.id,
-        "created_at": faker.date_time(),
+    }
+
+
+def create_purchase_invoice_put_data(faker: Faker) -> Dict:
+    """Create PurchaseInvoice fake data."""
+    agreement: Agreement = AgreementFactory()
+    return {
+        "name": faker.pystr(min_chars=1, max_chars=100),
+        "agreement_id": agreement.id,
+        "created_at": faker.date_time().strftime("%Y-%m-%dT%H:%M:%S"),
     }
 
 
