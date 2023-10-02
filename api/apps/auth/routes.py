@@ -60,7 +60,7 @@ class AdminRoute(Resource):
         """Handle post request."""
         args = admin_parser.parse_args()
         args.update({"is_active": True, "is_admin": True})
-        args.pop("admin_password")
+        args.pop("admin_password", None)
         check_unique(User, args)
         return marshal(crud.create(User, args), UserFields.resource_fields)
 
