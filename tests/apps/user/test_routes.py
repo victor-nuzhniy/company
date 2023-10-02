@@ -1,11 +1,15 @@
 """Module for testing user apps routes."""
+import json
 from typing import Dict
 
+import pytest
 from faker import Faker
+from flask import url_for
 
 from api import User
 from tests.apps.user.conftest import create_user_data, create_user_put_data
 from tests.apps.user.factories import UserFactory
+from tests.conftest import check_instance_expected_data
 from tests.testing_classes import SampleTestRoute
 
 
@@ -22,3 +26,19 @@ class TestUserRoutes(SampleTestRoute):
     def get_fake_put_data(self, faker: Faker) -> Dict:
         """Get User fake data dict for put and patch methods."""
         return create_user_put_data(faker)
+
+
+@pytest.mark.usefixtures("client_class")
+class TestAdminUserRoute:
+    """Class for testing User patch by id route."""
+
+    def test_patch_route(self, auth_header: Dict) -> None:
+        """Test patch User instance - is_active and is_admin only by admin user."""
+        instance: User = UserFactory(is_admin=False, is_active=False)
+        expected_data: Dict = {"is_admin": True, "is_active": True}
+        response = self.client.patch(
+            url_for("adminuserroute", user_id=instance.id),
+            headers=auth_header,
+            data=json.dumps(expected_data),
+        )
+        check_instance_expected_data(response, expected_data)
