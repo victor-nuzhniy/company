@@ -18,4 +18,7 @@ def create_user_put_data(faker: Faker) -> Dict:
     return {
         "username": faker.user_name(),
         "email": faker.email(),
+        "password": faker.pystr(min_chars=1, max_chars=10),
+        "is_active": faker.pybool(),
+        "is_admin": faker.pybool(),
     }
