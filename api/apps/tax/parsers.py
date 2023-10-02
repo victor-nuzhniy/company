@@ -9,9 +9,16 @@ from api.apps.tax.validators import (
     tax_invoice_id,
 )
 
-tax_invoice_parser = reqparse.RequestParser()
-tax_invoice_parser.add_argument("name", type=str_length_100, required=True)
-tax_invoice_parser.add_argument("sale_invoice_id", type=invoice_id, required=True)
+tax_invoice_post_parser = reqparse.RequestParser()
+tax_invoice_post_parser.add_argument("name", type=str_length_100, required=True)
+tax_invoice_post_parser.add_argument("sale_invoice_id", type=invoice_id, required=True)
+
+tax_invoice_put_parser = reqparse.RequestParser()
+tax_invoice_put_parser.add_argument("name", type=str_length_100, required=True)
+tax_invoice_put_parser.add_argument("sale_invoice_id", type=invoice_id, required=True)
+tax_invoice_put_parser.add_argument(
+    "created_at", type=datetime_from_iso8601, required=True
+)
 
 tax_invoice_patch_parser = reqparse.RequestParser()
 tax_invoice_patch_parser.add_argument("name", type=str_length_100, required=False)

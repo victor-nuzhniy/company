@@ -4,10 +4,11 @@ from flask_restful_swagger import swagger
 
 from api import TaxInvoice, TaxInvoiceProduct, api
 from api.apps.tax.parsers import (
-    tax_invoice_parser,
     tax_invoice_patch_parser,
+    tax_invoice_post_parser,
     tax_invoice_product_parser,
     tax_invoice_product_patch_parser,
+    tax_invoice_put_parser,
 )
 from api.apps.tax.schemas import (
     tax_invoice_delete_schema,
@@ -23,6 +24,7 @@ from api.apps.tax.schemas import (
     tax_invoice_put_schema,
     tax_invoices_get_schema,
 )
+from api.common import CustomDateTimeFormat
 from api.model_routes import ModelRoute, ModelsRoute, token_required
 
 
@@ -34,7 +36,7 @@ class TaxInvoiceFields:
         "id": fields.Integer,
         "name": fields.String,
         "sale_invoice_id": fields.Integer,
-        "created_at": fields.DateTime,
+        "created_at": CustomDateTimeFormat,
     }
 
 
@@ -55,7 +57,7 @@ class TaxInvoiceRoute(ModelRoute):
     """Operations with single TaxInvoice instance."""
 
     model = TaxInvoice
-    put_parser = tax_invoice_parser
+    put_parser = tax_invoice_put_parser
     patch_parser = tax_invoice_patch_parser
     model_fields = TaxInvoiceFields.resource_fields
 
@@ -88,7 +90,7 @@ class TaxInvoicesRoute(ModelsRoute):
     """Operations with TaxInvoice instances and instance creation."""
 
     model = TaxInvoice
-    post_parser = tax_invoice_parser
+    post_parser = tax_invoice_post_parser
     model_fields = TaxInvoiceFields.resource_fields
 
     @swagger.operation(**tax_invoice_post_schema)

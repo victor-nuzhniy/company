@@ -6,10 +6,17 @@ from api.apps.counterparty.validators import counterparty_id
 from api.apps.invoice.validators import order_id, product_id, str_length_100
 from api.apps.order.validators import user_id
 
-order_parser = reqparse.RequestParser()
-order_parser.add_argument("user_id", type=user_id, required=True)
-order_parser.add_argument("name", type=str_length_100, required=True)
-order_parser.add_argument("customer_id", type=counterparty_id, required=True)
+order_post_parser = reqparse.RequestParser()
+order_post_parser.add_argument("user_id", type=user_id, required=True)
+order_post_parser.add_argument("name", type=str_length_100, required=True)
+order_post_parser.add_argument("customer_id", type=counterparty_id, required=True)
+
+order_put_parser = reqparse.RequestParser()
+order_put_parser.add_argument("user_id", type=user_id, required=True)
+order_put_parser.add_argument("name", type=str_length_100, required=True)
+order_put_parser.add_argument("created_at", type=datetime_from_iso8601, required=True)
+order_put_parser.add_argument("customer_id", type=counterparty_id, required=True)
+
 
 order_patch_parser = reqparse.RequestParser()
 order_patch_parser.add_argument("user_id", type=user_id, required=False)

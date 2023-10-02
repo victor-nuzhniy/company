@@ -4,10 +4,11 @@ from flask_restful_swagger import swagger
 
 from api import SaleInvoice, SaleInvoiceProduct, api
 from api.apps.sale.parsers import (
-    sale_invoice_parser,
     sale_invoice_patch_parser,
+    sale_invoice_post_parser,
     sale_invoice_product_parser,
     sale_invoice_product_patch_parser,
+    sale_invoice_put_parser,
 )
 from api.apps.sale.schemas import (
     sale_invoice_delete_schema,
@@ -23,6 +24,7 @@ from api.apps.sale.schemas import (
     sale_invoice_put_schema,
     sale_invoices_get_schema,
 )
+from api.common import CustomDateTimeFormat
 from api.model_routes import ModelRoute, ModelsRoute, token_required
 
 
@@ -34,7 +36,7 @@ class SaleInvoiceFields:
         "id": fields.Integer,
         "name": fields.String,
         "invoice_id": fields.Integer,
-        "created_at": fields.DateTime,
+        "created_at": CustomDateTimeFormat,
         "done": fields.Boolean,
     }
 
@@ -56,7 +58,7 @@ class SaleInvoiceRoute(ModelRoute):
     """Operations with single SaleInvoice instance."""
 
     model = SaleInvoice
-    put_parser = sale_invoice_parser
+    put_parser = sale_invoice_put_parser
     patch_parser = sale_invoice_patch_parser
     model_fields = SaleInvoiceFields.resource_fields
 
@@ -89,7 +91,7 @@ class SaleInvoicesRoute(ModelsRoute):
     """Operations with many SaleInvoice instances and instance creation."""
 
     model = SaleInvoice
-    post_parser = sale_invoice_parser
+    post_parser = sale_invoice_post_parser
     model_fields = SaleInvoiceFields.resource_fields
 
     @swagger.operation(**sale_invoice_post_schema)

@@ -4,10 +4,11 @@ from flask_restful_swagger import swagger
 
 from api import Order, OrderProduct, api
 from api.apps.order.parsers import (
-    order_parser,
     order_patch_parser,
+    order_post_parser,
     order_product_parser,
     order_product_patch_parser,
+    order_put_parser,
 )
 from api.apps.order.schemas import (
     order_delete_schema,
@@ -23,6 +24,7 @@ from api.apps.order.schemas import (
     order_put_schema,
     orders_get_schema,
 )
+from api.common import CustomDateTimeFormat
 from api.model_routes import ModelRoute, ModelsRoute, token_required
 
 
@@ -34,7 +36,7 @@ class OrderFields:
         "id": fields.Integer,
         "user_id": fields.Integer,
         "name": fields.String,
-        "created_at": fields.DateTime,
+        "created_at": CustomDateTimeFormat,
         "customer_id": fields.Integer,
     }
 
@@ -56,7 +58,7 @@ class OrderRoute(ModelRoute):
     """Operations with single Order instance."""
 
     model = Order
-    put_parser = order_parser
+    put_parser = order_put_parser
     patch_parser = order_patch_parser
     model_fields = OrderFields.resource_fields
 
@@ -89,7 +91,7 @@ class OrdersRoute(ModelsRoute):
     """Operations with many Order instances and instance creation."""
 
     model = Order
-    post_parser = order_parser
+    post_parser = order_post_parser
     model_fields = OrderFields.resource_fields
 
     @swagger.operation(**order_post_schema)

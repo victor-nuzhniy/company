@@ -5,9 +5,20 @@ from flask_restful.inputs import datetime_from_iso8601
 from api.apps.invoice.validators import agreement_id, product_id, str_length_100
 from api.apps.purchase.validators import purchase_invoice_id
 
-purchase_invoice_parser = reqparse.RequestParser()
-purchase_invoice_parser.add_argument("name", type=str_length_100, required=True)
-purchase_invoice_parser.add_argument("agreement_id", type=agreement_id, required=True)
+purchase_invoice_post_parser = reqparse.RequestParser()
+purchase_invoice_post_parser.add_argument("name", type=str_length_100, required=True)
+purchase_invoice_post_parser.add_argument(
+    "agreement_id", type=agreement_id, required=True
+)
+
+purchase_invoice_put_parser = reqparse.RequestParser()
+purchase_invoice_put_parser.add_argument("name", type=str_length_100, required=True)
+purchase_invoice_put_parser.add_argument(
+    "agreement_id", type=agreement_id, required=True
+)
+purchase_invoice_put_parser.add_argument(
+    "created_at", type=datetime_from_iso8601, required=True
+)
 
 purchase_invoice_patch_parser = reqparse.RequestParser()
 purchase_invoice_patch_parser.add_argument("name", type=str_length_100, required=False)

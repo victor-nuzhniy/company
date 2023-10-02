@@ -4,10 +4,11 @@ from flask_restful_swagger import swagger
 
 from api import PurchaseInvoice, PurchaseInvoiceProduct, api
 from api.apps.purchase.parsers import (
-    purchase_invoice_parser,
     purchase_invoice_patch_parser,
+    purchase_invoice_post_parser,
     purchase_invoice_product_parser,
     purchase_invoice_product_patch_parser,
+    purchase_invoice_put_parser,
 )
 from api.apps.purchase.schemas import (
     purchase_invoice_delete_schema,
@@ -23,6 +24,7 @@ from api.apps.purchase.schemas import (
     purchase_invoice_put_schema,
     purchase_invoices_get_schema,
 )
+from api.common import CustomDateTimeFormat
 from api.model_routes import ModelRoute, ModelsRoute, token_required
 
 
@@ -34,7 +36,7 @@ class PurchaseInvoiceFields:
         "id": fields.Integer,
         "name": fields.String,
         "agreement_id": fields.Integer,
-        "created_at": fields.DateTime,
+        "created_at": CustomDateTimeFormat,
     }
 
 
@@ -56,7 +58,7 @@ class PurchaseInvoiceRoute(ModelRoute):
     """Operations with single PurchaseInvoice instance."""
 
     model = PurchaseInvoice
-    put_parser = purchase_invoice_parser
+    put_parser = purchase_invoice_put_parser
     patch_parser = purchase_invoice_patch_parser
     model_fields = PurchaseInvoiceFields.resource_fields
 
@@ -89,7 +91,7 @@ class PurchaseInvoicesRoute(ModelsRoute):
     """Operations with many PurchaseInvoice instances and instance creations."""
 
     model = PurchaseInvoice
-    post_parser = purchase_invoice_parser
+    post_parser = purchase_invoice_post_parser
     model_fields = PurchaseInvoiceFields.resource_fields
 
     @swagger.operation(**purchase_invoice_post_schema)
