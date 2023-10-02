@@ -3,11 +3,13 @@ import json
 from typing import Dict
 from unittest.mock import MagicMock, patch
 
+import jwt
 import pytest
 from faker import Faker
-from flask import url_for
+from flask import Flask, url_for
 
-from tests.apps.user.conftest import create_user_data
+from api import User
+from tests.apps.user.conftest import create_user_data, create_user_put_data
 from tests.conftest import check_instance_expected_data
 
 
@@ -41,3 +43,33 @@ class TestAdminRoute:
         assert response.get_json().get("message") == {
             "admin_password": "Access denied. Value is invalid."
         }
+
+
+@pytest.mark.usefixtures("client_class")
+class TestLoginRoute:
+    """Class for testing LoginRoute."""
+
+    def test_post_route(self, auth_header: Dict, faker: Faker, app: Flask) -> None:
+        """Test post route."""
+        expected_data: Dict = create_user_put_data(faker)
+        user: User = self.client.post(
+            url_for("usersroute"),
+            headers=auth_header,
+            data=json.dumps(expected_data),
+        ).get_json()
+        response = self.client.post(
+            url_for("loginroute"),
+            headers={"Content-Type": "application/json"},
+            data=json.dumps(
+                {
+                    "email": expected_data.get("email"),
+                    "password": expected_data.get("password"),
+                }
+            ),
+        )
+        result = response.get_json()
+        assert response.status_code == 200
+        assert result.get("message") == "Successfully fetched auth token"
+        assert result.get("data") == jwt.encode(
+            {"user_id": user.get("id")}, app.config["SECRET_KEY"], algorithm="HS256"
+        )
