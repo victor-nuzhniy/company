@@ -17,7 +17,18 @@ def create_invoice_data(faker: Faker) -> Dict:
     return {
         "name": faker.pystr(min_chars=1, max_chars=100),
         "order_id": order.id,
-        "created_at": faker.date_time(),
+        "agreement_id": agreement.id,
+    }
+
+
+def create_invoice_put_data(faker: Faker) -> Dict:
+    """Create Invoice data for patch method."""
+    order: Order = OrderFactory()
+    agreement: Agreement = AgreementFactory()
+    return {
+        "name": faker.pystr(min_chars=1, max_chars=100),
+        "order_id": order.id,
+        "created_at": faker.date_time().strftime("%Y-%m-%dT%H:%M:%S"),
         "paid": faker.pybool(),
         "agreement_id": agreement.id,
     }
