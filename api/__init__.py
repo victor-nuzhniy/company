@@ -3,6 +3,7 @@ import os
 
 from dotenv import load_dotenv
 from flask import Flask
+from flask_cors import CORS
 from flask_migrate import Migrate
 from flask_restful import Api
 from flask_restful_swagger import swagger
@@ -11,6 +12,10 @@ from flask_sqlalchemy import SQLAlchemy
 load_dotenv()
 
 app = Flask(__name__)
+cors = CORS(
+    app,
+    resources={r"/*": {"origins": "*", "allow_headers": "*", "expose_headers": "*"}},
+)
 app.config["SECRET_KEY"] = os.getenv("SECRET_KEY")
 app.config["DEFAULT_RENDERERS"] = [
     "flask_api.renderers.JSONRenderer",
