@@ -1,8 +1,9 @@
 """Routes for account apps."""
+from flask import abort
 from flask_restful import Resource, fields, marshal, marshal_with
 from flask_restful_swagger import swagger
 
-from api import SaleInvoiceProduct, api
+from api import SaleInvoice, SaleInvoiceProduct, api
 from api.apps.account.parsers import (
     account_parser,
     period_parser,
@@ -96,6 +97,9 @@ class ProcessSaleInvoiceRoute(Resource):
         """
         args = account_parser.parse_args()
         sale_invoice_id = args.get("sale_invoice_id")
+        sale_invoice = crud.read(SaleInvoice, {"id": sale_invoice_id})
+        if sale_invoice.done:
+            abort(406, f"Sale_invoice with id {sale_invoice_id} is already done!")
         sale_invoice_products = crud.read_many(
             SaleInvoiceProduct, {"sale_invoice_id": sale_invoice_id}
         )
@@ -108,7 +112,7 @@ class ProcessSaleInvoiceRoute(Resource):
         create_tax_invoice_products(tax_invoice_products, sale_invoice_id)
         update_sale_invoice(sale_invoice_id)
 
-        return {"message": "Operation succussfully performed"}
+        return {"message": "Operation successfully performed"}
 
 
 class PeriodReportRoute(Resource):
