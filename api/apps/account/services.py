@@ -77,10 +77,11 @@ def create_tax_invoice_products(tax_products: List[Dict], sale_invoice_id: int) 
     last_tax_invoice = (
         TaxInvoice.query.with_entities(TaxInvoice.id).order_by(-TaxInvoice.id).first()
     )
+    tax_invoice_num = str(last_tax_invoice.id + 1) if last_tax_invoice else "1"
     tax_invoice = crud.create(
         TaxInvoice,
         {
-            "name": constants.TAX_INVOICE_NAME_PREFIX + str(last_tax_invoice.id),
+            "name": constants.TAX_INVOICE_NAME_PREFIX + tax_invoice_num,
             "sale_invoice_id": sale_invoice_id,
         },
     )
