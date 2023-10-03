@@ -214,8 +214,8 @@ tax_invoice_product_put_schema = {
             "allowMultiple": True,
             "dataType": "json",
             "paramType": "body",
-            "defaultValue": '{"tax_invoice_id": 1, "sale_invoice_products_id": 1, '
-            '"purchase_invoice_products_id": 1, "quantity": 2}',
+            "defaultValue": '{"tax_invoice_id": 1, "sale_invoice_product_id": 1, '
+            '"purchase_invoice_product_id": 1, "quantity": 2}',
         },
         {
             "name": "Authorization",
@@ -251,8 +251,8 @@ tax_invoice_product_patch_schema = {
             "allowMultiple": True,
             "dataType": "json",
             "paramType": "body",
-            "defaultValue": '{"tax_invoice_id": 1, "sale_invoice_products_id": 1, '
-            '"purchase_invoice_products_id": 1, "quantity": 2}',
+            "defaultValue": '{"tax_invoice_id": 1, "sale_invoice_product_id": 1, '
+            '"purchase_invoice_product_id": 1, "quantity": 2}',
         },
         {
             "name": "Authorization",
@@ -311,8 +311,8 @@ tax_invoice_product_post_schema = {
             "allowMultiple": True,
             "dataType": "json",
             "paramType": "body",
-            "defaultValue": '{"tax_invoice_id": 1, "sale_invoice_products_id": 1, '
-            '"purchase_invoice_products_id": 1, "quantity": 2}',
+            "defaultValue": '{"tax_invoice_id": 1, "sale_invoice_product_id": 1, '
+            '"purchase_invoice_product_id": 1, "quantity": 2}',
         },
         {
             "name": "Authorization",
