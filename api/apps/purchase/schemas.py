@@ -370,8 +370,8 @@ purchase_registry_get_schema = {
             "defaultValue": "Bearer ",
         },
         {
-            "name": "start",
-            "description": "Query parameters start (offset)",
+            "name": "offset",
+            "description": "Query parameters offset",
             "required": False,
             "allowMultiple": False,
             "dataType": "json",

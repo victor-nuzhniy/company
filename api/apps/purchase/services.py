@@ -12,7 +12,7 @@ from api import (
 )
 
 
-def get_purchase_invoice_data(offset: int, limit: int) -> Sequence:
+def get_purchase_invoice_data(offset: int = 0, limit: int = 20) -> Sequence:
     """Get Purchase registry product list."""
     return (
         PurchaseInvoice.query.with_entities(

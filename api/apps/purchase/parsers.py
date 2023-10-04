@@ -55,7 +55,7 @@ purchase_invoice_product_patch_parser.add_argument(
 
 purchase_registry_parser = reqparse.RequestParser()
 purchase_registry_parser.add_argument(
-    "start", type=int, required=False, location="query"
+    "offset", type=int, required=False, location="query"
 )
 purchase_registry_parser.add_argument(
     "limit", type=int, required=False, location="query"

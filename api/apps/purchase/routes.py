@@ -187,7 +187,7 @@ class PurchaseRegistryRoute(Resource):
         """Get purchase registry products list."""
         args = purchase_registry_parser.parse_args()
         return marshal(
-            get_purchase_invoice_data(args.get("start", 0), args.get("limit", 20)),
+            get_purchase_invoice_data(**args),
             PurchaseRegistry.resource_fields,
         )
 
