@@ -7,4 +7,4 @@ class CustomDateTimeFormat(fields.Raw):
 
     def format(self, value):
         """Return custom datetime format."""
-        return value.strftime("%Y-%m-%dT%H:%M:%S")
+        return value.strftime("%Y-%m-%d %H:%M:%S")
