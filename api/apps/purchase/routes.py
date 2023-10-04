@@ -1,5 +1,5 @@
 """Routes for purchase apps."""
-from flask_restful import fields
+from flask_restful import Resource, fields, marshal
 from flask_restful_swagger import swagger
 
 from api import PurchaseInvoice, PurchaseInvoiceProduct, api
@@ -24,6 +24,7 @@ from api.apps.purchase.schemas import (
     purchase_invoice_put_schema,
     purchase_invoices_get_schema,
 )
+from api.apps.purchase.services import get_purchase_invoice_data
 from api.common import CustomDateTimeFormat
 from api.model_routes import ModelRoute, ModelsRoute, token_required
 
@@ -51,6 +52,21 @@ class PurchaseInvoiceProductFields:
         "price": fields.Integer,
         "purchase_invoice_id": fields.Integer,
         "products_left": fields.Integer,
+    }
+
+
+@swagger.model
+class PurchaseRegistry:
+    """PurchaseRegistry output fields."""
+
+    resource_fields = {
+        "id": fields.Integer,
+        "created_at": CustomDateTimeFormat,
+        "purchase_name": fields.String,
+        "summ": fields.Integer,
+        "currency": fields.String,
+        "counterparty": fields.String,
+        "agreement": fields.String,
     }
 
 
@@ -160,7 +176,18 @@ class PurchaseInvoiceProductsRoute(ModelsRoute):
         return super().get(*args, **kwargs)
 
 
+class PurchaseRegistryRoute(Resource):
+    """Purchase registry information."""
+
+    @swagger.operation()
+    @token_required()
+    def get(self, *args, **kwargs):
+        """Get purchase registry products list."""
+        return marshal(get_purchase_invoice_data(), PurchaseRegistry.resource_fields)
+
+
 api.add_resource(PurchaseInvoiceRoute, "/purchase-invoice/<instance_id>")
 api.add_resource(PurchaseInvoicesRoute, "/purchase-invoice/")
 api.add_resource(PurchaseInvoiceProductRoute, "/purchase-invoice-product/<instance_id>")
 api.add_resource(PurchaseInvoiceProductsRoute, "/purchase-invoice-product/")
+api.add_resource(PurchaseRegistryRoute, "/purchase-registry/")
