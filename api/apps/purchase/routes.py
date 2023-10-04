@@ -9,6 +9,7 @@ from api.apps.purchase.parsers import (
     purchase_invoice_product_parser,
     purchase_invoice_product_patch_parser,
     purchase_invoice_put_parser,
+    purchase_registry_parser,
 )
 from api.apps.purchase.schemas import (
     purchase_invoice_delete_schema,
@@ -23,6 +24,7 @@ from api.apps.purchase.schemas import (
     purchase_invoice_products_get_schema,
     purchase_invoice_put_schema,
     purchase_invoices_get_schema,
+    purchase_registry_get_schema,
 )
 from api.apps.purchase.services import get_purchase_invoice_data
 from api.common import CustomDateTimeFormat
@@ -179,11 +181,15 @@ class PurchaseInvoiceProductsRoute(ModelsRoute):
 class PurchaseRegistryRoute(Resource):
     """Purchase registry information."""
 
-    @swagger.operation()
+    @swagger.operation(**purchase_registry_get_schema)
     @token_required()
     def get(self, *args, **kwargs):
         """Get purchase registry products list."""
-        return marshal(get_purchase_invoice_data(), PurchaseRegistry.resource_fields)
+        args = purchase_registry_parser.parse_args()
+        return marshal(
+            get_purchase_invoice_data(args.get("start", 0), args.get("limit", 20)),
+            PurchaseRegistry.resource_fields,
+        )
 
 
 api.add_resource(PurchaseInvoiceRoute, "/purchase-invoice/<instance_id>")

@@ -12,7 +12,7 @@ from api import (
 )
 
 
-def get_purchase_invoice_data() -> Sequence:
+def get_purchase_invoice_data(offset: int, limit: int) -> Sequence:
     """Get Purchase registry product list."""
     return (
         PurchaseInvoice.query.with_entities(
@@ -31,5 +31,7 @@ def get_purchase_invoice_data() -> Sequence:
         .join(Counterparty)
         .join(Product)
         .group_by(PurchaseInvoice)
+        .limit(limit)
+        .offset(offset)
         .all()
     )
