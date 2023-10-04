@@ -353,3 +353,43 @@ purchase_invoice_products_get_schema = {
         {"code": 409, "message": "Instance with id does not exist."},
     ],
 }
+
+
+purchase_registry_get_schema = {
+    "notes": "Get purchase registry.",
+    "nickname": "Get purchase registry.",
+    "responseClass": "PurchaseRegistryFields",
+    "parameters": [
+        {
+            "name": "Authorization",
+            "description": "Authorization: Bearer token",
+            "required": True,
+            "allowMultiple": False,
+            "dataType": "String",
+            "paramType": "header",
+            "defaultValue": "Bearer ",
+        },
+        {
+            "name": "start",
+            "description": "Query parameters start (offset)",
+            "required": False,
+            "allowMultiple": False,
+            "dataType": "json",
+            "paramType": "query",
+            "defaultValue": 0,
+        },
+        {
+            "name": "limit",
+            "description": "Query parameters limit",
+            "required": False,
+            "allowMultiple": False,
+            "dataType": "json",
+            "paramType": "query",
+            "defaultValue": 10,
+        },
+    ],
+    "responseMessages": [
+        {"code": 200, "message": "Operation successfully performed"},
+        {"code": 400, "message": "Invalid input (specified)."},
+    ],
+}
