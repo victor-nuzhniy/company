@@ -248,10 +248,10 @@ class CounterpartyAgreementsRoute(Resource):
         )
 
 
-api.add_resource(DiscountRoute, "/discount/<instance_id>")
+api.add_resource(DiscountRoute, "/discount/<instance_id>/")
 api.add_resource(DiscountsRoute, "/discount/")
-api.add_resource(CounterpartyRoute, "/counterpary/,<instance_id>")
+api.add_resource(CounterpartyRoute, "/counterpary/,<instance_id>/")
 api.add_resource(CounterpartysRoute, "/counterparty/")
-api.add_resource(AgreementRoute, "/agreement/<instance_id>")
+api.add_resource(AgreementRoute, "/agreement/<instance_id>/")
 api.add_resource(AgreementsRoute, "/agreement/")
-api.add_resource(CounterpartyAgreementsRoute, "/agreements/<company_id>")
+api.add_resource(CounterpartyAgreementsRoute, "/agreements/<company_id>/")
