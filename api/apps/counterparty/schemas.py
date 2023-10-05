@@ -528,3 +528,26 @@ agreements_get_schema = {
         {"code": 409, "message": "Instance with id does not exist."},
     ],
 }
+
+
+counterparty_agreements_get_schema = {
+    "notes": "Get agreements by counterparty id.",
+    "nickname": "Get agreements by counterparty id.",
+    "responseClass": "AgreementFields",
+    "parameters": [
+        {
+            "name": "Authorization",
+            "description": "Authorization: Bearer token",
+            "required": True,
+            "allowMultiple": False,
+            "dataType": "String",
+            "paramType": "header",
+            "defaultValue": "Bearer ",
+        },
+    ],
+    "responseMessages": [
+        {"code": 200, "message": "Operation successfully performed"},
+        {"code": 401, "message": "Unauthorized."},
+        {"code": 409, "message": "Instance with id does not exist."},
+    ],
+}

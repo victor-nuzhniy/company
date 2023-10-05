@@ -1,5 +1,5 @@
 """Module for counterparty rounters."""
-from flask_restful import fields
+from flask_restful import Resource, fields, marshal
 from flask_restful_swagger import swagger
 
 from api import Agreement, Counterparty, Discount, api
@@ -19,6 +19,7 @@ from api.apps.counterparty.schemas import (
     agreement_put_schema,
     agreements_get_schema,
     counterparties_get_schema,
+    counterparty_agreements_get_schema,
     counterparty_delete_schema,
     counterparty_get_schema,
     counterparty_patch_schema,
@@ -31,7 +32,9 @@ from api.apps.counterparty.schemas import (
     discount_put_schema,
     discounts_get_schema,
 )
+from api.apps.counterparty.validators import counterparty_id
 from api.model_routes import ModelRoute, ModelsRoute, token_required
+from api.services import crud
 
 
 @swagger.model
@@ -231,9 +234,24 @@ class AgreementsRoute(ModelsRoute):
         return super().get(*args, **kwargs)
 
 
+class CounterpartyAgreementsRoute(Resource):
+    """Get Counterparty Agreements list by counterparty id."""
+
+    @swagger.operation(**counterparty_agreements_get_schema)
+    @token_required()
+    def get(self, company_id, *args, **kwargs):
+        """Get Agreements list by counterparty id."""
+        company_id = counterparty_id(company_id)
+        return marshal(
+            crud.read_many(Agreement, {"counterparty_id": company_id}),
+            AgreementFields.resource_fields,
+        )
+
+
 api.add_resource(DiscountRoute, "/discount/<instance_id>")
 api.add_resource(DiscountsRoute, "/discount/")
 api.add_resource(CounterpartyRoute, "/counterpary/,<instance_id>")
 api.add_resource(CounterpartysRoute, "/counterparty/")
 api.add_resource(AgreementRoute, "/agreement/<instance_id>")
 api.add_resource(AgreementsRoute, "/agreement/")
+api.add_resource(CounterpartyAgreementsRoute, "/agreements/<company_id>")
