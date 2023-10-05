@@ -2,9 +2,11 @@
 from typing import Dict, List, Sequence
 
 from flask import abort
-from sqlalchemy import CursorResult, and_, func, select
+from sqlalchemy import CursorResult, Row, and_, func, select
 
 from api import (
+    Invoice,
+    Order,
     Product,
     PurchaseInvoice,
     PurchaseInvoiceProduct,
@@ -210,3 +212,23 @@ def get_sold_products_for_period(period: Dict) -> Sequence:
         .all()
     )
     return result
+
+
+def get_last_name(model_name: str) -> Row:
+    """Get last model name."""
+    if model_name not in (
+        "Order",
+        "Invoice",
+        "PurchaseInvoice",
+        "SaleInvoice",
+        "TaxInvoice",
+    ):
+        abort(
+            409,
+            f"'{model_name}' is not in "
+            f"Order, Invoice, PurchaseInvoice, SaleInvoice, TaxInvoice models.",
+        )
+    model: Order | Invoice | PurchaseInvoice | SaleInvoice | TaxInvoice = globals().get(
+        model_name
+    )
+    return model.query.with_entities(model.name).order_by(model.id.desc()).first()

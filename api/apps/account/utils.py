@@ -29,3 +29,11 @@ def add_income_to_products(income_dict: Dict, products: List[Dict]) -> List[Dict
     for product in products:
         product["income"] = income_dict.get(product.get("id"))
     return products
+
+
+def get_last_string_digits_number(name: str) -> int:
+    """Get last possible digits from a str."""
+    for i in range(len(name)):
+        if not name[-i - 1].isnumeric():
+            return int(name[-i:])
+    return int(name)

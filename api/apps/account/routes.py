@@ -2,6 +2,7 @@
 from flask import abort
 from flask_restful import Resource, fields, marshal, marshal_with
 from flask_restful_swagger import swagger
+from sqlalchemy import Row
 
 from api import SaleInvoice, SaleInvoiceProduct, api
 from api.apps.account.parsers import (
@@ -11,12 +12,14 @@ from api.apps.account.parsers import (
 )
 from api.apps.account.schemas import (
     income_for_period_schema,
+    name_number_schema,
     period_report_schema,
     process_sale_invoice_schema,
     product_leftovers_schema,
 )
 from api.apps.account.services import (
     create_tax_invoice_products,
+    get_last_name,
     get_purchase_products_by_invoice_products,
     get_purchase_products_quantity_list,
     get_sale_invoice_products_by_period,
@@ -29,6 +32,7 @@ from api.apps.account.services import (
 from api.apps.account.utils import (
     add_income_to_products,
     create_income_products_dict,
+    get_last_string_digits_number,
     get_product_leftovers_on_date,
 )
 from api.model_routes import token_required
@@ -77,6 +81,13 @@ class IncomeForPeriod:
         "product_type": fields.String,
         "income": fields.Integer,
     }
+
+
+@swagger.model
+class NameNumber:
+    """NameRoute output fields."""
+
+    resource_fields = {"number": fields.Integer}
 
 
 class ProcessSaleInvoiceRoute(Resource):
@@ -169,7 +180,22 @@ class IncomeForPeriodRoute(Resource):
         return add_income_to_products(income_dict, products)
 
 
+class NameNumberRoute(Resource):
+    """Get last model name number."""
+
+    @swagger.operation(**name_number_schema)
+    @token_required()
+    def get(self, model_name, *args, **kwargs):
+        """Get last model name number."""
+        last_row: Row = get_last_name(model_name)
+        return marshal(
+            {"number": get_last_string_digits_number(last_row.name) + 1},
+            NameNumber.resource_fields,
+        )
+
+
 api.add_resource(ProcessSaleInvoiceRoute, "/account/process-sale-invoice/")
 api.add_resource(PeriodReportRoute, "/account/sale-report/")
 api.add_resource(ProductsLeftoversRoute, "/account/product-leftovers/")
 api.add_resource(IncomeForPeriodRoute, "/account/income-for-period/")
+api.add_resource(NameNumberRoute, "/account/<model_name>/")
