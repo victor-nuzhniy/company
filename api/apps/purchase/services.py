@@ -39,6 +39,18 @@ def get_purchase_invoice_data(offset: int = 0, limit: int = 20) -> Sequence:
 
 def get_purchase_invoice_products_by_purchase_id(invoice_id: int) -> Sequence:
     """Get PurchaseInvoices products list by purchase invoice id."""
-    return PurchaseInvoiceProduct.query.filter(
-        PurchaseInvoiceProduct.purchase_invoice_id == invoice_id
-    ).all()
+    return (
+        PurchaseInvoiceProduct.query.with_entities(
+            PurchaseInvoiceProduct.id.label("id"),
+            PurchaseInvoiceProduct.quantity.label("quantity"),
+            PurchaseInvoiceProduct.price.label("price"),
+            PurchaseInvoiceProduct.products_left.label("products_left"),
+            Product.name.label("name"),
+            Product.code.label("code"),
+            Product.currency.label("currency"),
+            Product.units.label("units"),
+        )
+        .join(Product)
+        .filter(PurchaseInvoiceProduct.purchase_invoice_id == invoice_id)
+        .all()
+    )

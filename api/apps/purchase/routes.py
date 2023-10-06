@@ -79,6 +79,22 @@ class PurchaseRegistry:
     }
 
 
+@swagger.model
+class PurchaseInvoicesProductsFields:
+    """PurchaseInvoicesProductsRoute output fields."""
+
+    resource_fields = {
+        "id": fields.Integer,
+        "quantity": fields.Integer,
+        "price": fields.Integer,
+        "products_left": fields.Integer,
+        "name": fields.String,
+        "code": fields.String,
+        "currency": fields.String,
+        "units": fields.String,
+    }
+
+
 class PurchaseInvoiceRoute(ModelRoute):
     """Operations with single PurchaseInvoice instance."""
 
@@ -209,7 +225,7 @@ class PurchaseInvoicesProductsRoute(Resource):
         purchase_invoice_id = purchase_invoice_id_validator(purchase_invoice_id)
         return marshal(
             get_purchase_invoice_products_by_purchase_id(purchase_invoice_id),
-            PurchaseInvoiceProductFields.resource_fields,
+            PurchaseInvoicesProductsFields.resource_fields,
         )
 
 

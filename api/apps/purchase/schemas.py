@@ -398,7 +398,7 @@ purchase_registry_get_schema = {
 purchase_invoices_products_get_schema = {
     "notes": "Get purchase invoice products by purchase invoice id.",
     "nickname": "Get purchase invoice products by purchase invoice id.",
-    "responseClass": "PurchaseInvoiceProductFields",
+    "responseClass": "PurchaseInvoicesProductsFields",
     "parameters": [
         {
             "name": "Authorization",
