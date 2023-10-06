@@ -393,3 +393,26 @@ purchase_registry_get_schema = {
         {"code": 400, "message": "Invalid input (specified)."},
     ],
 }
+
+
+purchase_invoices_products_get_schema = {
+    "notes": "Get purchase invoice products by purchase invoice id.",
+    "nickname": "Get purchase invoice products by purchase invoice id.",
+    "responseClass": "PurchaseInvoiceProductFields",
+    "parameters": [
+        {
+            "name": "Authorization",
+            "description": "Authorization: Bearer token",
+            "required": True,
+            "allowMultiple": False,
+            "dataType": "String",
+            "paramType": "header",
+            "defaultValue": "Bearer ",
+        },
+    ],
+    "responseMessages": [
+        {"code": 200, "message": "Operation successfully performed"},
+        {"code": 401, "message": "Unauthorized."},
+        {"code": 409, "message": "Instance with id does not exist."},
+    ],
+}

@@ -35,3 +35,10 @@ def get_purchase_invoice_data(offset: int = 0, limit: int = 20) -> Sequence:
         .offset(offset)
         .all()
     )
+
+
+def get_purchase_invoice_products_by_purchase_id(invoice_id: int) -> Sequence:
+    """Get PurchaseInvoices products list by purchase invoice id."""
+    return PurchaseInvoiceProduct.query.filter(
+        PurchaseInvoiceProduct.purchase_invoice_id == invoice_id
+    ).all()

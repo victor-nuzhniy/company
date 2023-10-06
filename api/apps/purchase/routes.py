@@ -24,9 +24,16 @@ from api.apps.purchase.schemas import (
     purchase_invoice_products_get_schema,
     purchase_invoice_put_schema,
     purchase_invoices_get_schema,
+    purchase_invoices_products_get_schema,
     purchase_registry_get_schema,
 )
-from api.apps.purchase.services import get_purchase_invoice_data
+from api.apps.purchase.services import (
+    get_purchase_invoice_data,
+    get_purchase_invoice_products_by_purchase_id,
+)
+from api.apps.purchase.validators import (
+    purchase_invoice_id as purchase_invoice_id_validator,
+)
 from api.common import CustomDateTimeFormat
 from api.model_routes import ModelRoute, ModelsRoute, token_required
 
@@ -192,8 +199,25 @@ class PurchaseRegistryRoute(Resource):
         )
 
 
+class PurchaseInvoicesProductsRoute(Resource):
+    """Getting PurchaseInvoices products list by purchase invoice id."""
+
+    @swagger.operation(**purchase_invoices_products_get_schema)
+    @token_required()
+    def get(self, purchase_invoice_id, *args, **kwargs):
+        """Get PurchaseInvoices products list by purchase invoice id."""
+        purchase_invoice_id = purchase_invoice_id_validator(purchase_invoice_id)
+        return marshal(
+            get_purchase_invoice_products_by_purchase_id(purchase_invoice_id),
+            PurchaseInvoiceProductFields.resource_fields,
+        )
+
+
 api.add_resource(PurchaseInvoiceRoute, "/purchase-invoice/<instance_id>")
 api.add_resource(PurchaseInvoicesRoute, "/purchase-invoice/")
 api.add_resource(PurchaseInvoiceProductRoute, "/purchase-invoice-product/<instance_id>")
 api.add_resource(PurchaseInvoiceProductsRoute, "/purchase-invoice-product/")
 api.add_resource(PurchaseRegistryRoute, "/purchase-registry/")
+api.add_resource(
+    PurchaseInvoicesProductsRoute, "/purchase-invoice-products/<purchase_invoice_id>/"
+)
