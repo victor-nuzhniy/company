@@ -155,7 +155,7 @@ class ProductTypesRoute(ModelsRoute):
         return super().get(*args, **kwargs)
 
 
-api.add_resource(ProductRoute, "/product/<instance_id>")
+api.add_resource(ProductRoute, "/product/<instance_id>/")
 api.add_resource(ProductsRoute, "/product/")
-api.add_resource(ProductTypeRoute, "/product-type/<instance_id>")
+api.add_resource(ProductTypeRoute, "/product-type/<instance_id>/")
 api.add_resource(ProductTypesRoute, "/product-type/")

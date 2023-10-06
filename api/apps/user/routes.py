@@ -98,6 +98,6 @@ class AdminUserRoute(Resource):
         return crud.update(User, args, {"id": user_id})
 
 
-api.add_resource(UserRoute, "/user/<instance_id>")
+api.add_resource(UserRoute, "/user/<instance_id>/")
 api.add_resource(UsersRoute, "/user/")
-api.add_resource(AdminUserRoute, "/user/admin/<user_id>")
+api.add_resource(AdminUserRoute, "/user/admin/<user_id>/")

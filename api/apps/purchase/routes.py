@@ -229,9 +229,11 @@ class PurchaseInvoicesProductsRoute(Resource):
         )
 
 
-api.add_resource(PurchaseInvoiceRoute, "/purchase-invoice/<instance_id>")
+api.add_resource(PurchaseInvoiceRoute, "/purchase-invoice/<instance_id>/")
 api.add_resource(PurchaseInvoicesRoute, "/purchase-invoice/")
-api.add_resource(PurchaseInvoiceProductRoute, "/purchase-invoice-product/<instance_id>")
+api.add_resource(
+    PurchaseInvoiceProductRoute, "/purchase-invoice-product/<instance_id>/"
+)
 api.add_resource(PurchaseInvoiceProductsRoute, "/purchase-invoice-product/")
 api.add_resource(PurchaseRegistryRoute, "/purchase-registry/")
 api.add_resource(

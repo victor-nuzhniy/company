@@ -160,7 +160,7 @@ class SaleInvoiceProductsRoute(ModelsRoute):
         return super().get(*args, **kwargs)
 
 
-api.add_resource(SaleInvoiceRoute, "/sale-invoice/<instance_id>")
+api.add_resource(SaleInvoiceRoute, "/sale-invoice/<instance_id>/")
 api.add_resource(SaleInvoicesRoute, "/sale-invoice/")
-api.add_resource(SaleInvoiceProductRoute, "/sale-invoice-product/<instance_id>")
+api.add_resource(SaleInvoiceProductRoute, "/sale-invoice-product/<instance_id>/")
 api.add_resource(SaleInvoiceProductsRoute, "/sale-invoice-product/")

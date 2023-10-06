@@ -160,7 +160,7 @@ class OrderProductsRoute(ModelsRoute):
         return super().get(*args, **kwargs)
 
 
-api.add_resource(OrderRoute, "/order/<instance_id>")
+api.add_resource(OrderRoute, "/order/<instance_id>/")
 api.add_resource(OrdersRoute, "/order/")
-api.add_resource(OrderProductRoute, "/order-product/<instance_id>")
+api.add_resource(OrderProductRoute, "/order-product/<instance_id>/")
 api.add_resource(OrderProductsRoute, "/order-product/")
