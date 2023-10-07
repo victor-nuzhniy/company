@@ -85,9 +85,11 @@ class PurchaseInvoicesProductsFields:
 
     resource_fields = {
         "id": fields.Integer,
+        "product_id": fields.Integer,
         "quantity": fields.Integer,
         "price": fields.Integer,
         "products_left": fields.Integer,
+        "purchase_invoice_id": fields.Integer,
         "name": fields.String,
         "code": fields.String,
         "currency": fields.String,

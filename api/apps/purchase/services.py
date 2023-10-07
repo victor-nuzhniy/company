@@ -42,9 +42,11 @@ def get_purchase_invoice_products_by_purchase_id(invoice_id: int) -> Sequence:
     return (
         PurchaseInvoiceProduct.query.with_entities(
             PurchaseInvoiceProduct.id.label("id"),
+            PurchaseInvoiceProduct.product_id.label("product_id"),
             PurchaseInvoiceProduct.quantity.label("quantity"),
             PurchaseInvoiceProduct.price.label("price"),
             PurchaseInvoiceProduct.products_left.label("products_left"),
+            PurchaseInvoiceProduct.purchase_invoice_id.label("purchase_invoice_id"),
             Product.name.label("name"),
             Product.code.label("code"),
             Product.currency.label("currency"),
