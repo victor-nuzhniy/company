@@ -1,5 +1,5 @@
 """Routes for order apps."""
-from flask_restful import fields
+from flask_restful import Resource, fields, marshal
 from flask_restful_swagger import swagger
 
 from api import Order, OrderProduct, api
@@ -9,6 +9,7 @@ from api.apps.order.parsers import (
     order_product_parser,
     order_product_patch_parser,
     order_put_parser,
+    order_registry_parser,
 )
 from api.apps.order.schemas import (
     order_delete_schema,
@@ -22,8 +23,10 @@ from api.apps.order.schemas import (
     order_product_put_schema,
     order_products_get_schema,
     order_put_schema,
+    order_registry_get_schema,
     orders_get_schema,
 )
+from api.apps.order.services import get_order_registry_data
 from api.common import CustomDateTimeFormat
 from api.model_routes import ModelRoute, ModelsRoute, token_required
 
@@ -51,6 +54,21 @@ class OrderProductFields:
         "quantity": fields.Integer,
         "price": fields.Integer,
         "order_id": fields.Integer,
+    }
+
+
+@swagger.model
+class OrderRegistryFields:
+    """OrderRegistryRoute output fields."""
+
+    resource_fields = {
+        "id": fields.Integer,
+        "username": fields.String,
+        "order_name": fields.String,
+        "created_at": CustomDateTimeFormat,
+        "customer": fields.String,
+        "summ": fields.Integer,
+        "currency": fields.String,
     }
 
 
@@ -160,7 +178,22 @@ class OrderProductsRoute(ModelsRoute):
         return super().get(*args, **kwargs)
 
 
+class OrderRegistryRoute(Resource):
+    """Order registry information."""
+
+    @swagger.operation(**order_registry_get_schema)
+    @token_required()
+    def get(self, *args, **kwargs):
+        """Get order registry list."""
+        args = order_registry_parser.parse_args()
+        return marshal(
+            get_order_registry_data(**args),
+            OrderRegistryFields.resource_fields,
+        )
+
+
 api.add_resource(OrderRoute, "/order/<instance_id>/")
 api.add_resource(OrdersRoute, "/order/")
 api.add_resource(OrderProductRoute, "/order-product/<instance_id>/")
 api.add_resource(OrderProductsRoute, "/order-product/")
+api.add_resource(OrderRegistryRoute, "/order-registry/")
