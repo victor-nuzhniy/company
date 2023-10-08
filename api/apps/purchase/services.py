@@ -26,10 +26,10 @@ def get_purchase_invoice_data(offset: int = 0, limit: int = 20) -> Sequence:
             ).label("summ"),
             Product.currency.label("currency"),
         )
-        .join(PurchaseInvoice.purchase_invoice_products)
+        .outerjoin(PurchaseInvoice.purchase_invoice_products)
         .join(Agreement)
         .join(Counterparty)
-        .join(Product)
+        .outerjoin(Product)
         .group_by(PurchaseInvoice)
         .limit(limit)
         .offset(offset)
