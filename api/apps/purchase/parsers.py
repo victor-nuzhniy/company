@@ -65,3 +65,15 @@ purchase_registry_parser.add_argument(
 purchase_registry_parser.add_argument(
     "limit", type=int, required=False, location="args"
 )
+purchase_registry_parser.add_argument(
+    "date_from",
+    type=lambda x: datetime.strptime(x, "%Y-%m-%d"),
+    required=False,
+    location="args",
+)
+purchase_registry_parser.add_argument(
+    "date_to",
+    type=lambda x: datetime.strptime(x, "%Y-%m-%d"),
+    required=False,
+    location="args",
+)
