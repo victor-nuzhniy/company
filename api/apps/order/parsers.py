@@ -45,3 +45,19 @@ order_product_patch_parser.add_argument("product_id", type=product_id, required=
 order_product_patch_parser.add_argument("quantity", type=int, required=False)
 order_product_patch_parser.add_argument("price", type=int, required=False)
 order_product_patch_parser.add_argument("order_id", type=order_id, required=False)
+
+order_registry_parser = reqparse.RequestParser()
+order_registry_parser.add_argument("offset", type=int, required=False, location="args")
+order_registry_parser.add_argument("limit", type=int, required=False, location="args")
+order_registry_parser.add_argument(
+    "date_from",
+    type=lambda x: datetime.strptime(x, "%Y-%m-%d"),
+    required=False,
+    location="args",
+)
+order_registry_parser.add_argument(
+    "date_to",
+    type=lambda x: datetime.strptime(x, "%Y-%m-%d"),
+    required=False,
+    location="args",
+)
