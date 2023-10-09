@@ -102,7 +102,6 @@ class ModelsRoute(Resource):
 
     def post(self, *args, **kwargs):
         """Create model instance."""
-        print(request.json, 111111111111)
         args = self.post_parser.parse_args()
         check_unique(self.model, args)
         return marshal(crud.create(self.model, args), self.model_fields)
