@@ -11,6 +11,7 @@ from api.apps.order.parsers import (
     order_product_patch_parser,
     order_put_parser,
     order_registry_parser,
+    user_order_parser,
 )
 from api.apps.order.schemas import (
     order_delete_schema,
@@ -27,6 +28,7 @@ from api.apps.order.schemas import (
     order_registry_get_schema,
     orders_get_schema,
     orders_products_get_schema,
+    user_order_post_schema,
 )
 from api.apps.order.services import (
     get_order_products_by_order_id,
@@ -34,6 +36,7 @@ from api.apps.order.services import (
 )
 from api.common import CustomDateTimeFormat
 from api.model_routes import ModelRoute, ModelsRoute, token_required
+from api.services import crud
 
 
 @swagger.model
@@ -231,11 +234,13 @@ class OrdersProductsRoute(Resource):
 class UserOrderRoute(Resource):
     """Create Order by authorized user."""
 
-    @swagger.operation()
+    @swagger.operation(**user_order_post_schema)
     @token_required()
     def post(self, *args, **kwargs):
         """Create Order by authorized user."""
-        pass
+        args = user_order_parser.parse_args()
+        args["user_id"] = kwargs.get("current_user").id
+        return marshal(crud.create(Order, args), OrderFields.resource_fields)
 
 
 api.add_resource(OrderRoute, "/order/<instance_id>/")
@@ -244,3 +249,4 @@ api.add_resource(OrderProductRoute, "/order-product/<instance_id>/")
 api.add_resource(OrderProductsRoute, "/order-product/")
 api.add_resource(OrderRegistryRoute, "/order-registry/")
 api.add_resource(OrdersProductsRoute, "/orders-products/<order_id>/")
+api.add_resource(UserOrderRoute, "/user-order/")

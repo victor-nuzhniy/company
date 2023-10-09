@@ -61,3 +61,7 @@ order_registry_parser.add_argument(
     required=False,
     location="args",
 )
+
+user_order_parser = reqparse.RequestParser()
+user_order_parser.add_argument("name", type=str_length_100, required=True)
+user_order_parser.add_argument("customer_id", type=counterparty_id, required=True)
