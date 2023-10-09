@@ -227,7 +227,7 @@ class OrdersProductsRoute(Resource):
         order_id = order_id_validator(order_id)
         return marshal(
             get_order_products_by_order_id(order_id),
-            OrdersProductsFields,
+            OrdersProductsFields.resource_fields,
         )
 
 
