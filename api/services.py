@@ -154,7 +154,7 @@ class DbUtils:
         """Check unique constraits for model field with given value."""
         statement = select(model.id).where(getattr(model, name) == value)
         if instance_id:
-            statement = statement.where(id != instance_id)
+            statement = statement.where(model.id != instance_id)
         result: CursorResult = db.session.execute(statement=statement)
         return result.first() is not None
 
