@@ -42,3 +42,23 @@ def get_order_registry_data(
         .offset(offset)
         .all()
     )
+
+
+def get_order_products_by_order_id(order_id: int) -> Sequence:
+    """Get Orders products list by order id."""
+    return (
+        OrderProduct.query.with_entities(
+            OrderProduct.id.label("id"),
+            OrderProduct.product_id.label("product_id"),
+            OrderProduct.quantity.label("quantity"),
+            OrderProduct.price.label("price"),
+            OrderProduct.order_id.label("order_id"),
+            Product.name.label("name"),
+            Product.code.label("code"),
+            Product.currency.label("currency"),
+            Product.units.label("units"),
+        )
+        .join(Product)
+        .filter(OrderProduct.order_id == order_id)
+        .all()
+    )

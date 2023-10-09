@@ -3,6 +3,7 @@ from flask_restful import Resource, fields, marshal
 from flask_restful_swagger import swagger
 
 from api import Order, OrderProduct, api
+from api.apps.invoice.validators import order_id as order_id_validator
 from api.apps.order.parsers import (
     order_patch_parser,
     order_post_parser,
@@ -25,8 +26,12 @@ from api.apps.order.schemas import (
     order_put_schema,
     order_registry_get_schema,
     orders_get_schema,
+    orders_products_get_schema,
 )
-from api.apps.order.services import get_order_registry_data
+from api.apps.order.services import (
+    get_order_products_by_order_id,
+    get_order_registry_data,
+)
 from api.common import CustomDateTimeFormat
 from api.model_routes import ModelRoute, ModelsRoute, token_required
 
@@ -69,6 +74,23 @@ class OrderRegistryFields:
         "customer": fields.String,
         "summ": fields.Integer,
         "currency": fields.String,
+    }
+
+
+@swagger.model
+class OrdersProductsFields:
+    """OrdersProductsRoute output fields."""
+
+    resource_fields = {
+        "id": fields.Integer,
+        "product_id": fields.Integer,
+        "quantity": fields.Integer,
+        "price": fields.Integer,
+        "order_id": fields.Integer,
+        "name": fields.String,
+        "code": fields.String,
+        "currency": fields.String,
+        "units": fields.String,
     }
 
 
@@ -192,8 +214,33 @@ class OrderRegistryRoute(Resource):
         )
 
 
+class OrdersProductsRoute(Resource):
+    """Getting Orders products list by order id."""
+
+    @swagger.operation(**orders_products_get_schema)
+    @token_required()
+    def get(self, order_id, *args, **kwargs):
+        """Get Orders products list by order id."""
+        order_id = order_id_validator(order_id)
+        return marshal(
+            get_order_products_by_order_id(order_id),
+            OrdersProductsFields,
+        )
+
+
+class UserOrderRoute(Resource):
+    """Create Order by authorized user."""
+
+    @swagger.operation()
+    @token_required()
+    def post(self, *args, **kwargs):
+        """Create Order by authorized user."""
+        pass
+
+
 api.add_resource(OrderRoute, "/order/<instance_id>/")
 api.add_resource(OrdersRoute, "/order/")
 api.add_resource(OrderProductRoute, "/order-product/<instance_id>/")
 api.add_resource(OrderProductsRoute, "/order-product/")
 api.add_resource(OrderRegistryRoute, "/order-registry/")
+api.add_resource(OrdersProductsRoute, "/orders-products/<order_id>/")
