@@ -116,12 +116,15 @@ class CRUDOperations:
     def read_many(
         model: db.Model,
         filters: Dict = None,
+        rev: bool = False,
     ) -> db.Model:
         """Get model instances list."""
         filters = filters if filters else dict()
         select_statement = select(model)
         if filters:
             select_statement = select_statement.filter_by(**filters)
+        if rev:
+            select_statement = select_statement.order_by(model.id.desc())
         select_statement = select_statement.execution_options(populate_existing=True)
         result: CursorResult = db.session.execute(statement=select_statement)
         objects: Sequence = result.scalars().all()
