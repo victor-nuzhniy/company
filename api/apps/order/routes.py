@@ -3,6 +3,7 @@ from flask_restful import Resource, fields, marshal
 from flask_restful_swagger import swagger
 
 from api import Order, OrderProduct, api
+from api.apps.counterparty.validators import counterparty_id as company_id_validator
 from api.apps.invoice.validators import order_id as order_id_validator
 from api.apps.order.parsers import (
     order_patch_parser,
@@ -14,6 +15,7 @@ from api.apps.order.parsers import (
     user_order_parser,
 )
 from api.apps.order.schemas import (
+    counterparty_orders_get_schema,
     order_delete_schema,
     order_get_schema,
     order_patch_schema,
@@ -243,6 +245,20 @@ class UserOrderRoute(Resource):
         return marshal(crud.create(Order, args), OrderFields.resource_fields)
 
 
+class CounterpartyOrdersRoute(Resource):
+    """Get Counterparty Orders list by counterparty id."""
+
+    @swagger.operation(**counterparty_orders_get_schema)
+    @token_required()
+    def get(self, company_id, *args, **kwargs):
+        """Get Orders list by counterparty id."""
+        company_id = company_id_validator(company_id)
+        return marshal(
+            crud.read_many(Order, {"customer_id": company_id}, True),
+            OrderFields.resource_fields,
+        )
+
+
 api.add_resource(OrderRoute, "/order/<instance_id>/")
 api.add_resource(OrdersRoute, "/order/")
 api.add_resource(OrderProductRoute, "/order-product/<instance_id>/")
@@ -250,3 +266,4 @@ api.add_resource(OrderProductsRoute, "/order-product/")
 api.add_resource(OrderRegistryRoute, "/order-registry/")
 api.add_resource(OrdersProductsRoute, "/orders-products/<order_id>/")
 api.add_resource(UserOrderRoute, "/user-order/")
+api.add_resource(CounterpartyOrdersRoute, "/orders/<company_id>/")

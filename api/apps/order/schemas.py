@@ -467,3 +467,26 @@ user_order_post_schema = {
         {"code": 422, "message": "Invalid input (specified)."},
     ],
 }
+
+
+counterparty_orders_get_schema = {
+    "notes": "Get orders by counterparty id.",
+    "nickname": "Get orders by counterparty id.",
+    "responseClass": "OrderFields",
+    "parameters": [
+        {
+            "name": "Authorization",
+            "description": "Authorization: Bearer token",
+            "required": True,
+            "allowMultiple": False,
+            "dataType": "String",
+            "paramType": "header",
+            "defaultValue": "Bearer ",
+        },
+    ],
+    "responseMessages": [
+        {"code": 200, "message": "Operation successfully performed"},
+        {"code": 401, "message": "Unauthorized."},
+        {"code": 409, "message": "Instance with id does not exist."},
+    ],
+}
