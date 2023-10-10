@@ -65,7 +65,7 @@ class PurchaseInvoiceProductFields:
 
 
 @swagger.model
-class PurchaseRegistry:
+class PurchaseRegistryFields:
     """PurchaseRegistry output fields."""
 
     resource_fields = {
@@ -213,7 +213,7 @@ class PurchaseRegistryRoute(Resource):
         args = purchase_registry_parser.parse_args()
         return marshal(
             get_purchase_invoice_data(**args),
-            PurchaseRegistry.resource_fields,
+            PurchaseRegistryFields.resource_fields,
         )
 
 
