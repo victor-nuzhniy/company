@@ -24,8 +24,13 @@ from api.apps.invoice.schemas import (
     invoice_put_schema,
     invoice_registry_get_schema,
     invoices_get_schema,
+    invoices_products_get_schema,
 )
-from api.apps.invoice.services import get_invoice_data
+from api.apps.invoice.services import (
+    get_invoice_data,
+    get_invoice_products_by_invoice_id,
+)
+from api.apps.invoice.validators import invoice_id as invoice_id_validator
 from api.apps.order.parsers import order_registry_parser
 from api.common import CustomDateTimeFormat
 from api.model_routes import ModelRoute, ModelsRoute, token_required
@@ -75,6 +80,23 @@ class InvoiceRegistryFields:
         "agreement_id": fields.Integer,
         "counterparty": fields.String,
         "counterparty_id": fields.Integer,
+    }
+
+
+@swagger.model
+class InvoicesProductsFields:
+    """InvoicesProductsRoute output fields."""
+
+    resource_fields = {
+        "id": fields.Integer,
+        "product_id": fields.Integer,
+        "quantity": fields.Integer,
+        "price": fields.Integer,
+        "invoice_id": fields.Integer,
+        "name": fields.String,
+        "code": fields.String,
+        "currency": fields.String,
+        "units": fields.String,
     }
 
 
@@ -198,8 +220,23 @@ class InvoiceRegistryRoute(Resource):
         )
 
 
+class InvoicesProductsRoute(Resource):
+    """Getting Invoice products list by invoice id."""
+
+    @swagger.operation(**invoices_products_get_schema)
+    @token_required()
+    def get(self, invoice_id, *args, **kwargs):
+        """Get Invoice products list by invoice id."""
+        invoice_id = invoice_id_validator(invoice_id)
+        return marshal(
+            get_invoice_products_by_invoice_id(invoice_id),
+            InvoicesProductsFields.resource_fields,
+        )
+
+
 api.add_resource(InvoiceRoute, "/invoice/<instance_id>/")
 api.add_resource(InvoicesRoute, "/invoice/")
 api.add_resource(InvoiceProductRoute, "/invoice-product/<instance_id>/")
 api.add_resource(InvoiceProductsRoute, "/invoice-product/")
 api.add_resource(InvoiceRegistryRoute, "/invoice-registry/")
+api.add_resource(InvoicesProductsRoute, "/invoice-products/<invoice_id>/")

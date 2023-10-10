@@ -410,3 +410,26 @@ invoice_registry_get_schema = {
         {"code": 400, "message": "Invalid input (specified)."},
     ],
 }
+
+
+invoices_products_get_schema = {
+    "notes": "Get invoice products by invoice id.",
+    "nickname": "Get invoice products by invoice id.",
+    "responseClass": "InvoicesProductsFields",
+    "parameters": [
+        {
+            "name": "Authorization",
+            "description": "Authorization: Bearer token",
+            "required": True,
+            "allowMultiple": False,
+            "dataType": "String",
+            "paramType": "header",
+            "defaultValue": "Bearer ",
+        },
+    ],
+    "responseMessages": [
+        {"code": 200, "message": "Operation successfully performed"},
+        {"code": 401, "message": "Unauthorized."},
+        {"code": 409, "message": "Instance with id does not exist."},
+    ],
+}
