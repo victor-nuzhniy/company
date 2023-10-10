@@ -108,4 +108,4 @@ class ModelsRoute(Resource):
 
     def get(self, *args, **kwargs):
         """Get model instance list."""
-        return marshal(crud.read_many(self.model), self.model_fields)
+        return marshal(crud.read_many(self.model, rev=True), self.model_fields)
