@@ -30,10 +30,12 @@ from api.apps.invoice.services import (
     get_invoice_data,
     get_invoice_products_by_invoice_id,
 )
+from api.apps.invoice.validators import agreement_id as agreement_id_validator
 from api.apps.invoice.validators import invoice_id as invoice_id_validator
 from api.apps.order.parsers import order_registry_parser
 from api.common import CustomDateTimeFormat
 from api.model_routes import ModelRoute, ModelsRoute, token_required
+from api.services import crud
 
 
 @swagger.model
@@ -234,9 +236,24 @@ class InvoicesProductsRoute(Resource):
         )
 
 
+class AgreementInvoicesRoute(Resource):
+    """Get Agreement Invoices list by agreement id."""
+
+    @swagger.operation()
+    @token_required()
+    def get(self, agreement_id, *args, **kwargs):
+        """Get Invoices list by agreement id."""
+        agreement_id = agreement_id_validator(agreement_id)
+        return marshal(
+            crud.read_many(Invoice, {"agreement_id": agreement_id}, True),
+            InvoiceFields.resource_fields,
+        )
+
+
 api.add_resource(InvoiceRoute, "/invoice/<instance_id>/")
 api.add_resource(InvoicesRoute, "/invoice/")
 api.add_resource(InvoiceProductRoute, "/invoice-product/<instance_id>/")
 api.add_resource(InvoiceProductsRoute, "/invoice-product/")
 api.add_resource(InvoiceRegistryRoute, "/invoice-registry/")
 api.add_resource(InvoicesProductsRoute, "/invoice-products/<invoice_id>/")
+api.add_resource(AgreementInvoicesRoute, "/invoices/<agreement_id>/")

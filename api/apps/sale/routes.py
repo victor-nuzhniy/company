@@ -83,7 +83,7 @@ class SaleRegistryFields:
 class SaleInvoicesProductsFields:
     """SaleInvoicesProductsRoute output fields."""
 
-    resource_fields = {
+    resourse_fields = {
         "id": fields.Integer,
         "product_id": fields.Integer,
         "quantity": fields.Integer,
@@ -235,4 +235,4 @@ api.add_resource(SaleInvoicesRoute, "/sale-invoice/")
 api.add_resource(SaleInvoiceProductRoute, "/sale-invoice-product/<instance_id>/")
 api.add_resource(SaleInvoiceProductsRoute, "/sale-invoice-product/")
 api.add_resource(SaleRegistryRoute, "/sale-invoice-registry/")
-api.add_resource(SaleInvoicesProductsRoute, "/sale-invoices-products/")
+api.add_resource(SaleInvoicesProductsRoute, "/sale-invoice-products/<sale_invoice_id>/")
