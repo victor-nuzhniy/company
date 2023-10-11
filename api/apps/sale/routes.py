@@ -24,9 +24,14 @@ from api.apps.sale.schemas import (
     sale_invoice_products_get_schema,
     sale_invoice_put_schema,
     sale_invoices_get_schema,
+    sale_invoices_products_get_schema,
     sale_registry_get_schema,
 )
-from api.apps.sale.services import get_sale_invoice_data
+from api.apps.sale.services import (
+    get_sale_invoice_data,
+    get_sale_invoice_products_by_sale_invoice_id,
+)
+from api.apps.sale.validators import sale_invoice_id as sale_invoice_id_validator
 from api.common import CustomDateTimeFormat
 from api.model_routes import ModelRoute, ModelsRoute, token_required
 
@@ -71,6 +76,23 @@ class SaleRegistryFields:
         "agreement": fields.String,
         "invoice": fields.String,
         "done": fields.Boolean,
+    }
+
+
+@swagger.model
+class SaleInvoicesProductsFields:
+    """SaleInvoicesProductsRoute output fields."""
+
+    resource_fields = {
+        "id": fields.Integer,
+        "product_id": fields.Integer,
+        "quantity": fields.Integer,
+        "price": fields.Integer,
+        "sale_invoice_id": fields.Integer,
+        "name": fields.String,
+        "code": fields.String,
+        "currency": fields.String,
+        "units": fields.String,
     }
 
 
@@ -194,8 +216,23 @@ class SaleRegistryRoute(Resource):
         )
 
 
+class SaleInvoicesProductsRoute(Resource):
+    """Getting SaleInvoice products list by sale invoice id."""
+
+    @swagger.operation(**sale_invoices_products_get_schema)
+    @token_required()
+    def get(self, sale_invoice_id, *args, **kwargs):
+        """Get SaleInvoice products list by sale invoice id."""
+        sale_invoice_id = sale_invoice_id_validator(sale_invoice_id)
+        return marshal(
+            get_sale_invoice_products_by_sale_invoice_id(sale_invoice_id),
+            SaleInvoicesProductsFields.resourse_fields,
+        )
+
+
 api.add_resource(SaleInvoiceRoute, "/sale-invoice/<instance_id>/")
 api.add_resource(SaleInvoicesRoute, "/sale-invoice/")
 api.add_resource(SaleInvoiceProductRoute, "/sale-invoice-product/<instance_id>/")
 api.add_resource(SaleInvoiceProductsRoute, "/sale-invoice-product/")
 api.add_resource(SaleRegistryRoute, "/sale-invoice-registry/")
+api.add_resource(SaleInvoicesProductsRoute, "/sale-invoices-products/")

@@ -54,3 +54,23 @@ def get_sale_invoice_data(
         .offset(offset)
         .all()
     )
+
+
+def get_sale_invoice_products_by_sale_invoice_id(sale_invoice_id: int) -> Sequence:
+    """Get SaleInvoice products list by sale invoice id."""
+    return (
+        SaleInvoiceProduct.query.with_entities(
+            SaleInvoiceProduct.id.label("id"),
+            SaleInvoiceProduct.product_id.label("product_id"),
+            SaleInvoiceProduct.quantity.label("quantity"),
+            SaleInvoiceProduct.price.label("price"),
+            SaleInvoiceProduct.sale_invoice_id.label("sale_invoice_id"),
+            Product.name.label("name"),
+            Product.code.label("code"),
+            Product.currency.label("currency"),
+            Product.units.label("units"),
+        )
+        .join(Product)
+        .filter(SaleInvoiceProduct.sale_invoice_id == sale_invoice_id)
+        .all()
+    )
