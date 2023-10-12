@@ -74,3 +74,12 @@ def get_sale_invoice_products_by_sale_invoice_id(sale_invoice_id: int) -> Sequen
         .filter(SaleInvoiceProduct.sale_invoice_id == sale_invoice_id)
         .all()
     )
+
+
+def get_sale_invoices_by_agreement_id(agreement_id: int) -> Sequence:
+    """Get SaleInvoice list by agreement_id."""
+    return (
+        SaleInvoice.query.outerjoin(Invoice)
+        .filter(Invoice.agreement_id == agreement_id)
+        .all()
+    )

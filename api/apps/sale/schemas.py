@@ -433,3 +433,26 @@ sale_invoices_products_get_schema = {
         {"code": 409, "message": "Instance with id does not exist."},
     ],
 }
+
+
+agreement_sale_invoices_get_schema = {
+    "notes": "Get all sale invoices with agreement id.",
+    "nickname": "Get all sale invoices with agreement id.",
+    "responseClass": "SaleInvoiceFields",
+    "parameters": [
+        {
+            "name": "Authorization",
+            "description": "Authorization: Bearer token",
+            "required": True,
+            "allowMultiple": False,
+            "dataType": "String",
+            "paramType": "header",
+            "defaultValue": "Bearer ",
+        },
+    ],
+    "responseMessages": [
+        {"code": 200, "message": "Operation successfully performed"},
+        {"code": 401, "message": "Unauthorized."},
+        {"code": 409, "message": "Instance with id does not exist."},
+    ],
+}

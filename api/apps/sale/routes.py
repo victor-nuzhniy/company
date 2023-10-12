@@ -3,6 +3,7 @@ from flask_restful import Resource, fields, marshal
 from flask_restful_swagger import swagger
 
 from api import SaleInvoice, SaleInvoiceProduct, api
+from api.apps.invoice.validators import agreement_id as agreement_id_validator
 from api.apps.purchase.parsers import purchase_registry_parser
 from api.apps.sale.parsers import (
     sale_invoice_patch_parser,
@@ -12,6 +13,7 @@ from api.apps.sale.parsers import (
     sale_invoice_put_parser,
 )
 from api.apps.sale.schemas import (
+    agreement_sale_invoices_get_schema,
     sale_invoice_delete_schema,
     sale_invoice_get_schema,
     sale_invoice_patch_schema,
@@ -30,6 +32,7 @@ from api.apps.sale.schemas import (
 from api.apps.sale.services import (
     get_sale_invoice_data,
     get_sale_invoice_products_by_sale_invoice_id,
+    get_sale_invoices_by_agreement_id,
 )
 from api.apps.sale.validators import sale_invoice_id as sale_invoice_id_validator
 from api.common import CustomDateTimeFormat
@@ -230,9 +233,24 @@ class SaleInvoicesProductsRoute(Resource):
         )
 
 
+class AgreementSaleInvoicesRoute(Resource):
+    """Getting SaleInvoice list by agreement id."""
+
+    @swagger.operation(**agreement_sale_invoices_get_schema)
+    @token_required()
+    def get(self, agreement_id, *args, **kwargs):
+        """Get SaleInvoice list by agreement id."""
+        agreement_id = agreement_id_validator(agreement_id)
+        return marshal(
+            get_sale_invoices_by_agreement_id(agreement_id),
+            SaleInvoiceFields.resource_fields,
+        )
+
+
 api.add_resource(SaleInvoiceRoute, "/sale-invoice/<instance_id>/")
 api.add_resource(SaleInvoicesRoute, "/sale-invoice/")
 api.add_resource(SaleInvoiceProductRoute, "/sale-invoice-product/<instance_id>/")
 api.add_resource(SaleInvoiceProductsRoute, "/sale-invoice-product/")
 api.add_resource(SaleRegistryRoute, "/sale-invoice-registry/")
 api.add_resource(SaleInvoicesProductsRoute, "/sale-invoice-products/<sale_invoice_id>/")
+api.add_resource(AgreementSaleInvoicesRoute, "/agreement-sale-invoices/<agreement_id>/")
