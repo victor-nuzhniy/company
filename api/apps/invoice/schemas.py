@@ -433,3 +433,26 @@ invoices_products_get_schema = {
         {"code": 409, "message": "Instance with id does not exist."},
     ],
 }
+
+
+agreement_invoice_products_get_schema = {
+    "notes": "Get all invoice products with agreement_id.",
+    "nickname": "Get all invoice products with agreement_id.",
+    "responseClass": "InvoiceProductFields",
+    "parameters": [
+        {
+            "name": "Authorization",
+            "description": "Authorization: Bearer token",
+            "required": True,
+            "allowMultiple": False,
+            "dataType": "String",
+            "paramType": "header",
+            "defaultValue": "Bearer ",
+        },
+    ],
+    "responseMessages": [
+        {"code": 200, "message": "Operation successfully performed"},
+        {"code": 401, "message": "Unauthorized."},
+        {"code": 409, "message": "Instance with id does not exist."},
+    ],
+}

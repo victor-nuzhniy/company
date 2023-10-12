@@ -11,6 +11,7 @@ from api.apps.invoice.parsers import (
     invoice_put_parser,
 )
 from api.apps.invoice.schemas import (
+    agreement_invoice_products_get_schema,
     invoice_delete_schema,
     invoice_get_schema,
     invoice_patch_schema,
@@ -239,7 +240,7 @@ class InvoicesProductsRoute(Resource):
 class AgreementInvoicesRoute(Resource):
     """Get Agreement Invoices list by agreement id."""
 
-    @swagger.operation()
+    @swagger.operation(**agreement_invoice_products_get_schema)
     @token_required()
     def get(self, agreement_id, *args, **kwargs):
         """Get Invoices list by agreement id."""
