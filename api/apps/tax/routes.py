@@ -24,9 +24,14 @@ from api.apps.tax.schemas import (
     tax_invoice_products_get_schema,
     tax_invoice_put_schema,
     tax_invoices_get_schema,
+    tax_invoices_products_get_schema,
     tax_registry_get_schema,
 )
-from api.apps.tax.services import get_tax_data
+from api.apps.tax.services import (
+    get_tax_data,
+    get_tax_invoice_products_by_tax_invoice_id,
+)
+from api.apps.tax.validators import tax_invoice_id as tax_invoice_id_validator
 from api.common import CustomDateTimeFormat
 from api.model_routes import ModelRoute, ModelsRoute, token_required
 
@@ -76,6 +81,26 @@ class TaxRegistryFields:
         "counterparty_id": fields.Integer,
         "sale_summ": fields.Integer,
         "purchase_summ": fields.Integer,
+    }
+
+
+@swagger.model
+class TaxInvoicesProductsFields:
+    """InvoicesProductsRoute output fields."""
+
+    resource_fields = {
+        "id": fields.Integer,
+        "product_id": fields.Integer,
+        "quantity": fields.Integer,
+        "sale_price": fields.Integer,
+        "purchase_price": fields.Integer,
+        "tax_invoice_id": fields.Integer,
+        "sale_invoice_product_id": fields.Integer,
+        "purchase_invoice_product_id": fields.Integer,
+        "name": fields.String,
+        "code": fields.String,
+        "currency": fields.String,
+        "units": fields.String,
     }
 
 
@@ -199,8 +224,23 @@ class TaxRegistryRoute(Resource):
         )
 
 
+class TaxInvoicesProductsRoute(Resource):
+    """Getting TaxInvoice products list by tax invoice id."""
+
+    @swagger.operation(**tax_invoices_products_get_schema)
+    @token_required()
+    def get(self, tax_invoice_id, *args, **kwargs):
+        """Get TaxInvoice products list by tax invoice id."""
+        tax_invoice_id = tax_invoice_id_validator(tax_invoice_id)
+        return marshal(
+            get_tax_invoice_products_by_tax_invoice_id(tax_invoice_id),
+            TaxInvoicesProductsFields.resource_fields,
+        )
+
+
 api.add_resource(TaxInvoiceRoute, "/tax-invoice/<instance_id>/")
 api.add_resource(TaxInvoicesRoute, "/tax-invoice/")
 api.add_resource(TaxInvoiceProductRoute, "/tax-invoice-product/<instance_id>/")
 api.add_resource(TaxInvoiceProductsRoute, "/tax-invoice-product/")
 api.add_resource(TaxRegistryRoute, "/tax-registry/")
+api.add_resource(TaxInvoicesProductsRoute, "/tax-invoice-products/<tax_invoice_id>/")

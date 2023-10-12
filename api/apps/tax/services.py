@@ -8,6 +8,7 @@ from api import (
     Agreement,
     Counterparty,
     Invoice,
+    Product,
     PurchaseInvoice,
     PurchaseInvoiceProduct,
     SaleInvoice,
@@ -76,5 +77,40 @@ def get_tax_data(
         .order_by(TaxInvoice.id.desc())
         .limit(limit)
         .offset(offset)
+        .all()
+    )
+
+
+def get_tax_invoice_products_by_tax_invoice_id(tax_invoice_id: int) -> Sequence:
+    """Get TaxInvoice products list by tax invoice id."""
+    return (
+        db.session.query(
+            TaxInvoiceProduct.id.label("id"),
+            TaxInvoiceProduct.quantity.label("quantity"),
+            TaxInvoiceProduct.tax_invoice_id.label("tax_invoice_id"),
+            TaxInvoiceProduct.sale_invoice_product_id.label("sale_invoice_product_id"),
+            TaxInvoiceProduct.purchase_invoice_product_id.label(
+                "purchase_invoice_product_id"
+            ),
+            SaleInvoiceProduct.price.label("sale_price"),
+            PurchaseInvoiceProduct.price.label("purchase_price"),
+            Product.name.label("name"),
+            Product.code.label("code"),
+            Product.currency.label("currency"),
+            Product.units.label("units"),
+        )
+        .select_from(
+            TaxInvoiceProduct,
+            SaleInvoiceProduct,
+            Product,
+            PurchaseInvoiceProduct,
+        )
+        .outerjoin(TaxInvoiceProduct.sale_invoice_products)
+        .filter(
+            SaleInvoiceProduct.id == TaxInvoiceProduct.sale_invoice_product_id,
+            PurchaseInvoiceProduct.id == TaxInvoiceProduct.purchase_invoice_product_id,
+            SaleInvoiceProduct.product_id == Product.id,
+            TaxInvoiceProduct.tax_invoice_id == tax_invoice_id,
+        )
         .all()
     )

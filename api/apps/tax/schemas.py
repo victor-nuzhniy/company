@@ -414,3 +414,26 @@ tax_registry_get_schema = {
         {"code": 400, "message": "Invalid input (specified)."},
     ],
 }
+
+
+tax_invoices_products_get_schema = {
+    "notes": "Get tax invoice products by tax invoice id.",
+    "nickname": "Get tax invoice products by tax invoice id.",
+    "responseClass": "TaxInvoicesProductsFields",
+    "parameters": [
+        {
+            "name": "Authorization",
+            "description": "Authorization: Bearer token",
+            "required": True,
+            "allowMultiple": False,
+            "dataType": "String",
+            "paramType": "header",
+            "defaultValue": "Bearer ",
+        },
+    ],
+    "responseMessages": [
+        {"code": 200, "message": "Operation successfully performed"},
+        {"code": 401, "message": "Unauthorized."},
+        {"code": 409, "message": "Instance with id does not exist."},
+    ],
+}
