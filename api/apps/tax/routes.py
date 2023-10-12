@@ -1,8 +1,9 @@
 """Routes for tax apps."""
-from flask_restful import fields
+from flask_restful import Resource, fields, marshal
 from flask_restful_swagger import swagger
 
 from api import TaxInvoice, TaxInvoiceProduct, api
+from api.apps.purchase.parsers import purchase_registry_parser
 from api.apps.tax.parsers import (
     tax_invoice_patch_parser,
     tax_invoice_post_parser,
@@ -23,7 +24,9 @@ from api.apps.tax.schemas import (
     tax_invoice_products_get_schema,
     tax_invoice_put_schema,
     tax_invoices_get_schema,
+    tax_registry_get_schema,
 )
+from api.apps.tax.services import get_tax_data
 from api.common import CustomDateTimeFormat
 from api.model_routes import ModelRoute, ModelsRoute, token_required
 
@@ -50,6 +53,29 @@ class TaxInvoiceProductFields:
         "sale_invoice_product_id": fields.Integer,
         "purchase_invoice_product_id": fields.Integer,
         "quantity": fields.Integer,
+    }
+
+
+@swagger.model
+class TaxRegistryFields:
+    """TaxRegistryRoute output fields."""
+
+    resource_fields = {
+        "id": fields.Integer,
+        "created_at": CustomDateTimeFormat,
+        "tax_invoice_name": fields.String,
+        "invoice": fields.String,
+        "invoice_id": fields.Integer,
+        "sale_invoice": fields.String,
+        "sale_invoice_id": fields.Integer,
+        "purchase_invoice": fields.String,
+        "purchase_invoice_id": fields.Integer,
+        "agreement": fields.String,
+        "agreement_id": fields.Integer,
+        "counterparty": fields.String,
+        "counterparty_id": fields.Integer,
+        "sale_summ": fields.Integer,
+        "purchase_summ": fields.Integer,
     }
 
 
@@ -159,7 +185,22 @@ class TaxInvoiceProductsRoute(ModelsRoute):
         return super().get(*args, **kwargs)
 
 
+class TaxRegistryRoute(Resource):
+    """Tax registry information."""
+
+    @swagger.operation(**tax_registry_get_schema)
+    @token_required()
+    def get(self, *args, **kwargs):
+        """Get tax registry list."""
+        args = purchase_registry_parser.parse_args()
+        return marshal(
+            get_tax_data(**args),
+            TaxRegistryFields.resource_fields,
+        )
+
+
 api.add_resource(TaxInvoiceRoute, "/tax-invoice/<instance_id>/")
 api.add_resource(TaxInvoicesRoute, "/tax-invoice/")
 api.add_resource(TaxInvoiceProductRoute, "/tax-invoice-product/<instance_id>/")
 api.add_resource(TaxInvoiceProductsRoute, "/tax-invoice-product/")
+api.add_resource(TaxRegistryRoute, "/tax-registry/")
