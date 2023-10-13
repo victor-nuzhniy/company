@@ -29,7 +29,7 @@ def get_tax_data(
     date_from = datetime(1000, 1, 1) if not date_from else date_from
     date_to = datetime(9000, 1, 1) if not date_to else date_to
     return (
-        db.session.query(
+        TaxInvoice.query.with_entities(
             TaxInvoice.id.label("id"),
             TaxInvoice.created_at.label("created_at"),
             TaxInvoice.name.label("tax_invoice_name"),
@@ -50,26 +50,24 @@ def get_tax_data(
                 "purchase_summ"
             ),
         )
-        .select_from(
-            SaleInvoice,
-            Invoice,
-            Agreement,
-            Counterparty,
-            TaxInvoiceProduct,
+        .outerjoin(SaleInvoice, SaleInvoice.id == TaxInvoice.sale_invoice_id)
+        .outerjoin(Invoice, Invoice.id == SaleInvoice.invoice_id)
+        .outerjoin(Agreement, Agreement.id == Invoice.agreement_id)
+        .outerjoin(Counterparty, Counterparty.id == Agreement.counterparty_id)
+        .outerjoin(TaxInvoiceProduct, TaxInvoiceProduct.tax_invoice_id == TaxInvoice.id)
+        .outerjoin(
             SaleInvoiceProduct,
-            PurchaseInvoiceProduct,
-            PurchaseInvoice,
-        )
-        .outerjoin(SaleInvoice.tax_invoices)
-        .filter(
-            SaleInvoice.id == TaxInvoice.sale_invoice_id,
-            Invoice.id == SaleInvoice.invoice_id,
-            Agreement.id == Invoice.agreement_id,
-            Counterparty.id == Agreement.counterparty_id,
-            TaxInvoice.id == TaxInvoiceProduct.tax_invoice_id,
-            TaxInvoiceProduct.purchase_invoice_product_id == PurchaseInvoiceProduct.id,
-            PurchaseInvoice.id == PurchaseInvoiceProduct.purchase_invoice_id,
             SaleInvoiceProduct.id == TaxInvoiceProduct.sale_invoice_product_id,
+        )
+        .outerjoin(
+            PurchaseInvoiceProduct,
+            PurchaseInvoiceProduct.id == TaxInvoiceProduct.purchase_invoice_product_id,
+        )
+        .outerjoin(
+            PurchaseInvoice,
+            PurchaseInvoice.id == PurchaseInvoiceProduct.purchase_invoice_id,
+        )
+        .filter(
             TaxInvoice.created_at > date_from,
             TaxInvoice.created_at < date_to,
         )
