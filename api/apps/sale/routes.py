@@ -28,13 +28,16 @@ from api.apps.sale.schemas import (
     sale_invoices_get_schema,
     sale_invoices_products_get_schema,
     sale_registry_get_schema,
+    tax_sale_invoices_products_left_get_schema,
 )
 from api.apps.sale.services import (
     get_sale_invoice_data,
     get_sale_invoice_products_by_sale_invoice_id,
     get_sale_invoices_by_agreement_id,
+    get_tax_sale_invoice_products_left,
 )
 from api.apps.sale.validators import sale_invoice_id as sale_invoice_id_validator
+from api.apps.tax.validators import tax_invoice_id as tax_invoice_id_validator
 from api.common import CustomDateTimeFormat
 from api.model_routes import ModelRoute, ModelsRoute, token_required
 
@@ -233,6 +236,26 @@ class SaleInvoicesProductsRoute(Resource):
         )
 
 
+class TaxSaleInvoiceProductsLeftRoute(Resource):
+    """
+    Getting SaleInvoice products list by sale invoice id.
+
+    Products, included in tax invoice, will not be included in query.
+    There are not products will be available from sale invoice with done True.
+    """
+
+    @swagger.operation(**tax_sale_invoices_products_left_get_schema)
+    @token_required()
+    def get(self, sale_invoice_id, tax_invoice_id, *args, **kwargs):
+        """Get SaleInvoice products list by sale invoice id and tax_invoice_id."""
+        sale_invoice_id = sale_invoice_id_validator(sale_invoice_id)
+        tax_invoice_id = tax_invoice_id_validator(tax_invoice_id)
+        return marshal(
+            get_tax_sale_invoice_products_left(sale_invoice_id, tax_invoice_id),
+            SaleInvoicesProductsFields.resourse_fields,
+        )
+
+
 class AgreementSaleInvoicesRoute(Resource):
     """Getting SaleInvoice list by agreement id."""
 
@@ -253,4 +276,8 @@ api.add_resource(SaleInvoiceProductRoute, "/sale-invoice-product/<instance_id>/"
 api.add_resource(SaleInvoiceProductsRoute, "/sale-invoice-product/")
 api.add_resource(SaleRegistryRoute, "/sale-invoice-registry/")
 api.add_resource(SaleInvoicesProductsRoute, "/sale-invoice-products/<sale_invoice_id>/")
+api.add_resource(
+    TaxSaleInvoiceProductsLeftRoute,
+    "/sale-invoice-products/<sale_invoice_id>/<tax_invoice_id>/",
+)
 api.add_resource(AgreementSaleInvoicesRoute, "/agreement-sale-invoices/<agreement_id>/")

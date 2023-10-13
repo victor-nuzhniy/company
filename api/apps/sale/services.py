@@ -11,6 +11,7 @@ from api import (
     Product,
     SaleInvoice,
     SaleInvoiceProduct,
+    TaxInvoiceProduct,
 )
 
 
@@ -72,6 +73,42 @@ def get_sale_invoice_products_by_sale_invoice_id(sale_invoice_id: int) -> Sequen
         )
         .join(Product)
         .filter(SaleInvoiceProduct.sale_invoice_id == sale_invoice_id)
+        .all()
+    )
+
+
+def get_tax_sale_invoice_products_left(
+    sale_invoice_id: int, tax_invoice_id: int
+) -> Sequence:
+    """
+    Get SaleInvoice products list by sale invoice id.
+
+    Products, included in tax invoice, will not be included in query.
+    There are not products will be available from sale invoice with done True.
+    """
+    return (
+        SaleInvoiceProduct.query.with_entities(
+            SaleInvoiceProduct.id.label("id"),
+            SaleInvoiceProduct.product_id.label("product_id"),
+            SaleInvoiceProduct.quantity.label("quantity"),
+            SaleInvoiceProduct.price.label("price"),
+            SaleInvoiceProduct.sale_invoice_id.label("sale_invoice_id"),
+            Product.name.label("name"),
+            Product.code.label("code"),
+            Product.currency.label("currency"),
+            Product.units.label("units"),
+        )
+        .join(Product)
+        .filter(
+            SaleInvoiceProduct.sale_invoice_id == sale_invoice_id,
+            SaleInvoiceProduct.id.not_in(
+                TaxInvoiceProduct.query.with_entities(
+                    TaxInvoiceProduct.sale_invoice_product_id
+                )
+                .filter(TaxInvoiceProduct.tax_invoice_id == tax_invoice_id)
+                .all()
+            ),
+        )
         .all()
     )
 
