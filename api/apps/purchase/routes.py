@@ -3,6 +3,7 @@ from flask_restful import Resource, fields, marshal
 from flask_restful_swagger import swagger
 
 from api import PurchaseInvoice, PurchaseInvoiceProduct, api
+from api.apps.product.validators import product_type_id
 from api.apps.purchase.parsers import (
     purchase_invoice_patch_parser,
     purchase_invoice_post_parser,
@@ -22,6 +23,7 @@ from api.apps.purchase.schemas import (
     purchase_invoice_product_post_schema,
     purchase_invoice_product_put_schema,
     purchase_invoice_products_get_schema,
+    purchase_invoice_products_left_get_schema,
     purchase_invoice_put_schema,
     purchase_invoices_get_schema,
     purchase_invoices_products_get_schema,
@@ -29,6 +31,7 @@ from api.apps.purchase.schemas import (
 )
 from api.apps.purchase.services import (
     get_purchase_invoice_data,
+    get_purchase_invoice_products_by_product_id_with_products_left,
     get_purchase_invoice_products_by_purchase_id,
 )
 from api.apps.purchase.validators import (
@@ -94,6 +97,18 @@ class PurchaseInvoicesProductsFields:
         "code": fields.String,
         "currency": fields.String,
         "units": fields.String,
+    }
+
+
+class PurchaseInvoiceProductsLeftFields:
+    """PurchaseInvoiceProductsLeftRoute output fields."""
+
+    resource_fields = {
+        "id": fields.Integer,
+        "product_id": fields.Integer,
+        "products_left": fields.Integer,
+        "name": fields.String,
+        "code": fields.String,
     }
 
 
@@ -231,6 +246,20 @@ class PurchaseInvoicesProductsRoute(Resource):
         )
 
 
+class PurchaseInvoiceProductsLeftRoute(Resource):
+    """Getting PurchaseInvoices products list with products_left > 0 and product_id."""
+
+    @swagger.operation(**purchase_invoice_products_left_get_schema)
+    @token_required()
+    def get(self, product_id, *args, **kwargs):
+        """Get PurchaseInvoice products list with products_left > 0 and product_id."""
+        product_id = product_type_id(product_id)
+        return marshal(
+            get_purchase_invoice_products_by_product_id_with_products_left(product_id),
+            PurchaseInvoiceProductsLeftFields.resource_fields,
+        )
+
+
 api.add_resource(PurchaseInvoiceRoute, "/purchase-invoice/<instance_id>/")
 api.add_resource(PurchaseInvoicesRoute, "/purchase-invoice/")
 api.add_resource(
@@ -240,4 +269,7 @@ api.add_resource(PurchaseInvoiceProductsRoute, "/purchase-invoice-product/")
 api.add_resource(PurchaseRegistryRoute, "/purchase-registry/")
 api.add_resource(
     PurchaseInvoicesProductsRoute, "/purchase-invoice-products/<purchase_invoice_id>/"
+)
+api.add_resource(
+    PurchaseInvoiceProductsLeftRoute, "/purchase-invoice-products/product/<product_id>/"
 )

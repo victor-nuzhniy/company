@@ -434,3 +434,26 @@ purchase_invoices_products_get_schema = {
         {"code": 409, "message": "Instance with id does not exist."},
     ],
 }
+
+
+purchase_invoice_products_left_get_schema = {
+    "notes": "Get purchase invoice products with products left > 0 and product id.",
+    "nickname": "Get purchase invoice products with products left > 0 and product id.",
+    "responseClass": "PurchaseInvoiceProductsLeftFields",
+    "parameters": [
+        {
+            "name": "Authorization",
+            "description": "Authorization: Bearer token",
+            "required": True,
+            "allowMultiple": False,
+            "dataType": "String",
+            "paramType": "header",
+            "defaultValue": "Bearer ",
+        },
+    ],
+    "responseMessages": [
+        {"code": 200, "message": "Operation successfully performed"},
+        {"code": 401, "message": "Unauthorized."},
+        {"code": 409, "message": "Instance with id does not exist."},
+    ],
+}

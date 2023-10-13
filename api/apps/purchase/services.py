@@ -71,3 +71,24 @@ def get_purchase_invoice_products_by_purchase_id(invoice_id: int) -> Sequence:
         .filter(PurchaseInvoiceProduct.purchase_invoice_id == invoice_id)
         .all()
     )
+
+
+def get_purchase_invoice_products_by_product_id_with_products_left(
+    product_id: int,
+) -> Sequence:
+    """Get PurchaseInvoice products list with products_left > 0 and product_id."""
+    return (
+        PurchaseInvoiceProduct.query.with_entities(
+            PurchaseInvoiceProduct.id.label("id"),
+            PurchaseInvoiceProduct.product_id.label("product_id"),
+            PurchaseInvoiceProduct.products_left.label("products_left"),
+            Product.name.label("name"),
+            Product.code.label("code"),
+        )
+        .outerjoin(Product)
+        .filter(
+            PurchaseInvoiceProduct.products_left > 0,
+            PurchaseInvoiceProduct.product_id == product_id,
+        )
+        .all()
+    )
