@@ -2,7 +2,7 @@
 from datetime import datetime
 from typing import Sequence
 
-from sqlalchemy import and_, func
+from sqlalchemy import and_, func, or_
 
 from api import (
     Agreement,
@@ -101,12 +101,35 @@ def get_tax_sale_invoice_products_left(
         .join(Product)
         .filter(
             SaleInvoiceProduct.sale_invoice_id == sale_invoice_id,
-            SaleInvoiceProduct.id.not_in(
-                TaxInvoiceProduct.query.with_entities(
-                    TaxInvoiceProduct.sale_invoice_product_id
-                )
-                .filter(TaxInvoiceProduct.tax_invoice_id == tax_invoice_id)
-                .all()
+            or_(
+                SaleInvoiceProduct.id.not_in(
+                    TaxInvoiceProduct.query.with_entities(
+                        TaxInvoiceProduct.sale_invoice_product_id
+                    )
+                    .filter(TaxInvoiceProduct.tax_invoice_id == tax_invoice_id)
+                    .all()
+                ),
+                and_(
+                    SaleInvoiceProduct.id.in_(
+                        TaxInvoiceProduct.query.with_entities(
+                            TaxInvoiceProduct.sale_invoice_product_id
+                        )
+                        .filter(TaxInvoiceProduct.tax_invoice_id == tax_invoice_id)
+                        .all()
+                    ),
+                    SaleInvoiceProduct.quantity
+                    > TaxInvoiceProduct.query.with_entities(
+                        func.sum(TaxInvoiceProduct.quantity).label(
+                            "tax_invoice_product_sum"
+                        )
+                    )
+                    .filter(
+                        TaxInvoiceProduct.sale_invoice_product_id
+                        == SaleInvoiceProduct.id
+                    )
+                    .first()
+                    .tax_invoice_product_sum,
+                ),
             ),
         )
         .all()
