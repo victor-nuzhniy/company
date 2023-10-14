@@ -3,7 +3,7 @@ from flask_restful import Resource, fields, marshal
 from flask_restful_swagger import swagger
 
 from api import PurchaseInvoice, PurchaseInvoiceProduct, api
-from api.apps.product.validators import product_type_id
+from api.apps.invoice.validators import product_id as product_id_validator
 from api.apps.purchase.parsers import (
     purchase_invoice_patch_parser,
     purchase_invoice_post_parser,
@@ -253,7 +253,7 @@ class PurchaseInvoiceProductsLeftRoute(Resource):
     @token_required()
     def get(self, product_id, *args, **kwargs):
         """Get PurchaseInvoice products list with products_left > 0 and product_id."""
-        product_id = product_type_id(product_id)
+        product_id = product_id_validator(product_id)
         return marshal(
             get_purchase_invoice_products_by_product_id_with_products_left(product_id),
             PurchaseInvoiceProductsLeftFields.resource_fields,

@@ -21,4 +21,4 @@ def product_type_id(product_type_id_int: int) -> int:
     """Validate product_type_id."""
     if db_utils.is_exists(ProductType, {"id": product_type_id_int}):
         return product_type_id_int
-    raise ValueError(f"SaleInvoice with id {product_type_id_int} does not exist.")
+    raise ValueError(f"Product type with id {product_type_id_int} does not exist.")
