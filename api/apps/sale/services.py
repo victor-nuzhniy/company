@@ -93,42 +93,48 @@ def get_tax_sale_invoice_products_left(
             SaleInvoiceProduct.quantity.label("quantity"),
             SaleInvoiceProduct.price.label("price"),
             SaleInvoiceProduct.sale_invoice_id.label("sale_invoice_id"),
+            func.sum(
+                SaleInvoiceProduct.quantity
+                - TaxInvoiceProduct.query.with_entities(
+                    func.sum(TaxInvoiceProduct.quantity).label(
+                        "tax_invoice_product_sum"
+                    )
+                )
+                .filter(
+                    TaxInvoiceProduct.sale_invoice_product_id == SaleInvoiceProduct.id
+                )
+                .first()
+                .tax_invoice_product_sum
+            ).label("sale_products_left"),
             Product.name.label("name"),
             Product.code.label("code"),
             Product.currency.label("currency"),
             Product.units.label("units"),
         )
         .join(Product)
+        .filter(SaleInvoiceProduct.sale_invoice_id == sale_invoice_id)
         .filter(
-            SaleInvoiceProduct.sale_invoice_id == sale_invoice_id,
             or_(
                 SaleInvoiceProduct.id.not_in(
                     TaxInvoiceProduct.query.with_entities(
                         TaxInvoiceProduct.sale_invoice_product_id
-                    )
-                    .filter(TaxInvoiceProduct.tax_invoice_id == tax_invoice_id)
-                    .all()
+                    ).filter(TaxInvoiceProduct.tax_invoice_id == tax_invoice_id)
                 ),
                 and_(
                     SaleInvoiceProduct.id.in_(
                         TaxInvoiceProduct.query.with_entities(
                             TaxInvoiceProduct.sale_invoice_product_id
-                        )
-                        .filter(TaxInvoiceProduct.tax_invoice_id == tax_invoice_id)
-                        .all()
+                        ).filter(TaxInvoiceProduct.tax_invoice_id == tax_invoice_id)
                     ),
                     SaleInvoiceProduct.quantity
                     > TaxInvoiceProduct.query.with_entities(
                         func.sum(TaxInvoiceProduct.quantity).label(
                             "tax_invoice_product_sum"
                         )
-                    )
-                    .filter(
+                    ).filter(
                         TaxInvoiceProduct.sale_invoice_product_id
                         == SaleInvoiceProduct.id
-                    )
-                    .first()
-                    .tax_invoice_product_sum,
+                    ),
                 ),
             ),
         )

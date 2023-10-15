@@ -251,7 +251,9 @@ class TaxSaleInvoiceProductsLeftRoute(Resource):
         sale_invoice_id = sale_invoice_id_validator(sale_invoice_id)
         tax_invoice_id = tax_invoice_id_validator(tax_invoice_id)
         return marshal(
-            get_tax_sale_invoice_products_left(sale_invoice_id, tax_invoice_id),
+            get_tax_sale_invoice_products_left(
+                int(sale_invoice_id), int(tax_invoice_id)
+            ),
             SaleInvoicesProductsFields.resourse_fields,
         )
 
