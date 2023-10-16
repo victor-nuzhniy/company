@@ -128,7 +128,14 @@ def create_tax_invoice_product_with_subtract_purchase_products_left(
         abort(409, "There are not enough products left.")
     tax_invoice_product = TaxInvoiceProduct(**kwargs)
     db.session.add(tax_invoice_product)
-    purchase_invoice_product.products_left -= tax_invoice_product.quantity
+    db.session.query(PurchaseInvoiceProduct).filter_by(
+        id=tax_invoice_product.purchase_invoice_product_id
+    ).update(
+        {
+            "products_left": PurchaseInvoiceProduct.products_left
+            - tax_invoice_product.quantity
+        }
+    )
     db.session.commit()
     return tax_invoice_product
 
@@ -144,12 +151,13 @@ def delete_tax_invoice_product_with_adding_purchase_products_left(
         id=tax_invoice_product.purchase_invoice_product_id
     ).update(
         {
-            "products_left": (
-                PurchaseInvoiceProduct.products_left + tax_invoice_product.quantity
-            )
+            "products_left": PurchaseInvoiceProduct.products_left
+            + tax_invoice_product.quantity
         }
     )
-    tax_invoice_product.delete()
+    TaxInvoiceProduct.query.filter(
+        TaxInvoiceProduct.id == tax_invoice_product_id
+    ).delete()
     db.session.commit()
 
 
