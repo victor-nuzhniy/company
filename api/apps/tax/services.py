@@ -2,6 +2,7 @@
 from datetime import datetime
 from typing import Sequence
 
+from flask import abort
 from sqlalchemy import func
 
 from api import (
@@ -112,3 +113,21 @@ def get_tax_invoice_products_by_tax_invoice_id(tax_invoice_id: int) -> Sequence:
         )
         .all()
     )
+
+
+def create_tax_invoice_product_with_subtract_purchase_products_left(
+    **kwargs,
+) -> TaxInvoiceProduct:
+    """Create TaxInvoiceProduct with subtracting purhcase products_left field."""
+    purchase_invoice_product = (
+        PurchaseInvoiceProduct.query.with_entities(PurchaseInvoiceProduct.products_left)
+        .filter(PurchaseInvoiceProduct.id == kwargs.get("purchase_invoice_product_id"))
+        .first()
+    )
+    if purchase_invoice_product.products_left < kwargs.get("quantity"):
+        abort(409, "There are not enough products left.")
+    tax_invoice_product = TaxInvoiceProduct(**kwargs)
+    db.session.add(tax_invoice_product)
+    purchase_invoice_product.products_left -= tax_invoice_product.quantity
+    db.session.commit()
+    return tax_invoice_product

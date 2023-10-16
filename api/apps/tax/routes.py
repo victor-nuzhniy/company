@@ -28,6 +28,7 @@ from api.apps.tax.schemas import (
     tax_registry_get_schema,
 )
 from api.apps.tax.services import (
+    create_tax_invoice_product_with_subtract_purchase_products_left,
     get_tax_data,
     get_tax_invoice_products_by_tax_invoice_id,
 )
@@ -238,9 +239,24 @@ class TaxInvoicesProductsRoute(Resource):
         )
 
 
+class TaxInvoiceProductCreateRoute(Resource):
+    """Create TaxInvoiceProduct with subtracting purchase products_left field."""
+
+    @swagger.operation()
+    @token_required()
+    def post(self, *args, **kwargs):
+        """Create TaxInvoiceProduct with subtracting purhcase products_left field."""
+        args = tax_invoice_product_parser.parse_args()
+        return marshal(
+            create_tax_invoice_product_with_subtract_purchase_products_left(**args),
+            TaxInvoiceProductFields.resource_fields,
+        )
+
+
 api.add_resource(TaxInvoiceRoute, "/tax-invoice/<instance_id>/")
 api.add_resource(TaxInvoicesRoute, "/tax-invoice/")
 api.add_resource(TaxInvoiceProductRoute, "/tax-invoice-product/<instance_id>/")
 api.add_resource(TaxInvoiceProductsRoute, "/tax-invoice-product/")
 api.add_resource(TaxRegistryRoute, "/tax-registry/")
 api.add_resource(TaxInvoicesProductsRoute, "/tax-invoice-products/<tax_invoice_id>/")
+api.add_resource(TaxInvoiceProductCreateRoute, "/tax-invoice-product-create/")

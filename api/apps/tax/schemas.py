@@ -437,3 +437,41 @@ tax_invoices_products_get_schema = {
         {"code": 409, "message": "Instance with id does not exist."},
     ],
 }
+
+
+tax_invoice_product_with_subtract_post_schema = {
+    "notes": "Create tax invoice product with purchase products_left subtraction.",
+    "nickname": "Create tax invoice product. with purchase products_left subtraction.",
+    "parameters": [
+        {
+            "name": "Create tax invoice product with "
+            "purhcase products_left subtraction.",
+            "description": "TaxInvoiceProduct 'tax_invoice_id', "
+            "'sale_invoice_product_id', 'purchase_invoice_products_id'"
+            " and 'quantity' fields.",
+            "required": True,
+            "allowMultiple": True,
+            "dataType": "json",
+            "paramType": "body",
+            "defaultValue": '{"tax_invoice_id": 1, "sale_invoice_product_id": 1, '
+            '"purchase_invoice_product_id": 1, "quantity": 2}',
+        },
+        {
+            "name": "Authorization",
+            "description": "Authorization: Bearer token",
+            "required": True,
+            "allowMultiple": False,
+            "dataType": "String",
+            "paramType": "header",
+            "defaultValue": "Bearer ",
+        },
+    ],
+    "responseClass": "TaxInvoiceProductFields",
+    "responseMessages": [
+        {"code": 200, "message": "Operation successfully performed"},
+        {"code": 400, "message": "Invalid input (specified)."},
+        {"code": 401, "message": "Unauthorized."},
+        {"code": 409, "message": "Instance with id does not exist."},
+        {"code": 422, "message": "Invalid input (specified)."},
+    ],
+}
