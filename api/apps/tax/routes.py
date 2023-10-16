@@ -298,5 +298,8 @@ api.add_resource(TaxInvoiceProductsRoute, "/tax-invoice-product/")
 api.add_resource(TaxRegistryRoute, "/tax-registry/")
 api.add_resource(TaxInvoicesProductsRoute, "/tax-invoice-products/<tax_invoice_id>/")
 api.add_resource(TaxInvoiceProductCreateRoute, "/tax-invoice-product-create/")
-api.add_resource(TaxInvoiceProductDeleteRoute, "/tax-invoice-product-delete/")
-api.add_resource(TaxInvoiceDeleteRoute, "/tax-invoice-delete/")
+api.add_resource(
+    TaxInvoiceProductDeleteRoute,
+    "/tax-invoice-product-delete/<tax_invoice_product_id>/",
+)
+api.add_resource(TaxInvoiceDeleteRoute, "/tax-invoice-delete/<tax_invoice_id>/")
