@@ -2,7 +2,7 @@
 from typing import Dict, List, Sequence
 
 from flask import abort
-from sqlalchemy import CursorResult, Row, and_, func, select
+from sqlalchemy import Row, and_, func
 
 from api import (
     Invoice,
@@ -24,14 +24,12 @@ from api.services import crud
 def get_purchase_products_by_invoice_products(invoice_products: List) -> Sequence:
     """Get purchase products list by products ids."""
     products_ids: List[int] = [elem.product_id for elem in invoice_products]
-    statement: str = (
-        select(Product, Product.id.in_(products_ids))
-        .join(PurchaseInvoiceProduct, Product.id == PurchaseInvoiceProduct.product_id)
-        .where(PurchaseInvoiceProduct.products_left > 0)
+    return (
+        Product.query.options(db.joinedload(Product.purchase_invoice_products))
+        .outerjoin(PurchaseInvoiceProduct)
+        .filter(Product.id.in_(products_ids), PurchaseInvoiceProduct.products_left > 0)
+        .all()
     )
-    result: CursorResult = db.session.execute(statement)
-    objects: Sequence = result.scalars().all()
-    return objects
 
 
 def prepare_tax_invoice_products(
@@ -46,7 +44,7 @@ def prepare_tax_invoice_products(
     tax_products: List = []
     for product in invoice_products:
         purchase_products: Sequence = purchase_products_dict[
-            product.id
+            product.product_id
         ].purchase_invoice_products
         quantity: int = product.quantity
         for purchase_product in purchase_products:
