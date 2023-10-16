@@ -151,3 +151,21 @@ def delete_tax_invoice_product_with_adding_purchase_products_left(
     )
     tax_invoice_product.delete()
     db.session.commit()
+
+
+def delete_tax_invoice_with_adding_purchase_products_left_fieds(
+    tax_invoice_id: int,
+) -> None:
+    """Delete TaxInvoice with adding purchase products_left fields."""
+    tax_invoice_products = TaxInvoiceProduct.query.filter(
+        TaxInvoiceProduct.tax_invoice_id == tax_invoice_id
+    ).all()
+    for product in tax_invoice_products:
+        db.session.query(PurchaseInvoiceProduct).filter_by(
+            id=product.purchase_invoice_product_id
+        ).update(
+            {"products_left": (PurchaseInvoiceProduct.products_left + product.quantity)}
+        )
+        db.session.commit()
+    TaxInvoice.query.filter(TaxInvoice.id == tax_invoice_id).delete()
+    db.session.commit()

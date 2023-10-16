@@ -25,6 +25,7 @@ from api.apps.tax.schemas import (
     tax_invoice_product_with_adding_products_left_delete_schema,
     tax_invoice_products_get_schema,
     tax_invoice_put_schema,
+    tax_invoice_with_purchase_add_products_left_delete_schema,
     tax_invoices_get_schema,
     tax_invoices_products_get_schema,
     tax_registry_get_schema,
@@ -32,10 +33,14 @@ from api.apps.tax.schemas import (
 from api.apps.tax.services import (
     create_tax_invoice_product_with_subtract_purchase_products_left,
     delete_tax_invoice_product_with_adding_purchase_products_left,
+    delete_tax_invoice_with_adding_purchase_products_left_fieds,
     get_tax_data,
     get_tax_invoice_products_by_tax_invoice_id,
 )
 from api.apps.tax.validators import tax_invoice_id as tax_invoice_id_validator
+from api.apps.tax.validators import (
+    tax_invoice_product_id as tax_invoice_product_id_validator,
+)
 from api.common import CustomDateTimeFormat
 from api.model_routes import ModelRoute, ModelsRoute, token_required
 
@@ -263,10 +268,27 @@ class TaxInvoiceProductDeleteRoute(Resource):
     @token_required()
     def delete(self, tax_invoice_product_id, *args, **kwargs):
         """Delete TaxInvoiceProduct with adding purchase products_left field."""
+        tax_invoice_product_id = tax_invoice_product_id_validator(
+            tax_invoice_product_id
+        )
         delete_tax_invoice_product_with_adding_purchase_products_left(
             tax_invoice_product_id
         )
         return {"message": "Tax invoice product was successfully deleted."}
+
+
+class TaxInvoiceDeleteRoute(Resource):
+    """Delete TaxInvoice with adding purchase products_left fields."""
+
+    @swagger.operation(**tax_invoice_with_purchase_add_products_left_delete_schema)
+    @token_required()
+    def delete(self, tax_invoice_id, *args, **kwargs):
+        """Delete TaxInvoice with adding purchase products_left fields."""
+        tax_invoice_id = tax_invoice_id_validator(tax_invoice_id)
+        delete_tax_invoice_with_adding_purchase_products_left_fieds(tax_invoice_id)
+        return {
+            "message": f"TaxInvoice with id {tax_invoice_id} was successfully deleted."
+        }
 
 
 api.add_resource(TaxInvoiceRoute, "/tax-invoice/<instance_id>/")
@@ -277,3 +299,4 @@ api.add_resource(TaxRegistryRoute, "/tax-registry/")
 api.add_resource(TaxInvoicesProductsRoute, "/tax-invoice-products/<tax_invoice_id>/")
 api.add_resource(TaxInvoiceProductCreateRoute, "/tax-invoice-product-create/")
 api.add_resource(TaxInvoiceProductDeleteRoute, "/tax-invoice-product-delete/")
+api.add_resource(TaxInvoiceDeleteRoute, "/tax-invoice-delete/")

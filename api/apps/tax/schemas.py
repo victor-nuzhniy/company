@@ -499,3 +499,26 @@ tax_invoice_product_with_adding_products_left_delete_schema = {
         {"code": 409, "message": "Instance with id does not exist."},
     ],
 }
+
+
+tax_invoice_with_purchase_add_products_left_delete_schema = {
+    "notes": "Delete tax invoice data by id.",
+    "nickname": "Delete tax invoice.",
+    "responseClass": '{"message": "Deleted instance with id"}',
+    "parameters": [
+        {
+            "name": "Authorization",
+            "description": "Authorization: Bearer token",
+            "required": True,
+            "allowMultiple": False,
+            "dataType": "String",
+            "paramType": "header",
+            "defaultValue": "Bearer ",
+        },
+    ],
+    "responseMessages": [
+        {"code": 200, "message": "Deleted instance with id."},
+        {"code": 401, "message": "Unauthorized."},
+        {"code": 409, "message": "Instance with id does not exist."},
+    ],
+}
