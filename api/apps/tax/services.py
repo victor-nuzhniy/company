@@ -1,6 +1,6 @@
 """DB service functionality for tax apps."""
 from datetime import datetime
-from typing import Sequence
+from typing import Any, Sequence
 
 from flask import abort
 from sqlalchemy import func
@@ -116,7 +116,7 @@ def get_tax_invoice_products_by_tax_invoice_id(tax_invoice_id: int) -> Sequence:
 
 
 def create_tax_invoice_product_with_subtract_purchase_products_left(
-    **kwargs,
+    **kwargs: Any,
 ) -> TaxInvoiceProduct:
     """Create TaxInvoiceProduct with subtracting purhcase products_left field."""
     purchase_invoice_product = (
@@ -131,3 +131,23 @@ def create_tax_invoice_product_with_subtract_purchase_products_left(
     purchase_invoice_product.products_left -= tax_invoice_product.quantity
     db.session.commit()
     return tax_invoice_product
+
+
+def delete_tax_invoice_product_with_adding_purchase_products_left(
+    tax_invoice_product_id: int,
+) -> None:
+    """Delete TaxInvoiceProduct with adding purchase products_left field."""
+    tax_invoice_product = TaxInvoiceProduct.query.filter(
+        TaxInvoiceProduct.id == tax_invoice_product_id
+    ).first()
+    db.session.query(PurchaseInvoiceProduct).filter_by(
+        id=tax_invoice_product.purchase_invoice_product_id
+    ).update(
+        {
+            "products_left": (
+                PurchaseInvoiceProduct.products_left + tax_invoice_product.quantity
+            )
+        }
+    )
+    tax_invoice_product.delete()
+    db.session.commit()

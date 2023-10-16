@@ -4,6 +4,7 @@ from flask_restful_swagger import swagger
 
 from api import TaxInvoice, TaxInvoiceProduct, api
 from api.apps.purchase.parsers import purchase_registry_parser
+from api.apps.purchase.schemas import purchase_invoice_products_left_get_schema
 from api.apps.tax.parsers import (
     tax_invoice_patch_parser,
     tax_invoice_post_parser,
@@ -21,6 +22,7 @@ from api.apps.tax.schemas import (
     tax_invoice_product_patch_schema,
     tax_invoice_product_post_schema,
     tax_invoice_product_put_schema,
+    tax_invoice_product_with_adding_products_left_delete_schema,
     tax_invoice_products_get_schema,
     tax_invoice_put_schema,
     tax_invoices_get_schema,
@@ -29,6 +31,7 @@ from api.apps.tax.schemas import (
 )
 from api.apps.tax.services import (
     create_tax_invoice_product_with_subtract_purchase_products_left,
+    delete_tax_invoice_product_with_adding_purchase_products_left,
     get_tax_data,
     get_tax_invoice_products_by_tax_invoice_id,
 )
@@ -242,7 +245,7 @@ class TaxInvoicesProductsRoute(Resource):
 class TaxInvoiceProductCreateRoute(Resource):
     """Create TaxInvoiceProduct with subtracting purchase products_left field."""
 
-    @swagger.operation()
+    @swagger.operation(**purchase_invoice_products_left_get_schema)
     @token_required()
     def post(self, *args, **kwargs):
         """Create TaxInvoiceProduct with subtracting purhcase products_left field."""
@@ -253,6 +256,19 @@ class TaxInvoiceProductCreateRoute(Resource):
         )
 
 
+class TaxInvoiceProductDeleteRoute(Resource):
+    """Delete TaxInvoiceProduct with adding purchase products_left field."""
+
+    @swagger.operation(**tax_invoice_product_with_adding_products_left_delete_schema)
+    @token_required()
+    def delete(self, tax_invoice_product_id, *args, **kwargs):
+        """Delete TaxInvoiceProduct with adding purchase products_left field."""
+        delete_tax_invoice_product_with_adding_purchase_products_left(
+            tax_invoice_product_id
+        )
+        return {"message": "Tax invoice product was successfully deleted."}
+
+
 api.add_resource(TaxInvoiceRoute, "/tax-invoice/<instance_id>/")
 api.add_resource(TaxInvoicesRoute, "/tax-invoice/")
 api.add_resource(TaxInvoiceProductRoute, "/tax-invoice-product/<instance_id>/")
@@ -260,3 +276,4 @@ api.add_resource(TaxInvoiceProductsRoute, "/tax-invoice-product/")
 api.add_resource(TaxRegistryRoute, "/tax-registry/")
 api.add_resource(TaxInvoicesProductsRoute, "/tax-invoice-products/<tax_invoice_id>/")
 api.add_resource(TaxInvoiceProductCreateRoute, "/tax-invoice-product-create/")
+api.add_resource(TaxInvoiceProductDeleteRoute, "/tax-invoice-product-delete/")

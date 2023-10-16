@@ -475,3 +475,27 @@ tax_invoice_product_with_subtract_post_schema = {
         {"code": 422, "message": "Invalid input (specified)."},
     ],
 }
+
+
+tax_invoice_product_with_adding_products_left_delete_schema = {
+    "notes": "Delete tax invoice product data by id with"
+    " adding purchase products_left.",
+    "nickname": "Delete tax invoice product with adding purchase products_left.",
+    "responseClass": '{"message": "Tax invoice product was successfully deleted."}',
+    "parameters": [
+        {
+            "name": "Authorization",
+            "description": "Authorization: Bearer token",
+            "required": True,
+            "allowMultiple": False,
+            "dataType": "String",
+            "paramType": "header",
+            "defaultValue": "Bearer ",
+        },
+    ],
+    "responseMessages": [
+        {"code": 200, "message": "Deleted instance with id."},
+        {"code": 401, "message": "Unauthorized."},
+        {"code": 409, "message": "Instance with id does not exist."},
+    ],
+}
