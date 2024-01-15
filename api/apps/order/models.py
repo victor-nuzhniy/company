@@ -1,10 +1,13 @@
 """Models for order apps."""
 from sqlalchemy import func
+from sqlalchemy.orm import DeclarativeMeta
 
 from api import db
 
+BaseModel: DeclarativeMeta = db.Model
 
-class Order(db.Model):
+
+class Order(BaseModel):
     """Order model for api app."""
 
     id = db.Column(db.Integer, primary_key=True)
@@ -30,7 +33,7 @@ class Order(db.Model):
         return str(self.name)
 
 
-class OrderProduct(db.Model):
+class OrderProduct(BaseModel):
     """OrderProducts model for api app."""
 
     id = db.Column(db.Integer, primary_key=True)

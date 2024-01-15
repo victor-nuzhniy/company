@@ -1,8 +1,12 @@
 """Counterparty app models."""
+from sqlalchemy.orm import DeclarativeMeta
+
 from api import db
 
+BaseModel: DeclarativeMeta = db.Model
 
-class Discount(db.Model):
+
+class Discount(BaseModel):
     """Discount model for api app."""
 
     id = db.Column(db.Integer, primary_key=True)
@@ -15,7 +19,7 @@ class Discount(db.Model):
         return str(self.name)
 
 
-class Counterparty(db.Model):
+class Counterparty(BaseModel):
     """Counterparty model for api app."""
 
     id = db.Column(db.Integer, primary_key=True)
@@ -39,7 +43,7 @@ class Counterparty(db.Model):
         return str(self.name)
 
 
-class Agreement(db.Model):
+class Agreement(BaseModel):
     """Agreement model for api app."""
 
     id = db.Column(db.Integer, primary_key=True)

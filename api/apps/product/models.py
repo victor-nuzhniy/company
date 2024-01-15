@@ -1,8 +1,12 @@
 """Product models."""
+from sqlalchemy.orm import DeclarativeMeta
+
 from api import db
 
+BaseModel: DeclarativeMeta = db.Model
 
-class ProductType(db.Model):
+
+class ProductType(BaseModel):
     """ProductType model for api app."""
 
     id = db.Column(db.Integer, primary_key=True)
@@ -14,7 +18,7 @@ class ProductType(db.Model):
         return str(self.name)
 
 
-class Product(db.Model):
+class Product(BaseModel):
     """Product model for api app."""
 
     id = db.Column(db.Integer, primary_key=True)

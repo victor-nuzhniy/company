@@ -1,6 +1,6 @@
 """Utilities for account apps."""
 from collections import defaultdict
-from typing import Dict, List, Sequence
+from typing import Any, Dict, List, Sequence
 
 
 def get_product_leftovers_on_date(
@@ -14,9 +14,9 @@ def get_product_leftovers_on_date(
     return result
 
 
-def create_income_products_dict(products: Sequence):
+def create_income_products_dict(products: Sequence) -> dict[int, Any]:
     """Create products id: income dict."""
-    income_dict = defaultdict(int)
+    income_dict: dict[int, Any] = defaultdict(int)
     for product in products:
         income_dict[product.product_id] += product.quantity * (
             product.sale_price - product.purchase_price

@@ -1,8 +1,12 @@
 """Models for user app."""
+from sqlalchemy.orm import DeclarativeMeta
+
 from api import db
 
+BaseModel: DeclarativeMeta = db.Model
 
-class User(db.Model):
+
+class User(BaseModel):
     """User model for api app."""
 
     id = db.Column(db.Integer, primary_key=True)
