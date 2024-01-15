@@ -40,7 +40,6 @@ repos:
         - flask-restful-swagger
         - flask-cors
         - mypy
-        - types-flask
         - types-six
         - types-requests
       name: mypy
