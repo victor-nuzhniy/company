@@ -1,10 +1,10 @@
 """Models for invoice apps."""
 from sqlalchemy import func
-from sqlalchemy.orm import DeclarativeMeta
+from sqlalchemy.orm import DeclarativeBase
 
 from api import db
 
-BaseModel: DeclarativeMeta = db.Model
+BaseModel: DeclarativeBase = db.Model
 
 
 class Invoice(BaseModel):
@@ -55,4 +55,6 @@ class InvoiceProduct(BaseModel):
 
     def __repr__(self) -> str:
         """Represent model instance."""
-        return f"Invoice product with id {self.product_id}"
+        return "Invoice product with id {product_id}".format(
+            product_id=self.product_id,
+        )

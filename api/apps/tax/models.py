@@ -1,6 +1,7 @@
 """Models for tax apps."""
 from sqlalchemy import func
 from sqlalchemy.orm import DeclarativeBase
+
 from api import db
 
 BaseModel: DeclarativeBase = db.Model

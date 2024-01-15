@@ -1,9 +1,9 @@
 """Counterparty app models."""
-from sqlalchemy.orm import DeclarativeMeta
+from sqlalchemy.orm import DeclarativeBase
 
 from api import db
 
-BaseModel: DeclarativeMeta = db.Model
+BaseModel: DeclarativeBase = db.Model
 
 
 class Discount(BaseModel):
