@@ -1,31 +1,28 @@
 """Schemas for common_services apps."""
-
+from api.constants import (
+    authorization_parameter,
+    code_error,
+    code_success,
+    code_unauthorized,
+)
 
 name_number_schema = {
     "notes": "Get number for document name based on last name number.",
     "nickname": "Get number for document name based on last name number.",
-    "parameters": [
-        {
-            "name": "Authorization",
-            "description": "Authorization: Bearer token",
-            "required": True,
-            "allowMultiple": False,
-            "dataType": "String",
-            "paramType": "header",
-            "defaultValue": "Bearer ",
-        },
-    ],
+    "parameters": authorization_parameter,
     "responseClass": "NameNumber",
     "responseMessages": [
-        {"code": 200, "message": "Operation successfully performed"},
-        {"code": 400, "message": "Invalid input (specified)."},
-        {"code": 401, "message": "Unauthorized."},
+        code_success,
+        code_error,
+        code_unauthorized,
         {
             "code": 409,
-            "message": "".join((
-                "'model_name' is not in Order, Invoice,",
-                " PurchaseInvoice, SaleInvoice, TaxInvoice models.",
-            )),
+            "message": "".join(
+                (
+                    "'model_name' is not in Order, Invoice,",
+                    " PurchaseInvoice, SaleInvoice, TaxInvoice models.",
+                ),
+            ),
         },
     ],
 }

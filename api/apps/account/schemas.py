@@ -1,5 +1,11 @@
 """Swagger schemas for account apps."""
-
+from api.constants import (
+    authorization_parameter,
+    code_success,
+    code_unauthorized,
+    code_unsupported_media_type,
+    response_message_list,
+)
 
 process_sale_invoice_schema = {
     "notes": "Operations with saling process",
@@ -14,24 +20,10 @@ process_sale_invoice_schema = {
             "paramType": "body",
             "defaultValue": '{"sale_invoice_id": 1}',
         },
-        {
-            "name": "Authorization",
-            "description": "Authorization: Bearer token",
-            "required": True,
-            "allowMultiple": False,
-            "dataType": "String",
-            "paramType": "header",
-            "defaultValue": "Bearer ",
-        },
-    ],
+    ]
+    + authorization_parameter,
     "responseClass": "{'message': 'info'}",
-    "responseMessages": [
-        {"code": 200, "message": "Operation successfully performed"},
-        {"code": 400, "message": "Invalid input (specified)."},
-        {"code": 401, "message": "Unauthorized."},
-        {"code": 409, "message": "Instance with id does not exist."},
-        {"code": 422, "message": "Invalid input (specified)."},
-    ],
+    "responseMessages": response_message_list,
 }
 
 
@@ -42,30 +34,16 @@ period_report_schema = {
     "parameters": [
         {
             "name": "Date period",
-            "description": "Start and end period dates, format '%y-%m-%d'",   # noqa WPS323
+            "description": "Start and end period dates, format '%y-%m-%d'",  # noqa WPS323
             "required": True,
             "allowMultiple": False,
             "dataType": "json",
             "paramType": "body",
             "defaultValue": '{"date_from": "2020-01-01", "date_to": "2024-01-01"}',
         },
-        {
-            "name": "Authorization",
-            "description": "Authorization: Bearer token",
-            "required": True,
-            "allowMultiple": False,
-            "dataType": "String",
-            "paramType": "header",
-            "defaultValue": "Bearer ",
-        },
-    ],
-    "responseMessages": [
-        {"code": 200, "message": "Operation successfully performed"},
-        {"code": 400, "message": "Invalid input (specified)."},
-        {"code": 401, "message": "Unauthorized."},
-        {"code": 409, "message": "Instance with id does not exist."},
-        {"code": 422, "message": "Invalid input (specified)."},
-    ],
+    ]
+    + authorization_parameter,
+    "responseMessages": response_message_list,
 }
 
 
@@ -76,27 +54,19 @@ product_leftovers_schema = {
     "parameters": [
         {
             "name": "Date",
-            "description": "Date to evaluate product leftovers, format '%y-%m-%d'",   # noqa WPS323
+            "description": "Date to evaluate product leftovers, format '%y-%m-%d'",  # noqa WPS323
             "required": True,
             "allowMultiple": False,
             "dataType": "json",
             "paramType": "body",
             "defaultValue": '{"date": "2024-01-01"}',
         },
-        {
-            "name": "Authorization",
-            "description": "Authorization: Bearer token",
-            "required": True,
-            "allowMultiple": False,
-            "dataType": "String",
-            "paramType": "header",
-            "defaultValue": "Bearer ",
-        },
-    ],
+    ]
+    + authorization_parameter,
     "responseMessages": [
-        {"code": 200, "message": "Operation successfully performed"},
-        {"code": 401, "message": "Unauthorized."},
-        {"code": 415, "message": "Invalid input."},
+        code_success,
+        code_unauthorized,
+        code_unsupported_media_type,
     ],
 }
 
@@ -108,26 +78,18 @@ income_for_period_schema = {
     "parameters": [
         {
             "name": "Date period",
-            "description": "Start and end period dates, format '%y-%m-%d'",   # noqa WPS323
+            "description": "Start and end period dates, format '%y-%m-%d'",  # noqa WPS323
             "required": True,
             "allowMultiple": False,
             "dataType": "json",
             "paramType": "body",
             "defaultValue": '{"date_from": "2020-01-01", "date_to": "2024-01-01"}',
         },
-        {
-            "name": "Authorization",
-            "description": "Authorization: Bearer token",
-            "required": True,
-            "allowMultiple": False,
-            "dataType": "String",
-            "paramType": "header",
-            "defaultValue": "Bearer ",
-        },
-    ],
+    ]
+    + authorization_parameter,
     "responseMessages": [
-        {"code": 200, "message": "Operation successfully performed"},
-        {"code": 401, "message": "Unauthorized."},
-        {"code": 415, "message": "Invalid input."},
+        code_success,
+        code_unauthorized,
+        code_unsupported_media_type,
     ],
 }
