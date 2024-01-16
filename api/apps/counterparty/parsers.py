@@ -10,7 +10,7 @@ from api.apps.counterparty.validators import (
     str_ten,
     str_thirty,
 )
-from api.apps.invoice.validators import str_length_100
+from api.apps.invoice.validators import str_hundred
 from api.apps.product.validators import str_length_200
 
 discount_parser = reqparse.RequestParser()
@@ -25,8 +25,8 @@ discount_patch_parser.add_argument("rate", type=int_range(low=0, high=100))
 counterparty_parser = reqparse.RequestParser()
 counterparty_parser.add_argument("name", type=str_hundred_fifty, required=True)
 counterparty_parser.add_argument("postal_code", type=str_ten)
-counterparty_parser.add_argument("country", type=str_length_100)
-counterparty_parser.add_argument("city", type=str_length_100)
+counterparty_parser.add_argument("country", type=str_hundred)
+counterparty_parser.add_argument("city", type=str_hundred)
 counterparty_parser.add_argument("address", type=str_hundred_fifty_five)
 counterparty_parser.add_argument("phone_number", type=str_thirty)
 counterparty_parser.add_argument("discount_id", type=discount_id, required=True)
