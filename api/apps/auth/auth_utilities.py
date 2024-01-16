@@ -45,15 +45,15 @@ def get_auth_token_response(user: Row) -> dict[str, str]:
 
 def get_auth_response() -> ResponseReturnValue:
     """Get response with token data or message error."""
-    data = login_parser.parse_args()
-    user = login(data["email"], data["password"])
+    parsed_data = login_parser.parse_args()
+    user = login(parsed_data["email"], parsed_data["password"])
     if user:
         try:
             return get_auth_token_response(user)
-        except Exception as e:
-            return {"error": "Something went wrong", "message": str(e)}, 500
+        except Exception as ex:
+            return {"error": "Something went wrong", "message": str(ex)}, 500
     return {
-               "message": "Error fetching auth token!, invalid email or password",
-               "data": None,
-               "error": "Unauthorized",
-           }, 404
+        "message": "Error fetching auth token!, invalid email or password",
+        "data": None,
+        "error": "Unauthorized",
+    }, 404
