@@ -1,13 +1,10 @@
 """Models for purchase apps."""
 from sqlalchemy import func
-from sqlalchemy.orm import DeclarativeBase
 
 from api import db
 
-BaseModel: DeclarativeBase = db.Model
 
-
-class PurchaseInvoice(BaseModel):
+class PurchaseInvoice(db.Model):  # type: ignore
     """PurchaseInvoice model for api app."""
 
     id = db.Column(db.Integer, primary_key=True)
@@ -26,7 +23,7 @@ class PurchaseInvoice(BaseModel):
         return str(self.name)
 
 
-class PurchaseInvoiceProduct(BaseModel):
+class PurchaseInvoiceProduct(db.Model):  # type: ignore
     """PurchaseInvoiceProducts model for api app."""
 
     id = db.Column(db.Integer, primary_key=True)
@@ -46,7 +43,7 @@ class PurchaseInvoiceProduct(BaseModel):
     tax_invoice_products = db.relationship("TaxInvoiceProduct")
     products = db.relationship("Product", back_populates="purchase_invoice_products")
     purchase_invoices = db.relationship(
-        "PurchaseInvoice", back_populates="purchase_invoice_products"
+        "PurchaseInvoice", back_populates="purchase_invoice_products",
     )
 
     def __repr__(self) -> str:
