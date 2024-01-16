@@ -210,7 +210,10 @@ class CounterpartyAgreementsRoute(Resource):
     @swagger.operation(**counterparty_agreements_get_schema)
     @token_required()
     def get(
-        self, company_id: int, *args: typing.Any, **kwargs: typing.Any,
+        self,
+        company_id: int,
+        *args: typing.Any,
+        **kwargs: typing.Any,
     ) -> ResponseReturnValue:
         """Get Agreements list by counterparty id."""
         company_id = counterparty_id(company_id)

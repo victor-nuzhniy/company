@@ -1,6 +1,11 @@
 """Schemas for counterparty apps."""
-from api.constants import authorization_parameter, response_message_list, code_unauthorized, code_does_not_exist, \
-    code_success
+from api.constants import (
+    authorization_parameter,
+    code_does_not_exist,
+    code_success,
+    code_unauthorized,
+    response_message_list,
+)
 
 discount_get_schema = {
     "notes": "Get discount by id.",
@@ -23,7 +28,8 @@ discount_put_schema = {
             "paramType": "body",
             "defaultValue": '{"name": "enterprise", "rate": 10}',
         },
-    ] + authorization_parameter,
+    ]
+    + authorization_parameter,
     "responseClass": "DiscountFields",
     "responseMessages": response_message_list,
 }
@@ -41,7 +47,8 @@ discount_patch_schema = {
             "paramType": "body",
             "defaultValue": '{"name": "enterprise", "rate": 10}',
         },
-    ] + authorization_parameter,
+    ]
+    + authorization_parameter,
     "responseClass": "DiscountFields",
     "responseMessages": response_message_list,
 }
@@ -71,7 +78,8 @@ discount_post_schema = {
             "paramType": "body",
             "defaultValue": '{"name": "enterprise", "rate": 10}',
         },
-    ] + authorization_parameter,
+    ]
+    + authorization_parameter,
     "responseClass": "DiscountFields",
     "responseMessages": response_message_list,
 }
@@ -102,23 +110,28 @@ counterparty_put_schema = {
     "parameters": [
         {
             "name": "Update counterparty",
-            "description": "".join((
-                "Counterparty 'name', 'postal_code', 'country',",
-                " 'city', 'address', 'phone_number' and ",
-                "'discount_id' fields.",
-            )),
+            "description": "".join(
+                (
+                    "Counterparty 'name', 'postal_code', 'country',",
+                    " 'city', 'address', 'phone_number' and ",
+                    "'discount_id' fields.",
+                ),
+            ),
             "required": True,
             "allowMultiple": True,
             "dataType": "json",
             "paramType": "body",
-            "defaultValue": "".join((
-                '{"name": "Alabama", "postal_code": "49000", ',
-                '"country": "Poland", "city": "Krakow, ',
-                '"address": "Nova str, 23/3/8", "phone_number":',
-                ' "357 335", "dicount_id": 1}',
-            )),
+            "defaultValue": "".join(
+                (
+                    '{"name": "Alabama", "postal_code": "49000", ',
+                    '"country": "Poland", "city": "Krakow, ',
+                    '"address": "Nova str, 23/3/8", "phone_number":',
+                    ' "357 335", "dicount_id": 1}',
+                ),
+            ),
         },
-    ] + authorization_parameter,
+    ]
+    + authorization_parameter,
     "responseClass": "CounterpartyFields",
     "responseMessages": response_message_list,
 }
@@ -129,23 +142,28 @@ counterparty_patch_schema = {
     "parameters": [
         {
             "name": "Partially update counterparty",
-            "description": "".join((
-                "Counterparty 'name', 'postal_code', 'country',",
-                " 'city', 'address', 'phone_number' and ",
-                "'discount_id' fields.",
-            )),
+            "description": "".join(
+                (
+                    "Counterparty 'name', 'postal_code', 'country',",
+                    " 'city', 'address', 'phone_number' and ",
+                    "'discount_id' fields.",
+                ),
+            ),
             "required": False,
             "allowMultiple": True,
             "dataType": "json",
             "paramType": "body",
-            "defaultValue": "".join((
-                '{"name": "Alabama", "postal_code": "49000", ',
-                '"country": "Poland", "city": "Krakow, ',
-                '"address": "Nova str, 23/3/8", "phone_number":',
-                ' "357 335", "dicount_id": 1}',
-            )),
+            "defaultValue": "".join(
+                (
+                    '{"name": "Alabama", "postal_code": "49000", ',
+                    '"country": "Poland", "city": "Krakow, ',
+                    '"address": "Nova str, 23/3/8", "phone_number":',
+                    ' "357 335", "dicount_id": 1}',
+                ),
+            ),
         },
-    ] + authorization_parameter,
+    ]
+    + authorization_parameter,
     "responseClass": "CounterpartyFields",
     "responseMessages": response_message_list,
 }
@@ -168,23 +186,28 @@ counterparty_post_schema = {
     "parameters": [
         {
             "name": "Create counterparty",
-            "description": "".join((
-                "Counterparty 'name', 'postal_code', 'country',",
-                " 'city', 'address', 'phone_number' and ",
-                "'discount_id' fields.",
-            )),
+            "description": "".join(
+                (
+                    "Counterparty 'name', 'postal_code', 'country',",
+                    " 'city', 'address', 'phone_number' and ",
+                    "'discount_id' fields.",
+                ),
+            ),
             "required": True,
             "allowMultiple": True,
             "dataType": "json",
             "paramType": "body",
-            "defaultValue": "".join((
-                '{"name": "Alabama", "postal_code": "49000", ',
-                '"country": "Poland", "city": "Krakow, ',
-                '"address": "Nova str, 23/3/8", "phone_number":',
-                ' "357 335", "dicount_id": 1}',
-            )),
+            "defaultValue": "".join(
+                (
+                    '{"name": "Alabama", "postal_code": "49000", ',
+                    '"country": "Poland", "city": "Krakow, ',
+                    '"address": "Nova str, 23/3/8", "phone_number":',
+                    ' "357 335", "dicount_id": 1}',
+                ),
+            ),
         },
-    ] + authorization_parameter,
+    ]
+    + authorization_parameter,
     "responseClass": "CounterpartyFields",
     "responseMessages": response_message_list,
 }
@@ -222,7 +245,8 @@ agreement_put_schema = {
             "paramType": "body",
             "defaultValue": '{"name": "Agreement 1", "counterparty_id": 1}',
         },
-    ] + authorization_parameter,
+    ]
+    + authorization_parameter,
     "responseClass": "AgreementFields",
     "responseMessages": response_message_list,
 }
@@ -240,7 +264,8 @@ agreement_patch_schema = {
             "paramType": "body",
             "defaultValue": '{"name": "Agreement 1", "counterparty_id": 1}',
         },
-    ] + authorization_parameter,
+    ]
+    + authorization_parameter,
     "responseClass": "AgreementFields",
     "responseMessages": response_message_list,
 }
@@ -270,7 +295,8 @@ agreement_post_schema = {
             "paramType": "body",
             "defaultValue": '{"name": "Agreement 1", "counterparty_id": 1}',
         },
-    ] + authorization_parameter,
+    ]
+    + authorization_parameter,
     "responseClass": "AgreementFields",
     "responseMessages": response_message_list,
 }
