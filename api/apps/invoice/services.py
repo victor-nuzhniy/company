@@ -5,18 +5,19 @@ from typing import Sequence
 from sqlalchemy import and_, func
 
 from api import Agreement, Counterparty, Invoice, InvoiceProduct, Order, Product
+from api.constants import EARLIEST_DATE, LATEST_DATE
 
 
 def get_invoice_data(
     offset: int = 0,
     limit: int = 20,
-    date_from: datetime = datetime(1000, 1, 1),
-    date_to: datetime = datetime(9000, 1, 1),
+    date_from: datetime = EARLIEST_DATE,
+    date_to: datetime = LATEST_DATE,
 ) -> Sequence:
     """Get Invoice registry list."""
-    date_from = datetime(1000, 1, 1) if not date_from else date_from
-    date_to = datetime(9000, 1, 1) if not date_to else date_to
-    return (
+    date_from = date_from if date_from else EARLIEST_DATE
+    date_to = date_to if date_to else LATEST_DATE
+    query = (
         Invoice.query.with_entities(
             Invoice.id.label("id"),
             Invoice.created_at.label("created_at"),
@@ -36,6 +37,9 @@ def get_invoice_data(
         .join(Order)
         .join(Counterparty)
         .outerjoin(Product)
+    )
+    return (
+        query
         .filter(and_(Invoice.created_at > date_from, Invoice.created_at < date_to))
         .group_by(Invoice)
         .order_by(Invoice.id.desc())
