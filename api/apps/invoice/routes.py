@@ -1,5 +1,8 @@
 """Invoice routes."""
-from flask_restful import Resource, fields, marshal
+import typing
+
+from flask.typing import ResponseReturnValue
+from flask_restful import Resource, marshal
 from flask_restful_swagger import swagger
 
 from api import Invoice, InvoiceProduct, api
@@ -9,6 +12,7 @@ from api.apps.invoice.parsers import (
     invoice_product_parser,
     invoice_product_patch_parser,
     invoice_put_parser,
+    order_registry_parser,
 )
 from api.apps.invoice.schemas import (
     agreement_invoice_products_get_schema,
@@ -31,76 +35,16 @@ from api.apps.invoice.services import (
     get_invoice_data,
     get_invoice_products_by_invoice_id,
 )
-from api.apps.invoice.validators import agreement_id as agreement_id_validator
-from api.apps.invoice.validators import invoice_id as invoice_id_validator
-from api.apps.order.parsers import order_registry_parser
-from api.common import CustomDateTimeFormat
+from api.apps.invoice.swagger_models import (
+    InvoiceFields,
+    InvoiceProductFields,
+    InvoiceRegistryFields,
+    InvoicesProductsFields,
+)
+from api.apps.invoice.validators import agreement_id_valid as agreement_id_validator
+from api.apps.invoice.validators import invoice_id_valid as invoice_id_validator
 from api.model_routes import ModelRoute, ModelsRoute, token_required
 from api.services import crud
-
-
-@swagger.model
-class InvoiceFields:
-    """InvoiceRoute output fields."""
-
-    resource_fields = {
-        "id": fields.Integer,
-        "name": fields.String,
-        "order_id": fields.Integer,
-        "created_at": CustomDateTimeFormat,
-        "paid": fields.Boolean,
-        "agreement_id": fields.Integer,
-    }
-
-
-@swagger.model
-class InvoiceProductFields:
-    """InvoiceProductRoute output fields."""
-
-    resource_fields = {
-        "id": fields.Integer,
-        "product_id": fields.Integer,
-        "quantity": fields.Integer,
-        "price": fields.Integer,
-        "invoice_id": fields.Integer,
-    }
-
-
-@swagger.model
-class InvoiceRegistryFields:
-    """InvoiceRegistry output fields."""
-
-    resource_fields = {
-        "id": fields.Integer,
-        "created_at": CustomDateTimeFormat,
-        "invoice_name": fields.String,
-        "paid": fields.Boolean,
-        "order": fields.String,
-        "order_id": fields.Integer,
-        "summ": fields.Integer,
-        "currency": fields.String,
-        "agreement": fields.String,
-        "agreement_id": fields.Integer,
-        "counterparty": fields.String,
-        "counterparty_id": fields.Integer,
-    }
-
-
-@swagger.model
-class InvoicesProductsFields:
-    """InvoicesProductsRoute output fields."""
-
-    resource_fields = {
-        "id": fields.Integer,
-        "product_id": fields.Integer,
-        "quantity": fields.Integer,
-        "price": fields.Integer,
-        "invoice_id": fields.Integer,
-        "name": fields.String,
-        "code": fields.String,
-        "currency": fields.String,
-        "units": fields.String,
-    }
 
 
 class InvoiceRoute(ModelRoute):
@@ -113,25 +57,25 @@ class InvoiceRoute(ModelRoute):
 
     @swagger.operation(**invoice_get_schema)
     @token_required()
-    def get(self, *args, **kwargs):
+    def get(self, *args: typing.Any, **kwargs: typing.Any) -> ResponseReturnValue:
         """Get model instance by id."""
         return super().get(*args, **kwargs)
 
     @swagger.operation(**invoice_put_schema)
     @token_required()
-    def put(self, *args, **kwargs):
+    def put(self, *args: typing.Any, **kwargs: typing.Any) -> ResponseReturnValue:
         """Update instance by id."""
         return super().put(*args, **kwargs)
 
     @swagger.operation(**invoice_patch_schema)
     @token_required()
-    def patch(self, *args, **kwargs):
+    def patch(self, *args: typing.Any, **kwargs: typing.Any) -> ResponseReturnValue:
         """Update instance bu id, partially."""
         return super().patch(*args, **kwargs)
 
     @swagger.operation(**invoice_delete_schema)
     @token_required()
-    def delete(self, *args, **kwargs):
+    def delete(self, *args: typing.Any, **kwargs: typing.Any) -> ResponseReturnValue:
         """Delete instance by id."""
         return super().delete(*args, **kwargs)
 
@@ -145,13 +89,13 @@ class InvoicesRoute(ModelsRoute):
 
     @swagger.operation(**invoice_post_schema)
     @token_required()
-    def post(self, *args, **kwargs):
+    def post(self, *args: typing.Any, **kwargs: typing.Any) -> ResponseReturnValue:
         """Create model instance."""
         return super().post(*args, **kwargs)
 
     @swagger.operation(**invoices_get_schema)
     @token_required()
-    def get(self, *args, **kwargs):
+    def get(self, *args: typing.Any, **kwargs: typing.Any) -> ResponseReturnValue:
         """Get model instance list."""
         return super().get(*args, **kwargs)
 
@@ -166,25 +110,25 @@ class InvoiceProductRoute(ModelRoute):
 
     @swagger.operation(**invoice_product_get_schema)
     @token_required()
-    def get(self, *args, **kwargs):
+    def get(self, *args: typing.Any, **kwargs: typing.Any) -> ResponseReturnValue:
         """Get model instance by id."""
         return super().get(*args, **kwargs)
 
     @swagger.operation(**invoice_product_put_schema)
     @token_required()
-    def put(self, *args, **kwargs):
+    def put(self, *args: typing.Any, **kwargs: typing.Any) -> ResponseReturnValue:
         """Update instance by id."""
         return super().put(*args, **kwargs)
 
     @swagger.operation(**invoice_product_patch_schema)
     @token_required()
-    def patch(self, *args, **kwargs):
+    def patch(self, *args: typing.Any, **kwargs: typing.Any) -> ResponseReturnValue:
         """Update instance bu id, partially."""
         return super().patch(*args, **kwargs)
 
     @swagger.operation(**invoice_product_delete_schema)
     @token_required()
-    def delete(self, *args, **kwargs):
+    def delete(self, *args: typing.Any, **kwargs: typing.Any) -> ResponseReturnValue:
         """Delete instance by id."""
         return super().delete(*args, **kwargs)
 
@@ -198,13 +142,13 @@ class InvoiceProductsRoute(ModelsRoute):
 
     @swagger.operation(**invoice_product_post_schema)
     @token_required()
-    def post(self, *args, **kwargs):
+    def post(self, *args: typing.Any, **kwargs: typing.Any) -> ResponseReturnValue:
         """Create model instance."""
         return super().post(*args, **kwargs)
 
     @swagger.operation(**invoice_products_get_schema)
     @token_required()
-    def get(self, *args, **kwargs):
+    def get(self, *args: typing.Any, **kwargs: typing.Any) -> ResponseReturnValue:
         """Get model instance list."""
         return super().get(*args, **kwargs)
 
@@ -214,11 +158,11 @@ class InvoiceRegistryRoute(Resource):
 
     @swagger.operation(**invoice_registry_get_schema)
     @token_required()
-    def get(self, *args, **kwargs):
+    def get(self, *args: typing.Any, **kwargs: typing.Any) -> ResponseReturnValue:
         """Get invoice registry list."""
-        args = order_registry_parser.parse_args()
+        arguments = order_registry_parser.parse_args()
         return marshal(
-            get_invoice_data(**args),
+            get_invoice_data(**arguments),
             InvoiceRegistryFields.resource_fields,
         )
 
@@ -228,7 +172,9 @@ class InvoicesProductsRoute(Resource):
 
     @swagger.operation(**invoices_products_get_schema)
     @token_required()
-    def get(self, invoice_id, *args, **kwargs):
+    def get(
+        self, invoice_id: int, *args: typing.Any, **kwargs: typing.Any
+    ) -> ResponseReturnValue:
         """Get Invoice products list by invoice id."""
         invoice_id = invoice_id_validator(invoice_id)
         return marshal(
@@ -242,7 +188,9 @@ class AgreementInvoicesRoute(Resource):
 
     @swagger.operation(**agreement_invoice_products_get_schema)
     @token_required()
-    def get(self, agreement_id, *args, **kwargs):
+    def get(
+        self, agreement_id: int, *args: typing.Any, **kwargs: typing.Any
+    ) -> ResponseReturnValue:
         """Get Invoices list by agreement id."""
         agreement_id = agreement_id_validator(agreement_id)
         return marshal(
