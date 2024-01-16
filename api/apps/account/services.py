@@ -1,5 +1,5 @@
 """Db services for account apps."""
-from typing import Dict, List, Sequence
+from typing import Sequence
 
 from flask import abort
 from flask.typing import ResponseReturnValue
@@ -28,7 +28,7 @@ class AccountQueries(object):
         invoice_products: Sequence,
     ) -> Sequence:
         """Get purchase products list by products ids."""
-        products_ids: List[int] = [elem.product_id for elem in invoice_products]
+        products_ids: list[int] = [elem.product_id_valid for elem in invoice_products]
         joinload = db.joinedload(Product.purchase_invoice_products)
         return (
             Product.query.options(joinload)
@@ -44,7 +44,7 @@ class AccountQueries(object):
         """Update SaleInvoice 'done' field to True."""
         crud.update(SaleInvoice, {"done": True}, {"id": sale_invoice_id})
 
-    def get_sale_invoice_products_by_period(self, period: Dict) -> ResponseReturnValue:
+    def get_sale_invoice_products_by_period(self, period: dict) -> ResponseReturnValue:
         """Get sold products list by given period."""
         date_from = period.get("date_from")
         date_to = period.get("date_to")
@@ -72,7 +72,7 @@ class AccountQueries(object):
             .all()
         )
 
-    def get_purchase_products_quantity_list(self, input_data: Dict) -> Sequence:
+    def get_purchase_products_quantity_list(self, input_data: dict) -> Sequence:
         """Get products list with purchase quantities on given date."""
         date = input_data.get("date")
         return (
@@ -92,7 +92,7 @@ class AccountQueries(object):
             .all()
         )
 
-    def get_sold_products(self, input_data: Dict) -> Sequence:
+    def get_sold_products(self, input_data: dict) -> Sequence:
         """Get sold product dict on given date."""
         date = input_data.get("date")
         return (
@@ -109,7 +109,7 @@ class AccountQueries(object):
             .all()
         )
 
-    def get_tax_invoice_products_with_prices_data(self, period: Dict) -> Sequence:
+    def get_tax_invoice_products_with_prices_data(self, period: dict) -> Sequence:
         """Get sold products with purchase and sale prices by given period."""
         date_from = period.get("date_from")
         date_to = period.get("date_to")
@@ -132,7 +132,7 @@ class AccountQueries(object):
             .all()
         )
 
-    def get_sold_products_for_period(self, period: Dict) -> Sequence:
+    def get_sold_products_for_period(self, period: dict) -> Sequence:
         """Get sold products for given period."""
         date_from = period.get("date_from")
         date_to = period.get("date_to")
@@ -165,17 +165,17 @@ def prepare_tax_invoice_products(  # noqa WPS210
     invoice_products: Sequence,
     purchase_products: Sequence,
     invoice_id: int,
-) -> List[Dict]:
+) -> list[dict]:
     """
     Create tax_invoice_products list with products quantity checking.
 
     In case of lacking products amount in purchase invoices raise error with 409 code.
     """
-    purchase_products_dict: Dict = {it.id: it for it in purchase_products}
-    tax_products: List = []
+    purchase_products_dict: dict = {it.id: it for it in purchase_products}
+    tax_products: list = []
     for product in invoice_products:
         purchase_products = purchase_products_dict[
-            product.product_id
+            product.product_id_valid
         ].purchase_invoice_products
         quantity: int = product.quantity
         for purchase_product in purchase_products:
@@ -198,7 +198,7 @@ def prepare_tax_invoice_products(  # noqa WPS210
             abort(
                 409,
                 "{name} not enough to process invoice with id {id}".format(
-                    name=purchase_products_dict[product.product_id].name,
+                    name=purchase_products_dict[product.product_id_valid].name,
                     id=invoice_id,
                 ),
             )
@@ -206,7 +206,7 @@ def prepare_tax_invoice_products(  # noqa WPS210
     return tax_products
 
 
-def create_tax_invoice_products(tax_products: List[Dict], sale_invoice_id: int) -> None:
+def create_tax_invoice_products(tax_products: list[dict], sale_invoice_id: int) -> None:
     """Create tax_invoice_products and tax_invoice they are connected."""
     last_tax_invoice = (
         TaxInvoice.query.with_entities(TaxInvoice.id).order_by(-TaxInvoice.id).first()
