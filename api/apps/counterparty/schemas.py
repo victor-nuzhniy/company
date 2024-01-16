@@ -2,9 +2,9 @@
 from api.constants import (
     authorization_parameter,
     code_does_not_exist,
-    code_success,
     code_unauthorized,
     response_message_list,
+    small_response_message_list,
 )
 
 discount_get_schema = {
@@ -89,11 +89,7 @@ discounts_get_schema = {
     "nickname": "Get all users.",
     "responseClass": "DiscountFields",
     "parameters": authorization_parameter,
-    "responseMessages": [
-        code_success,
-        code_unauthorized,
-        code_does_not_exist,
-    ],
+    "responseMessages": small_response_message_list,
 }
 
 counterparty_get_schema = {
@@ -217,11 +213,7 @@ counterparties_get_schema = {
     "nickname": "Get all counterparties.",
     "responseClass": "CounterpartyFields",
     "parameters": authorization_parameter,
-    "responseMessages": [
-        code_success,
-        code_unauthorized,
-        code_does_not_exist,
-    ],
+    "responseMessages": small_response_message_list,
 }
 
 agreement_get_schema = {
@@ -306,11 +298,7 @@ agreements_get_schema = {
     "nickname": "Get all agreements.",
     "responseClass": "AgreementFields",
     "parameters": authorization_parameter,
-    "responseMessages": [
-        code_success,
-        code_unauthorized,
-        code_does_not_exist,
-    ],
+    "responseMessages": small_response_message_list,
 }
 
 counterparty_agreements_get_schema = {
@@ -318,9 +306,5 @@ counterparty_agreements_get_schema = {
     "nickname": "Get agreements by counterparty id.",
     "responseClass": "AgreementFields",
     "parameters": authorization_parameter,
-    "responseMessages": [
-        code_success,
-        code_unauthorized,
-        code_does_not_exist,
-    ],
+    "responseMessages": small_response_message_list,
 }
