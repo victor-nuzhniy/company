@@ -4,14 +4,13 @@ from typing import Any, Dict, List, Sequence
 
 
 def get_product_leftovers_on_date(
-    purchase_products: Dict, sold_products: Sequence
+    purchase_products: Dict, sold_products: Sequence,
 ) -> List:
     """Subtract quantities in arguments."""
-    sold_products_dict = {item.id: item.quantity for item in sold_products}
+    sold_products_dict = {it.id: it.quantity for it in sold_products}
     for product in purchase_products:
         product["quantity"] -= sold_products_dict.get(product.get("id"), 0)
-    result = [product for product in purchase_products if product.get("quantity")]
-    return result
+    return [prod for prod in purchase_products if prod.get("quantity")]
 
 
 def create_income_products_dict(products: Sequence) -> dict[int, Any]:
@@ -33,7 +32,7 @@ def add_income_to_products(income_dict: Dict, products: List[Dict]) -> List[Dict
 
 def get_last_string_digits_number(name: str) -> int:
     """Get last possible digits from a str."""
-    for i in range(len(name)):
-        if not name[-i - 1].isnumeric():
-            return int(name[-i:])
+    for index in range(len(name)):  # noqa WPS518
+        if not name[-index - 1].isnumeric():
+            return int(name[-index:])
     return int(name)

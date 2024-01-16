@@ -23,7 +23,7 @@ from api.apps.account.services import (
     create_tax_invoice_products,
     prepare_tax_invoice_products,
 )
-from api.apps.account.utils import (
+from api.apps.account.account_utilities import (
     add_income_to_products,
     create_income_products_dict,
     get_product_leftovers_on_date,
