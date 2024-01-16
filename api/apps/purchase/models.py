@@ -51,4 +51,6 @@ class PurchaseInvoiceProduct(BaseModel):
 
     def __repr__(self) -> str:
         """Represent model instance."""
-        return f"Purchase invoice product with id {self.product_id}"
+        return "Purchase invoice product with id {product_id}".format(
+            product_id=self.product_id,
+        )
