@@ -22,8 +22,10 @@ name_number_schema = {
         {"code": 401, "message": "Unauthorized."},
         {
             "code": 409,
-            "message": "'model_name' is not in Order, Invoice,"
-            " PurchaseInvoice, SaleInvoice, TaxInvoice models.",
+            "message": "".join((
+                "'model_name' is not in Order, Invoice,",
+                " PurchaseInvoice, SaleInvoice, TaxInvoice models.",
+            )),
         },
     ],
 }
