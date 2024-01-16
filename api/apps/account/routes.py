@@ -19,15 +19,9 @@ from api.apps.account.schemas import (
     product_leftovers_schema,
 )
 from api.apps.account.services import (
+    account_queries,
     create_tax_invoice_products,
-    get_purchase_products_by_invoice_products,
-    get_purchase_products_quantity_list,
-    get_sale_invoice_products_by_period,
-    get_sold_products,
-    get_sold_products_for_period,
-    get_tax_invoice_products_with_prices_data,
     prepare_tax_invoice_products,
-    update_sale_invoice,
 )
 from api.apps.account.utils import (
     add_income_to_products,
@@ -108,14 +102,14 @@ class ProcessSaleInvoiceRoute(Resource):
         sale_invoice_products = crud.read_many(
             SaleInvoiceProduct, {"sale_invoice_id": sale_invoice_id},
         )
-        purchase_products = get_purchase_products_by_invoice_products(
+        purchase_products = account_queries.get_purchase_products_by_invoice_products(
             sale_invoice_products,
         )
         tax_invoice_products = prepare_tax_invoice_products(
             sale_invoice_products, purchase_products, sale_invoice_id,
         )
         create_tax_invoice_products(tax_invoice_products, sale_invoice_id)
-        update_sale_invoice(sale_invoice_id)
+        account_queries.update_sale_invoice(sale_invoice_id)
 
         return {"message": "Operation successfully performed"}
 
@@ -136,7 +130,7 @@ class PeriodReportRoute(Resource):
         Price field is given in cents.
         """
         arguments = period_parser.parse_args()
-        return get_sale_invoice_products_by_period(arguments)
+        return account_queries.get_sale_invoice_products_by_period(arguments)
 
 
 class ProductsLeftoversRoute(Resource):
@@ -148,10 +142,10 @@ class ProductsLeftoversRoute(Resource):
         """Create product leftovers report."""
         arguments = product_leftovers_parser.parse_args()
         purchase_products = marshal(
-            get_purchase_products_quantity_list(arguments),
+            account_queries.get_purchase_products_quantity_list(arguments),
             ProductLeftovers.resource_fields,
         )
-        sold_products = get_sold_products(arguments)
+        sold_products = account_queries.get_sold_products(arguments)
         return get_product_leftovers_on_date(purchase_products, sold_products)
 
 
@@ -167,11 +161,14 @@ class IncomeForPeriodRoute(Resource):
         Income is field given in cents.
         """
         arguments = period_parser.parse_args()
-        income_products_data = get_tax_invoice_products_with_prices_data(arguments)
-        products = marshal(
-            get_sold_products_for_period(arguments), IncomeForPeriod.resource_fields,
+        income_products = account_queries.get_tax_invoice_products_with_prices_data(
+            arguments,
         )
-        income_dict = create_income_products_dict(income_products_data)
+        products = marshal(
+            account_queries.get_sold_products_for_period(arguments),
+            IncomeForPeriod.resource_fields,
+        )
+        income_dict = create_income_products_dict(income_products)
         return add_income_to_products(income_dict, products)
 
 
