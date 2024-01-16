@@ -5,10 +5,10 @@ from flask_restful.inputs import int_range
 from api.apps.counterparty.validators import (
     counterparty_id,
     discount_id,
-    str_ten,
-    str_thirty,
     str_hundred_fifty,
     str_hundred_fifty_five,
+    str_ten,
+    str_thirty,
 )
 from api.apps.invoice.validators import str_length_100
 from api.apps.product.validators import str_length_200
@@ -20,6 +20,7 @@ discount_parser.add_argument("rate", type=int_range(low=0, high=100), required=T
 discount_patch_parser = reqparse.RequestParser()
 discount_patch_parser.add_argument("name", type=str_thirty)
 discount_patch_parser.add_argument("rate", type=int_range(low=0, high=100))
+
 
 counterparty_parser = reqparse.RequestParser()
 counterparty_parser.add_argument("name", type=str_hundred_fifty, required=True)
@@ -42,5 +43,7 @@ agreement_parser.add_argument("counterparty_id", type=counterparty_id, required=
 agreement_patch_parser = reqparse.RequestParser()
 agreement_patch_parser.add_argument("name", type=str_length_200, required=False)
 agreement_patch_parser.add_argument(
-    "counterparty_id", type=counterparty_id, required=False,
+    "counterparty_id",
+    type=counterparty_id,
+    required=False,
 )
