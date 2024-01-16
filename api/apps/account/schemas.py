@@ -42,7 +42,7 @@ period_report_schema = {
     "parameters": [
         {
             "name": "Date period",
-            "description": "Start and end period dates, format '%y-%m-%d'",
+            "description": "Start and end period dates, format '%y-%m-%d'",   # noqa WPS323
             "required": True,
             "allowMultiple": False,
             "dataType": "json",
@@ -76,7 +76,7 @@ product_leftovers_schema = {
     "parameters": [
         {
             "name": "Date",
-            "description": "Date to evaluate product leftovers, format '%y-%m-%d'",
+            "description": "Date to evaluate product leftovers, format '%y-%m-%d'",   # noqa WPS323
             "required": True,
             "allowMultiple": False,
             "dataType": "json",
@@ -108,7 +108,7 @@ income_for_period_schema = {
     "parameters": [
         {
             "name": "Date period",
-            "description": "Start and end period dates, format '%y-%m-%d'",
+            "description": "Start and end period dates, format '%y-%m-%d'",   # noqa WPS323
             "required": True,
             "allowMultiple": False,
             "dataType": "json",
