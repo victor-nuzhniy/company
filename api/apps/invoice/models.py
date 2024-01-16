@@ -1,13 +1,10 @@
 """Models for invoice apps."""
 from sqlalchemy import func
-from sqlalchemy.orm import DeclarativeBase
 
 from api import db
 
-BaseModel: DeclarativeBase = db.Model
 
-
-class Invoice(BaseModel):
+class Invoice(db.Model):  # type: ignore
     """Invoice model for api app."""
 
     id = db.Column(db.Integer, primary_key=True)
@@ -34,7 +31,7 @@ class Invoice(BaseModel):
         return str(self.name)
 
 
-class InvoiceProduct(BaseModel):
+class InvoiceProduct(db.Model):  # type: ignore
     """InvoiceProducts model for api app."""
 
     id = db.Column(db.Integer, primary_key=True)

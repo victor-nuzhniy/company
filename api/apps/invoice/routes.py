@@ -41,8 +41,7 @@ from api.apps.invoice.swagger_models import (
     InvoiceRegistryFields,
     InvoicesProductsFields,
 )
-from api.apps.invoice.validators import agreement_id_valid as agreement_id_validator
-from api.apps.invoice.validators import invoice_id_valid as invoice_id_validator
+from api.apps.invoice.validators import agreement_id_valid, invoice_id_valid
 from api.model_routes import ModelRoute, ModelsRoute, token_required
 from api.services import crud
 
@@ -173,10 +172,10 @@ class InvoicesProductsRoute(Resource):
     @swagger.operation(**invoices_products_get_schema)
     @token_required()
     def get(
-        self, invoice_id: int, *args: typing.Any, **kwargs: typing.Any
+        self, invoice_id: int, *args: typing.Any, **kwargs: typing.Any,
     ) -> ResponseReturnValue:
         """Get Invoice products list by invoice id."""
-        invoice_id = invoice_id_validator(invoice_id)
+        invoice_id = invoice_id_valid(invoice_id)
         return marshal(
             get_invoice_products_by_invoice_id(invoice_id),
             InvoicesProductsFields.resource_fields,
@@ -189,12 +188,12 @@ class AgreementInvoicesRoute(Resource):
     @swagger.operation(**agreement_invoice_products_get_schema)
     @token_required()
     def get(
-        self, agreement_id: int, *args: typing.Any, **kwargs: typing.Any
+        self, agreement_id: int, *args: typing.Any, **kwargs: typing.Any,
     ) -> ResponseReturnValue:
         """Get Invoices list by agreement id."""
-        agreement_id = agreement_id_validator(agreement_id)
+        agreement_id = agreement_id_valid(agreement_id)
         return marshal(
-            crud.read_many(Invoice, {"agreement_id": agreement_id}, True),
+            crud.read_many(Invoice, {"agreement_id": agreement_id}, rev=True),
             InvoiceFields.resource_fields,
         )
 
