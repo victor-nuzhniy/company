@@ -12,10 +12,12 @@ login_schema = {
             "dataType": "json",
             "paramType": "body",
             "defaultValue": '{"email": "ab@abc.com", "password": "111"}',
-        }
+        },
     ],
-    "responseClass": '{"message": "Successfully fetched auth token",'
-    ' "data": "some_token"}',
+    "responseClass": "".join((
+        '{"message": "Successfully fetched auth token",',
+        ' "data": "some_token"}',
+    )),
     "responseMessages": [
         {"code": 200, "message": "Successfully fetched auth token"},
         {
@@ -28,7 +30,6 @@ login_schema = {
     ],
 }
 
-
 admin_schema = {
     "notes": "Admin routes.",
     "nickname": "Create active admin user.",
@@ -40,9 +41,11 @@ admin_schema = {
             "allowMultiple": False,
             "dataType": "json",
             "paramType": "body",
-            "defaultValue": '{"username": "Vasja", "email": "ab@abc.com", '
-            '"password": "111", "admin_password": "123"}',
-        }
+            "defaultValue": "".join((
+                '{"username": "Vasja", "email": "ab@abc.com", ',
+                '"password": "111", "admin_password": "123"}',
+            )),
+        },
     ],
     "responseClass": "UserFields",
     "responseMessages": [
@@ -51,8 +54,10 @@ admin_schema = {
         {"code": 415, "message": "Invalid input."},
         {
             "code": 422,
-            "message": "Invalid input. Enter valid value. "
-            "Too long value. Access field is empty.",
+            "message": "".join((
+                "Invalid input. Enter valid value. ",
+                "Too long value. Access field is empty.",
+            )),
         },
     ],
 }
