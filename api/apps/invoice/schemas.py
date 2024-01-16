@@ -1,27 +1,20 @@
 """Schemas for invoice apps."""
+from api.constants import (
+    authorization_parameter,
+    code_does_not_exist,
+    code_error,
+    code_success,
+    code_unauthorized,
+    response_message_list,
+    small_response_message_list,
+)
 
 invoice_get_schema = {
     "notes": "Get invoice by id.",
     "nickname": "Get invoice.",
     "responseClass": "InvoiceFields",
-    "parameters": [
-        {
-            "name": "Authorization",
-            "description": "Authorization: Bearer token",
-            "required": True,
-            "allowMultiple": False,
-            "dataType": "String",
-            "paramType": "header",
-            "defaultValue": "Bearer ",
-        },
-    ],
-    "responseMessages": [
-        {"code": 200, "message": "Operation successfully performed"},
-        {"code": 400, "message": "Invalid input (specified)."},
-        {"code": 401, "message": "Unauthorized."},
-        {"code": 409, "message": "Instance with id does not exist."},
-        {"code": 422, "message": "Invalid input (specified)."},
-    ],
+    "parameters": authorization_parameter,
+    "responseMessages": response_message_list,
 }
 
 
@@ -38,24 +31,10 @@ invoice_put_schema = {
             "paramType": "body",
             "defaultValue": '{"name": "I-00357", "order_id": 1, "agreement_id": 1}',
         },
-        {
-            "name": "Authorization",
-            "description": "Authorization: Bearer token",
-            "required": True,
-            "allowMultiple": False,
-            "dataType": "String",
-            "paramType": "header",
-            "defaultValue": "Bearer ",
-        },
-    ],
+    ]
+    + authorization_parameter,
     "responseClass": "InvoiceFields",
-    "responseMessages": [
-        {"code": 200, "message": "Operation successfully performed"},
-        {"code": 400, "message": "Invalid input (specified)."},
-        {"code": 401, "message": "Unauthorized."},
-        {"code": 409, "message": "Instance with id does not exist."},
-        {"code": 422, "message": "Invalid input (specified)."},
-    ],
+    "responseMessages": response_message_list,
 }
 
 
@@ -65,33 +44,23 @@ invoice_patch_schema = {
     "parameters": [
         {
             "name": "Partially update invoice",
-            "description": "Invoice 'name', 'order_id', 'created_at' "
-            "and 'agreement_id' fields.",
+            "description": "".join((
+                "Invoice 'name', 'order_id', 'created_at' ",
+                "and 'agreement_id' fields.",
+            )),
             "required": False,
             "allowMultiple": True,
             "dataType": "json",
             "paramType": "body",
-            "defaultValue": '{"name": "I-00357", "order_id": 1, '
-            '"created_at": "2023-10-01", "agreement_id": 1}',
+            "defaultValue": "".join((
+                '{"name": "I-00357", "order_id": 1, ',
+                '"created_at": "2023-10-01", "agreement_id": 1}',
+            )),
         },
-        {
-            "name": "Authorization",
-            "description": "Authorization: Bearer token",
-            "required": True,
-            "allowMultiple": False,
-            "dataType": "String",
-            "paramType": "header",
-            "defaultValue": "Bearer ",
-        },
-    ],
+    ]
+    + authorization_parameter,
     "responseClass": "InvoiceFields",
-    "responseMessages": [
-        {"code": 200, "message": "Operation successfully performed"},
-        {"code": 400, "message": "Invalid input (specified)."},
-        {"code": 401, "message": "Unauthorized."},
-        {"code": 409, "message": "Instance with id does not exist."},
-        {"code": 422, "message": "Invalid input (specified)."},
-    ],
+    "responseMessages": response_message_list,
 }
 
 
@@ -99,21 +68,11 @@ invoice_delete_schema = {
     "notes": "Delete invoice data by id.",
     "nickname": "Delete invoice.",
     "responseClass": '{"message": "Deleted instance with id"}',
-    "parameters": [
-        {
-            "name": "Authorization",
-            "description": "Authorization: Bearer token",
-            "required": True,
-            "allowMultiple": False,
-            "dataType": "String",
-            "paramType": "header",
-            "defaultValue": "Bearer ",
-        },
-    ],
+    "parameters": authorization_parameter,
     "responseMessages": [
         {"code": 200, "message": "Deleted instance with id."},
-        {"code": 401, "message": "Unauthorized."},
-        {"code": 409, "message": "Instance with id does not exist."},
+        code_unauthorized,
+        code_does_not_exist,
     ],
 }
 
@@ -131,24 +90,10 @@ invoice_post_schema = {
             "paramType": "body",
             "defaultValue": '{"name": "I-00357", "order_id": 1, "agreement_id": 1}',
         },
-        {
-            "name": "Authorization",
-            "description": "Authorization: Bearer token",
-            "required": True,
-            "allowMultiple": False,
-            "dataType": "String",
-            "paramType": "header",
-            "defaultValue": "Bearer ",
-        },
-    ],
+    ]
+    + authorization_parameter,
     "responseClass": "InvoiceFields",
-    "responseMessages": [
-        {"code": 200, "message": "Operation successfully performed"},
-        {"code": 400, "message": "Invalid input (specified)."},
-        {"code": 401, "message": "Unauthorized."},
-        {"code": 409, "message": "Instance with id does not exist."},
-        {"code": 422, "message": "Invalid input (specified)."},
-    ],
+    "responseMessages": response_message_list,
 }
 
 
@@ -156,22 +101,8 @@ invoices_get_schema = {
     "notes": "Get all invoices.",
     "nickname": "Get all invoices.",
     "responseClass": "InvoiceFields",
-    "parameters": [
-        {
-            "name": "Authorization",
-            "description": "Authorization: Bearer token",
-            "required": True,
-            "allowMultiple": False,
-            "dataType": "String",
-            "paramType": "header",
-            "defaultValue": "Bearer ",
-        },
-    ],
-    "responseMessages": [
-        {"code": 200, "message": "Operation successfully performed"},
-        {"code": 401, "message": "Unauthorized."},
-        {"code": 409, "message": "Instance with id does not exist."},
-    ],
+    "parameters": authorization_parameter,
+    "responseMessages": small_response_message_list,
 }
 
 
@@ -179,24 +110,8 @@ invoice_product_get_schema = {
     "notes": "Get invoice product by id.",
     "nickname": "Get invoice product.",
     "responseClass": "InvoiceProductFields",
-    "parameters": [
-        {
-            "name": "Authorization",
-            "description": "Authorization: Bearer token",
-            "required": True,
-            "allowMultiple": False,
-            "dataType": "String",
-            "paramType": "header",
-            "defaultValue": "Bearer ",
-        },
-    ],
-    "responseMessages": [
-        {"code": 200, "message": "Operation successfully performed"},
-        {"code": 400, "message": "Invalid input (specified)."},
-        {"code": 401, "message": "Unauthorized."},
-        {"code": 409, "message": "Instance with id does not exist."},
-        {"code": 422, "message": "Invalid input (specified)."},
-    ],
+    "parameters": authorization_parameter,
+    "responseMessages": response_message_list,
 }
 
 
@@ -206,33 +121,23 @@ invoice_product_put_schema = {
     "parameters": [
         {
             "name": "Update invoice product",
-            "description": "Invoice product 'product_id', "
-            "'quantity', 'price' and 'invoice_id' fields.",
+            "description": "".join((
+                "Invoice product 'product_id', ",
+                "'quantity', 'price' and 'invoice_id' fields.",
+            )),
             "required": True,
             "allowMultiple": True,
             "dataType": "json",
             "paramType": "body",
-            "defaultValue": '{"product_id": 1, "quantity": 2, '
-            '"price": 100, "invoice_id": 1}',
+            "defaultValue": "".join((
+                '{"product_id": 1, "quantity": 2, ',
+                '"price": 100, "invoice_id": 1}',
+            )),
         },
-        {
-            "name": "Authorization",
-            "description": "Authorization: Bearer token",
-            "required": True,
-            "allowMultiple": False,
-            "dataType": "String",
-            "paramType": "header",
-            "defaultValue": "Bearer ",
-        },
-    ],
+    ]
+    + authorization_parameter,
     "responseClass": "InvoiceProductFields",
-    "responseMessages": [
-        {"code": 200, "message": "Operation successfully performed"},
-        {"code": 400, "message": "Invalid input (specified)."},
-        {"code": 401, "message": "Unauthorized."},
-        {"code": 409, "message": "Instance with id does not exist."},
-        {"code": 422, "message": "Invalid input (specified)."},
-    ],
+    "responseMessages": response_message_list,
 }
 
 
@@ -242,33 +147,23 @@ invoice_product_patch_schema = {
     "parameters": [
         {
             "name": "Partially update invoice product",
-            "description": "Invoice product 'product_id', "
-            "'quantity', 'price' and 'invoice_id' fields.",
+            "description": "".join((
+                "Invoice product 'product_id', ",
+                "'quantity', 'price' and 'invoice_id' fields.",
+            )),
             "required": False,
             "allowMultiple": True,
             "dataType": "json",
             "paramType": "body",
-            "defaultValue": '{"product_id": 1, "quantity": 2, '
-            '"price": 100, "invoice_id": 1}',
+            "defaultValue": "".join((
+                '{"product_id": 1, "quantity": 2, ',
+                '"price": 100, "invoice_id": 1}',
+            )),
         },
-        {
-            "name": "Authorization",
-            "description": "Authorization: Bearer token",
-            "required": True,
-            "allowMultiple": False,
-            "dataType": "String",
-            "paramType": "header",
-            "defaultValue": "Bearer ",
-        },
-    ],
+    ]
+    + authorization_parameter,
     "responseClass": "InvoiceProductFields",
-    "responseMessages": [
-        {"code": 200, "message": "Operation successfully performed"},
-        {"code": 400, "message": "Invalid input (specified)."},
-        {"code": 401, "message": "Unauthorized."},
-        {"code": 409, "message": "Instance with id does not exist."},
-        {"code": 422, "message": "Invalid input (specified)."},
-    ],
+    "responseMessages": response_message_list,
 }
 
 
@@ -276,21 +171,11 @@ invoice_product_delete_schema = {
     "notes": "Delete invoice product data by id.",
     "nickname": "Delete invoice product.",
     "responseClass": '{"message": "Deleted instance with id"}',
-    "parameters": [
-        {
-            "name": "Authorization",
-            "description": "Authorization: Bearer token",
-            "required": True,
-            "allowMultiple": False,
-            "dataType": "String",
-            "paramType": "header",
-            "defaultValue": "Bearer ",
-        },
-    ],
+    "parameters": authorization_parameter,
     "responseMessages": [
         {"code": 200, "message": "Deleted instance with id."},
-        {"code": 401, "message": "Unauthorized."},
-        {"code": 409, "message": "Instance with id does not exist."},
+        code_unauthorized,
+        code_does_not_exist,
     ],
 }
 
@@ -301,33 +186,23 @@ invoice_product_post_schema = {
     "parameters": [
         {
             "name": "Create invoice product",
-            "description": "Invoice product 'product_id', "
-            "'quantity', 'price' and 'invoice_id' fields.",
+            "description": "".join((
+                "Invoice product 'product_id', ",
+                "'quantity', 'price' and 'invoice_id' fields.",
+            )),
             "required": True,
             "allowMultiple": True,
             "dataType": "json",
             "paramType": "body",
-            "defaultValue": '{"product_id": 1, "quantity": 2, '
-            '"price": 100, "invoice_id": 1}',
+            "defaultValue": "".join((
+                '{"product_id": 1, "quantity": 2, ',
+                '"price": 100, "invoice_id": 1}',
+            )),
         },
-        {
-            "name": "Authorization",
-            "description": "Authorization: Bearer token",
-            "required": True,
-            "allowMultiple": False,
-            "dataType": "String",
-            "paramType": "header",
-            "defaultValue": "Bearer ",
-        },
-    ],
+    ]
+    + authorization_parameter,
     "responseClass": "InvoiceProductFields",
-    "responseMessages": [
-        {"code": 200, "message": "Operation successfully performed"},
-        {"code": 400, "message": "Invalid input (specified)."},
-        {"code": 401, "message": "Unauthorized."},
-        {"code": 409, "message": "Instance with id does not exist."},
-        {"code": 422, "message": "Invalid input (specified)."},
-    ],
+    "responseMessages": response_message_list,
 }
 
 
@@ -335,22 +210,8 @@ invoice_products_get_schema = {
     "notes": "Get all invoice products.",
     "nickname": "Get all invoice products.",
     "responseClass": "InvoiceProductFields",
-    "parameters": [
-        {
-            "name": "Authorization",
-            "description": "Authorization: Bearer token",
-            "required": True,
-            "allowMultiple": False,
-            "dataType": "String",
-            "paramType": "header",
-            "defaultValue": "Bearer ",
-        },
-    ],
-    "responseMessages": [
-        {"code": 200, "message": "Operation successfully performed"},
-        {"code": 401, "message": "Unauthorized."},
-        {"code": 409, "message": "Instance with id does not exist."},
-    ],
+    "parameters": authorization_parameter,
+    "responseMessages": small_response_message_list,
 }
 
 
@@ -358,16 +219,8 @@ invoice_registry_get_schema = {
     "notes": "Get invoice registry.",
     "nickname": "Get invoice registry.",
     "responseClass": "InvoiceRegistryFields",
-    "parameters": [
-        {
-            "name": "Authorization",
-            "description": "Authorization: Bearer token",
-            "required": True,
-            "allowMultiple": False,
-            "dataType": "String",
-            "paramType": "header",
-            "defaultValue": "Bearer ",
-        },
+    "parameters": authorization_parameter
+    + [
         {
             "name": "offset",
             "description": "Query parameters offset",
@@ -405,10 +258,7 @@ invoice_registry_get_schema = {
             "defaultValue": "2024-01-01",
         },
     ],
-    "responseMessages": [
-        {"code": 200, "message": "Operation successfully performed"},
-        {"code": 400, "message": "Invalid input (specified)."},
-    ],
+    "responseMessages": [code_success, code_error],
 }
 
 
@@ -416,22 +266,8 @@ invoices_products_get_schema = {
     "notes": "Get invoice products by invoice id.",
     "nickname": "Get invoice products by invoice id.",
     "responseClass": "InvoicesProductsFields",
-    "parameters": [
-        {
-            "name": "Authorization",
-            "description": "Authorization: Bearer token",
-            "required": True,
-            "allowMultiple": False,
-            "dataType": "String",
-            "paramType": "header",
-            "defaultValue": "Bearer ",
-        },
-    ],
-    "responseMessages": [
-        {"code": 200, "message": "Operation successfully performed"},
-        {"code": 401, "message": "Unauthorized."},
-        {"code": 409, "message": "Instance with id does not exist."},
-    ],
+    "parameters": authorization_parameter,
+    "responseMessages": small_response_message_list,
 }
 
 
@@ -439,20 +275,6 @@ agreement_invoice_products_get_schema = {
     "notes": "Get all invoice products with agreement_id.",
     "nickname": "Get all invoice products with agreement_id.",
     "responseClass": "InvoiceProductFields",
-    "parameters": [
-        {
-            "name": "Authorization",
-            "description": "Authorization: Bearer token",
-            "required": True,
-            "allowMultiple": False,
-            "dataType": "String",
-            "paramType": "header",
-            "defaultValue": "Bearer ",
-        },
-    ],
-    "responseMessages": [
-        {"code": 200, "message": "Operation successfully performed"},
-        {"code": 401, "message": "Unauthorized."},
-        {"code": 409, "message": "Instance with id does not exist."},
-    ],
+    "parameters": authorization_parameter,
+    "responseMessages": small_response_message_list,
 }
