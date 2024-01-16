@@ -1,12 +1,8 @@
 """Counterparty app models."""
-from sqlalchemy.orm import DeclarativeBase
-
 from api import db
 
-BaseModel: DeclarativeBase = db.Model
 
-
-class Discount(BaseModel):
+class Discount(db.Model):  # type: ignore
     """Discount model for api app."""
 
     id = db.Column(db.Integer, primary_key=True)
@@ -19,7 +15,7 @@ class Discount(BaseModel):
         return str(self.name)
 
 
-class Counterparty(BaseModel):
+class Counterparty(db.Model):  # type: ignore
     """Counterparty model for api app."""
 
     id = db.Column(db.Integer, primary_key=True)
@@ -43,7 +39,7 @@ class Counterparty(BaseModel):
         return str(self.name)
 
 
-class Agreement(BaseModel):
+class Agreement(db.Model):  # type: ignore
     """Agreement model for api app."""
 
     id = db.Column(db.Integer, primary_key=True)

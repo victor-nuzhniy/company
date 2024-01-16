@@ -42,5 +42,5 @@ agreement_parser.add_argument("counterparty_id", type=counterparty_id, required=
 agreement_patch_parser = reqparse.RequestParser()
 agreement_patch_parser.add_argument("name", type=str_length_200, required=False)
 agreement_patch_parser.add_argument(
-    "counterparty_id", type=counterparty_id, required=False
+    "counterparty_id", type=counterparty_id, required=False,
 )

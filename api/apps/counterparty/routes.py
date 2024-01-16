@@ -1,5 +1,8 @@
 """Module for counterparty rounters."""
-from flask_restful import Resource, fields, marshal
+import typing
+
+from flask.typing import ResponseReturnValue
+from flask_restful import Resource, marshal
 from flask_restful_swagger import swagger
 
 from api import Agreement, Counterparty, Discount, api
@@ -32,47 +35,14 @@ from api.apps.counterparty.schemas import (
     discount_put_schema,
     discounts_get_schema,
 )
+from api.apps.counterparty.swagger_models import (
+    AgreementFields,
+    CounterpartyFields,
+    DiscountFields,
+)
 from api.apps.counterparty.validators import counterparty_id
 from api.model_routes import ModelRoute, ModelsRoute, token_required
 from api.services import crud
-
-
-@swagger.model
-class DiscountFields:
-    """DiscountRoute output fields."""
-
-    resource_fields = {
-        "id": fields.Integer,
-        "name": fields.String,
-        "rate": fields.Integer,
-    }
-
-
-@swagger.model
-class CounterpartyFields:
-    """CounterpartyRoute output fields."""
-
-    resource_fields = {
-        "id": fields.Integer,
-        "name": fields.String,
-        "postal_code": fields.String,
-        "country": fields.String,
-        "city": fields.String,
-        "address": fields.String,
-        "phone_number": fields.String,
-        "discount_id": fields.Integer,
-    }
-
-
-@swagger.model
-class AgreementFields:
-    """AgreementRoute output fields."""
-
-    resource_fields = {
-        "id": fields.Integer,
-        "name": fields.String,
-        "counterparty_id": fields.Integer,
-    }
 
 
 class DiscountRoute(ModelRoute):
@@ -85,25 +55,25 @@ class DiscountRoute(ModelRoute):
 
     @swagger.operation(**discount_get_schema)
     @token_required()
-    def get(self, *args, **kwargs):
+    def get(self, *args: typing.Any, **kwargs: typing.Any) -> ResponseReturnValue:
         """Get model instance by id."""
         return super().get(*args, **kwargs)
 
     @swagger.operation(**discount_put_schema)
     @token_required()
-    def put(self, *args, **kwargs):
+    def put(self, *args: typing.Any, **kwargs: typing.Any) -> ResponseReturnValue:
         """Update instance by id."""
         return super().put(*args, **kwargs)
 
     @swagger.operation(**discount_patch_schema)
     @token_required()
-    def patch(self, *args, **kwargs):
+    def patch(self, *args: typing.Any, **kwargs: typing.Any) -> ResponseReturnValue:
         """Update instance bu id, partially."""
         return super().patch(*args, **kwargs)
 
     @swagger.operation(**discount_delete_schema)
     @token_required()
-    def delete(self, *args, **kwargs):
+    def delete(self, *args: typing.Any, **kwargs: typing.Any) -> ResponseReturnValue:
         """Delete instance by id."""
         return super().delete(*args, **kwargs)
 
@@ -117,13 +87,13 @@ class DiscountsRoute(ModelsRoute):
 
     @swagger.operation(**discount_post_schema)
     @token_required()
-    def post(self, *args, **kwargs):
+    def post(self, *args: typing.Any, **kwargs: typing.Any) -> ResponseReturnValue:
         """Create model instance."""
         return super().post(*args, **kwargs)
 
     @swagger.operation(**discounts_get_schema)
     @token_required()
-    def get(self, *args, **kwargs):
+    def get(self, *args: typing.Any, **kwargs: typing.Any) -> ResponseReturnValue:
         """Get model instance list."""
         return super().get(*args, **kwargs)
 
@@ -138,25 +108,25 @@ class CounterpartyRoute(ModelRoute):
 
     @swagger.operation(**counterparty_get_schema)
     @token_required()
-    def get(self, *args, **kwargs):
+    def get(self, *args: typing.Any, **kwargs: typing.Any) -> ResponseReturnValue:
         """Get model instance by id."""
         return super().get(*args, **kwargs)
 
     @swagger.operation(**counterparty_put_schema)
     @token_required()
-    def put(self, *args, **kwargs):
+    def put(self, *args: typing.Any, **kwargs: typing.Any) -> ResponseReturnValue:
         """Update instance by id."""
         return super().put(*args, **kwargs)
 
     @swagger.operation(**counterparty_patch_schema)
     @token_required()
-    def patch(self, *args, **kwargs):
+    def patch(self, *args: typing.Any, **kwargs: typing.Any) -> ResponseReturnValue:
         """Update instance bu id, partially."""
         return super().patch(*args, **kwargs)
 
     @swagger.operation(**counterparty_delete_schema)
     @token_required()
-    def delete(self, *args, **kwargs):
+    def delete(self, *args: typing.Any, **kwargs: typing.Any) -> ResponseReturnValue:
         """Delete instance by id."""
         return super().delete(*args, **kwargs)
 
@@ -170,13 +140,13 @@ class CounterpartysRoute(ModelsRoute):
 
     @swagger.operation(**counterparty_post_schema)
     @token_required()
-    def post(self, *args, **kwargs):
+    def post(self, *args: typing.Any, **kwargs: typing.Any) -> ResponseReturnValue:
         """Create model instance."""
         return super().post(*args, **kwargs)
 
     @swagger.operation(**counterparties_get_schema)
     @token_required()
-    def get(self, *args, **kwargs):
+    def get(self, *args: typing.Any, **kwargs: typing.Any) -> ResponseReturnValue:
         """Get model instance list."""
         return super().get(*args, **kwargs)
 
@@ -191,25 +161,25 @@ class AgreementRoute(ModelRoute):
 
     @swagger.operation(**agreement_get_schema)
     @token_required()
-    def get(self, *args, **kwargs):
+    def get(self, *args: typing.Any, **kwargs: typing.Any) -> ResponseReturnValue:
         """Get model instance by id."""
         return super().get(*args, **kwargs)
 
     @swagger.operation(**agreement_put_schema)
     @token_required()
-    def put(self, *args, **kwargs):
+    def put(self, *args: typing.Any, **kwargs: typing.Any) -> ResponseReturnValue:
         """Update instance by id."""
         return super().put(*args, **kwargs)
 
     @swagger.operation(**agreement_patch_schema)
     @token_required()
-    def patch(self, *args, **kwargs):
+    def patch(self, *args: typing.Any, **kwargs: typing.Any) -> ResponseReturnValue:
         """Update instance bu id, partially."""
         return super().patch(*args, **kwargs)
 
     @swagger.operation(**agreement_delete_schema)
     @token_required()
-    def delete(self, *args, **kwargs):
+    def delete(self, *args: typing.Any, **kwargs: typing.Any) -> ResponseReturnValue:
         """Delete instance by id."""
         return super().delete(*args, **kwargs)
 
@@ -223,13 +193,13 @@ class AgreementsRoute(ModelsRoute):
 
     @swagger.operation(**agreement_post_schema)
     @token_required()
-    def post(self, *args, **kwargs):
+    def post(self, *args: typing.Any, **kwargs: typing.Any) -> ResponseReturnValue:
         """Create model instance."""
         return super().post(*args, **kwargs)
 
     @swagger.operation(**agreements_get_schema)
     @token_required()
-    def get(self, *args, **kwargs):
+    def get(self, *args: typing.Any, **kwargs: typing.Any) -> ResponseReturnValue:
         """Get model instance list."""
         return super().get(*args, **kwargs)
 
@@ -239,7 +209,9 @@ class CounterpartyAgreementsRoute(Resource):
 
     @swagger.operation(**counterparty_agreements_get_schema)
     @token_required()
-    def get(self, company_id, *args, **kwargs):
+    def get(
+        self, company_id: int, *args: typing.Any, **kwargs: typing.Any,
+    ) -> ResponseReturnValue:
         """Get Agreements list by counterparty id."""
         company_id = counterparty_id(company_id)
         return marshal(
