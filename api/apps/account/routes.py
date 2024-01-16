@@ -3,10 +3,15 @@ import typing
 
 from flask import abort
 from flask.typing import ResponseReturnValue
-from flask_restful import Resource, fields, marshal, marshal_with
+from flask_restful import Resource, marshal, marshal_with
 from flask_restful_swagger import swagger
 
-from api import SaleInvoice, SaleInvoiceProduct, api
+from api import SaleInvoice, SaleInvoiceProduct, api, model_routes, services
+from api.apps.account.account_utilities import (
+    add_income_to_products,
+    create_income_products_dict,
+    get_product_leftovers_on_date,
+)
 from api.apps.account.parsers import (
     account_parser,
     period_parser,
@@ -23,64 +28,18 @@ from api.apps.account.services import (
     create_tax_invoice_products,
     prepare_tax_invoice_products,
 )
-from api.apps.account.account_utilities import (
-    add_income_to_products,
-    create_income_products_dict,
-    get_product_leftovers_on_date,
+from api.apps.account.swagger_models import (
+    IncomeForPeriod,
+    PeriodReport,
+    ProductLeftovers,
 )
-from api.model_routes import token_required
-from api.services import crud
-
-
-@swagger.model
-class PeriodReport(object):
-    """PeriodReportRoute output fields."""
-
-    resource_fields = {
-        "id": fields.Integer,
-        "quantity": fields.String,
-        "price": fields.String,
-        "sale_invoice_name": fields.String,
-        "created_at": fields.DateTime,
-        "name": fields.String,
-        "units": fields.String,
-        "code": fields.String,
-        "currency": fields.String,
-    }
-
-
-@swagger.model
-class ProductLeftovers(object):
-    """ProductLeftoversRoute output fields."""
-
-    resource_fields = {
-        "id": fields.Integer,
-        "name": fields.String,
-        "units": fields.String,
-        "currency": fields.String,
-        "quantity": fields.Integer,
-    }
-
-
-@swagger.model
-class IncomeForPeriod(object):
-    """IncomeForPeriodRoute output fields."""
-
-    resource_fields = {
-        "id": fields.Integer,
-        "name": fields.String,
-        "code": fields.String,
-        "currency": fields.String,
-        "product_type": fields.String,
-        "income": fields.Integer,
-    }
 
 
 class ProcessSaleInvoiceRoute(Resource):
     """Operations with saling process."""
 
     @swagger.operation(**process_sale_invoice_schema)
-    @token_required()
+    @model_routes.token_required()
     def post(self, *args: typing.Any, **kwargs: typing.Any) -> ResponseReturnValue:
         """
         Approve saling and create tax invoice.
@@ -93,20 +52,23 @@ class ProcessSaleInvoiceRoute(Resource):
         will be set to True, otherwise error with 409 code will be raised.
         """
         sale_invoice_id = account_parser.parse_args().get("sale_invoice_id")
-        sale_invoice = crud.read(SaleInvoice, {"id": sale_invoice_id})
+        sale_invoice = services.crud.read(SaleInvoice, {"id": sale_invoice_id})
         if sale_invoice and sale_invoice.done:
             abort(
                 406,
                 "Sale_invoice with id {id} is already done!".format(id=sale_invoice_id),
             )
-        sale_invoice_products = crud.read_many(
-            SaleInvoiceProduct, {"sale_invoice_id": sale_invoice_id},
+        sale_invoice_products = services.crud.read_many(
+            SaleInvoiceProduct,
+            {"sale_invoice_id": sale_invoice_id},
         )
         purchase_products = account_queries.get_purchase_products_by_invoice_products(
             sale_invoice_products,
         )
         tax_invoice_products = prepare_tax_invoice_products(
-            sale_invoice_products, purchase_products, sale_invoice_id,
+            sale_invoice_products,
+            purchase_products,
+            sale_invoice_id,
         )
         create_tax_invoice_products(tax_invoice_products, sale_invoice_id)
         account_queries.update_sale_invoice(sale_invoice_id)
@@ -118,7 +80,7 @@ class PeriodReportRoute(Resource):
     """Create period report."""
 
     @swagger.operation(**period_report_schema)
-    @token_required()
+    @model_routes.token_required()
     @marshal_with(PeriodReport.resource_fields)
     def post(self, *args: typing.Any, **kwargs: typing.Any) -> ResponseReturnValue:
         """
@@ -137,7 +99,7 @@ class ProductsLeftoversRoute(Resource):
     """Product leftovers to particular date."""
 
     @swagger.operation(**product_leftovers_schema)
-    @token_required()
+    @model_routes.token_required()
     def post(self, *args: typing.Any, **kwargs: typing.Any) -> ResponseReturnValue:
         """Create product leftovers report."""
         arguments = product_leftovers_parser.parse_args()
@@ -153,7 +115,7 @@ class IncomeForPeriodRoute(Resource):
     """Calculate income for given period."""
 
     @swagger.operation(**income_for_period_schema)
-    @token_required()
+    @model_routes.token_required()
     def post(self, *args: typing.Any, **kwargs: typing.Any) -> ResponseReturnValue:
         """
         Calculate income for given period.
