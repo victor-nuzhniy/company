@@ -5,10 +5,16 @@ from flask_restful import reqparse
 
 purchase_registry_parser = reqparse.RequestParser()
 purchase_registry_parser.add_argument(
-    "offset", type=int, required=False, location="args",
+    "offset",
+    type=int,
+    required=False,
+    location="args",
 )
 purchase_registry_parser.add_argument(
-    "limit", type=int, required=False, location="args",
+    "limit",
+    type=int,
+    required=False,
+    location="args",
 )
 purchase_registry_parser.add_argument(
     "date_from",
