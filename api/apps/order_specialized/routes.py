@@ -5,15 +5,25 @@ from flask.typing import ResponseReturnValue
 from flask_restful import Resource, marshal
 from flask_restful_swagger import swagger
 
-from api import model_routes, User, services, Order, api
+from api import Order, User, api, model_routes, services
 from api.apps.counterparty.validators import counterparty_id_valid
 from api.apps.invoice.validators import order_id_valid
 from api.apps.order.swagger_models import OrderFields
 from api.apps.order_specialized.parsers import order_registry_parser, user_order_parser
-from api.apps.order_specialized.schemas import order_registry_get_schema, orders_products_get_schema, \
-    user_order_post_schema, counterparty_orders_get_schema
-from api.apps.order_specialized.services import get_order_registry_data, get_order_products_by_order_id
-from api.apps.order_specialized.swagger_models import OrderRegistryFields, OrdersProductsFields
+from api.apps.order_specialized.schemas import (
+    counterparty_orders_get_schema,
+    order_registry_get_schema,
+    orders_products_get_schema,
+    user_order_post_schema,
+)
+from api.apps.order_specialized.services import (
+    get_order_products_by_order_id,
+    get_order_registry_data,
+)
+from api.apps.order_specialized.swagger_models import (
+    OrderRegistryFields,
+    OrdersProductsFields,
+)
 
 
 class OrderRegistryRoute(Resource):
@@ -36,7 +46,7 @@ class OrdersProductsRoute(Resource):
     @swagger.operation(**orders_products_get_schema)
     @model_routes.token_required()
     def get(
-        self, order_id: int, *args: typing.Any, **kwargs: typing.Any
+        self, order_id: int, *args: typing.Any, **kwargs: typing.Any,
     ) -> ResponseReturnValue:
         """Get Orders products list by order id."""
         order_id = order_id_valid(order_id)
@@ -58,7 +68,8 @@ class UserOrderRoute(Resource):
         if current_user:
             arguments["user_id"] = current_user.id
             return marshal(
-                services.crud.create(Order, arguments), OrderFields.resource_fields,
+                services.crud.create(Order, arguments),
+                OrderFields.resource_fields,
             )
         return {
             "message": "Authentication token is invalid",
@@ -73,7 +84,7 @@ class CounterpartyOrdersRoute(Resource):
     @swagger.operation(**counterparty_orders_get_schema)
     @model_routes.token_required()
     def get(
-        self, company_id: int, *args: typing.Any, **kwargs: typing.Any
+        self, company_id: int, *args: typing.Any, **kwargs: typing.Any,
     ) -> ResponseReturnValue:
         """Get Orders list by counterparty id."""
         company_id = counterparty_id_valid(company_id)

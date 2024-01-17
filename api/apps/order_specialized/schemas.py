@@ -1,20 +1,18 @@
 """Schemas for order_specialized apps."""
-
+from api.constants import (
+    authorization_parameter,
+    code_error,
+    code_success,
+    response_message_list,
+    small_response_message_list,
+)
 
 order_registry_get_schema = {
     "notes": "Get order registry.",
     "nickname": "Get order registry.",
     "responseClass": "OrderRegistryFields",
-    "parameters": [
-        {
-            "name": "Authorization",
-            "description": "Authorization: Bearer token",
-            "required": True,
-            "allowMultiple": False,
-            "dataType": "String",
-            "paramType": "header",
-            "defaultValue": "Bearer ",
-        },
+    "parameters": authorization_parameter
+    + [
         {
             "name": "offset",
             "description": "Query parameters offset",
@@ -53,33 +51,18 @@ order_registry_get_schema = {
         },
     ],
     "responseMessages": [
-        {"code": 200, "message": "Operation successfully performed"},
-        {"code": 400, "message": "Invalid input (specified)."},
+        code_success,
+        code_error,
     ],
 }
-
 
 
 orders_products_get_schema = {
     "notes": "Get order products with additional info by purchase invoice id.",
     "nickname": "Get order products with additional info by purchase invoice id.",
     "responseClass": "OrdersProductsFields",
-    "parameters": [
-        {
-            "name": "Authorization",
-            "description": "Authorization: Bearer token",
-            "required": True,
-            "allowMultiple": False,
-            "dataType": "String",
-            "paramType": "header",
-            "defaultValue": "Bearer ",
-        },
-    ],
-    "responseMessages": [
-        {"code": 200, "message": "Operation successfully performed"},
-        {"code": 401, "message": "Unauthorized."},
-        {"code": 409, "message": "Instance with id does not exist."},
-    ],
+    "parameters": authorization_parameter,
+    "responseMessages": small_response_message_list,
 }
 
 
@@ -96,24 +79,10 @@ user_order_post_schema = {
             "paramType": "body",
             "defaultValue": '{"name": "O-000234", "customer_id": 1}',
         },
-        {
-            "name": "Authorization",
-            "description": "Authorization: Bearer token",
-            "required": True,
-            "allowMultiple": False,
-            "dataType": "String",
-            "paramType": "header",
-            "defaultValue": "Bearer ",
-        },
-    ],
+    ]
+    + authorization_parameter,
     "responseClass": "OrderFields",
-    "responseMessages": [
-        {"code": 200, "message": "Operation successfully performed"},
-        {"code": 400, "message": "Invalid input (specified)."},
-        {"code": 401, "message": "Unauthorized."},
-        {"code": 409, "message": "Instance with id does not exist."},
-        {"code": 422, "message": "Invalid input (specified)."},
-    ],
+    "responseMessages": response_message_list,
 }
 
 
@@ -121,20 +90,6 @@ counterparty_orders_get_schema = {
     "notes": "Get orders by counterparty id.",
     "nickname": "Get orders by counterparty id.",
     "responseClass": "OrderFields",
-    "parameters": [
-        {
-            "name": "Authorization",
-            "description": "Authorization: Bearer token",
-            "required": True,
-            "allowMultiple": False,
-            "dataType": "String",
-            "paramType": "header",
-            "defaultValue": "Bearer ",
-        },
-    ],
-    "responseMessages": [
-        {"code": 200, "message": "Operation successfully performed"},
-        {"code": 401, "message": "Unauthorized."},
-        {"code": 409, "message": "Instance with id does not exist."},
-    ],
+    "parameters": authorization_parameter,
+    "responseMessages": small_response_message_list,
 }

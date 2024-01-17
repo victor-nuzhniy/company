@@ -35,4 +35,3 @@ class OrdersProductsFields(object):
         "currency": fields.String,
         "units": fields.String,
     }
-
