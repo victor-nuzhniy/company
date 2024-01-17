@@ -33,8 +33,7 @@ def get_order_registry_data(
         .outerjoin(Product)
     )
     return (
-        query
-        .filter(
+        query.filter(
             and_(
                 Order.created_at > date_from,
                 Order.created_at < date_to,

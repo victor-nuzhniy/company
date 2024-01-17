@@ -46,7 +46,10 @@ class OrdersProductsRoute(Resource):
     @swagger.operation(**orders_products_get_schema)
     @model_routes.token_required()
     def get(
-        self, order_id: int, *args: typing.Any, **kwargs: typing.Any,
+        self,
+        order_id: int,
+        *args: typing.Any,
+        **kwargs: typing.Any,
     ) -> ResponseReturnValue:
         """Get Orders products list by order id."""
         order_id = order_id_valid(order_id)
@@ -84,7 +87,10 @@ class CounterpartyOrdersRoute(Resource):
     @swagger.operation(**counterparty_orders_get_schema)
     @model_routes.token_required()
     def get(
-        self, company_id: int, *args: typing.Any, **kwargs: typing.Any,
+        self,
+        company_id: int,
+        *args: typing.Any,
+        **kwargs: typing.Any,
     ) -> ResponseReturnValue:
         """Get Orders list by counterparty id."""
         company_id = counterparty_id_valid(company_id)
