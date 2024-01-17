@@ -11,7 +11,7 @@ from api.apps.invoice.validators import (
     product_id_valid,
     str_hundred,
 )
-from api.apps.order.parsers import order_registry_parser as order_parser
+from api.apps.order_specialized.parsers import order_registry_parser as order_parser
 
 order_registry_parser = order_parser
 
