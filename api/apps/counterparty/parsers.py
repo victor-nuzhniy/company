@@ -39,7 +39,9 @@ counterparty_patch_parser.replace_argument("discount_id", type=discount_id_valid
 agreement_parser = reqparse.RequestParser()
 agreement_parser.add_argument("name", type=str_two_hundred, required=True)
 agreement_parser.add_argument(
-    "counterparty_id", type=counterparty_id_valid, required=True,
+    "counterparty_id",
+    type=counterparty_id_valid,
+    required=True,
 )
 
 agreement_patch_parser = reqparse.RequestParser()
