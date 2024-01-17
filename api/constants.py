@@ -42,3 +42,9 @@ authorization_parameter = [{
     "paramType": "header",
     "defaultValue": "Bearer ",
 }]
+
+server_error: tuple[dict, int] = {
+    "message": "Improperly configured",
+    "data": None,
+    "error": "Improperly configured",
+}, 500
