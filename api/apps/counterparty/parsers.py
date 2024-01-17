@@ -11,7 +11,7 @@ from api.apps.counterparty.validators import (
     str_thirty,
 )
 from api.apps.invoice.validators import str_hundred
-from api.apps.product.validators import str_length_200
+from api.apps.product.validators import str_two_hundred
 
 discount_parser = reqparse.RequestParser()
 discount_parser.add_argument("name", type=str_thirty, required=True)
@@ -37,13 +37,13 @@ counterparty_patch_parser.replace_argument("discount_id", type=discount_id_valid
 
 
 agreement_parser = reqparse.RequestParser()
-agreement_parser.add_argument("name", type=str_length_200, required=True)
+agreement_parser.add_argument("name", type=str_two_hundred, required=True)
 agreement_parser.add_argument(
     "counterparty_id", type=counterparty_id_valid, required=True,
 )
 
 agreement_patch_parser = reqparse.RequestParser()
-agreement_patch_parser.add_argument("name", type=str_length_200, required=False)
+agreement_patch_parser.add_argument("name", type=str_two_hundred, required=False)
 agreement_patch_parser.add_argument(
     "counterparty_id",
     type=counterparty_id_valid,
