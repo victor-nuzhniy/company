@@ -6,7 +6,7 @@ from api.common import CustomDateTimeFormat
 
 
 @swagger.model
-class TaxRegistryFields:
+class TaxRegistryFields(object):
     """TaxRegistryRoute output fields."""
 
     resource_fields = {
@@ -29,7 +29,7 @@ class TaxRegistryFields:
 
 
 @swagger.model
-class TaxInvoicesProductsFields:
+class TaxInvoicesProductsFields(object):
     """InvoicesProductsRoute output fields."""
 
     resource_fields = {
@@ -46,4 +46,3 @@ class TaxInvoicesProductsFields:
         "currency": fields.String,
         "units": fields.String,
     }
-

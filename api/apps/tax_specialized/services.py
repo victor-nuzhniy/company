@@ -18,18 +18,19 @@ from api import (
     TaxInvoiceProduct,
     db,
 )
+from api.constants import EARLIEST_DATE, LATEST_DATE
 
 
 def get_tax_data(
     offset: int = 0,
     limit: int = 20,
-    date_from: datetime = datetime(1000, 1, 1),
-    date_to: datetime = datetime(9000, 1, 1),
+    date_from: datetime = EARLIEST_DATE,
+    date_to: datetime = LATEST_DATE,
 ) -> Sequence:
     """Get Tax registry list."""
-    date_from = datetime(1000, 1, 1) if not date_from else date_from
-    date_to = datetime(9000, 1, 1) if not date_to else date_to
-    return (
+    date_from = date_from if date_from else EARLIEST_DATE
+    date_to = date_to if date_to else LATEST_DATE
+    query = (
         TaxInvoice.query.with_entities(
             TaxInvoice.id.label("id"),
             TaxInvoice.created_at.label("created_at"),
@@ -45,17 +46,21 @@ def get_tax_data(
             Counterparty.name.label("counterparty"),
             Counterparty.id.label("counterparty_id"),
             func.sum((TaxInvoiceProduct.quantity * SaleInvoiceProduct.price)).label(
-                "sale_summ"
+                "sale_summ",
             ),
             func.sum((TaxInvoiceProduct.quantity * PurchaseInvoiceProduct.price)).label(
-                "purchase_summ"
+                "purchase_summ",
             ),
         )
         .outerjoin(SaleInvoice, SaleInvoice.id == TaxInvoice.sale_invoice_id)
         .outerjoin(Invoice, Invoice.id == SaleInvoice.invoice_id)
         .outerjoin(Agreement, Agreement.id == Invoice.agreement_id)
         .outerjoin(Counterparty, Counterparty.id == Agreement.counterparty_id)
-        .outerjoin(TaxInvoiceProduct, TaxInvoiceProduct.tax_invoice_id == TaxInvoice.id)
+    )
+    additional_query = (
+        query.outerjoin(
+            TaxInvoiceProduct, TaxInvoiceProduct.tax_invoice_id == TaxInvoice.id,
+        )
         .outerjoin(
             SaleInvoiceProduct,
             SaleInvoiceProduct.id == TaxInvoiceProduct.sale_invoice_product_id,
@@ -68,7 +73,9 @@ def get_tax_data(
             PurchaseInvoice,
             PurchaseInvoice.id == PurchaseInvoiceProduct.purchase_invoice_id,
         )
-        .filter(
+    )
+    return (
+        additional_query.filter(
             TaxInvoice.created_at > date_from,
             TaxInvoice.created_at < date_to,
         )
@@ -89,7 +96,7 @@ def get_tax_invoice_products_by_tax_invoice_id(tax_invoice_id: int) -> Sequence:
             TaxInvoiceProduct.tax_invoice_id.label("tax_invoice_id"),
             TaxInvoiceProduct.sale_invoice_product_id.label("sale_invoice_product_id"),
             TaxInvoiceProduct.purchase_invoice_product_id.label(
-                "purchase_invoice_product_id"
+                "purchase_invoice_product_id",
             ),
             SaleInvoiceProduct.price.label("sale_price"),
             PurchaseInvoiceProduct.price.label("purchase_price"),
@@ -115,7 +122,7 @@ def get_tax_invoice_products_by_tax_invoice_id(tax_invoice_id: int) -> Sequence:
     )
 
 
-def create_tax_invoice_product_with_subtract_purchase_products_left(
+def create_tax_invoice_products(
     **kwargs: Any,
 ) -> TaxInvoiceProduct:
     """Create TaxInvoiceProduct with subtracting purhcase products_left field."""
@@ -129,50 +136,54 @@ def create_tax_invoice_product_with_subtract_purchase_products_left(
     tax_invoice_product = TaxInvoiceProduct(**kwargs)
     db.session.add(tax_invoice_product)
     db.session.query(PurchaseInvoiceProduct).filter_by(
-        id=tax_invoice_product.purchase_invoice_product_id
+        id=tax_invoice_product.purchase_invoice_product_id,
     ).update(
         {
             "products_left": PurchaseInvoiceProduct.products_left
-            - tax_invoice_product.quantity
-        }
+            - tax_invoice_product.quantity,
+        },
     )
     db.session.commit()
     return tax_invoice_product
 
 
-def delete_tax_invoice_product_with_adding_purchase_products_left(
+def delete_tax_invoice_products(
     tax_invoice_product_id: int,
 ) -> None:
     """Delete TaxInvoiceProduct with adding purchase products_left field."""
     tax_invoice_product = TaxInvoiceProduct.query.filter(
-        TaxInvoiceProduct.id == tax_invoice_product_id
+        TaxInvoiceProduct.id == tax_invoice_product_id,
     ).first()
     db.session.query(PurchaseInvoiceProduct).filter_by(
-        id=tax_invoice_product.purchase_invoice_product_id
+        id=tax_invoice_product.purchase_invoice_product_id,
     ).update(
         {
             "products_left": PurchaseInvoiceProduct.products_left
-            + tax_invoice_product.quantity
-        }
+            + tax_invoice_product.quantity,
+        },
     )
     TaxInvoiceProduct.query.filter(
-        TaxInvoiceProduct.id == tax_invoice_product_id
+        TaxInvoiceProduct.id == tax_invoice_product_id,
     ).delete()
     db.session.commit()
 
 
-def delete_tax_invoice_with_adding_purchase_products_left_fieds(
+def delete_tax_invoice(
     tax_invoice_id: int,
 ) -> None:
     """Delete TaxInvoice with adding purchase products_left fields."""
     tax_invoice_products = TaxInvoiceProduct.query.filter(
-        TaxInvoiceProduct.tax_invoice_id == tax_invoice_id
+        TaxInvoiceProduct.tax_invoice_id == tax_invoice_id,
     ).all()
     for product in tax_invoice_products:
         db.session.query(PurchaseInvoiceProduct).filter_by(
-            id=product.purchase_invoice_product_id
+            id=product.purchase_invoice_product_id,
         ).update(
-            {"products_left": (PurchaseInvoiceProduct.products_left + product.quantity)}
+            {
+                "products_left": (
+                    PurchaseInvoiceProduct.products_left + product.quantity
+                ),
+            },
         )
         db.session.commit()
     TaxInvoice.query.filter(TaxInvoice.id == tax_invoice_id).delete()
