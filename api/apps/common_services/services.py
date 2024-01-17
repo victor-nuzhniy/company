@@ -19,10 +19,12 @@ def get_last_name(model_name: str) -> Row:
     if model_name not in model_names_set:
         abort(
             409,
-            "".join((
-                "'{name}' is not in ".format(name=model_name),
-                "Order, Invoice, PurchaseInvoice, SaleInvoice, TaxInvoice models.",
-            )),
+            "".join(
+                (
+                    "'{name}' is not in ".format(name=model_name),
+                    "Order, Invoice, PurchaseInvoice, SaleInvoice, TaxInvoice models.",
+                ),
+            ),
         )
     caller_globals = inspect.stack()[1][0].f_globals
     model: Order | Invoice | PurchaseInvoice | SaleInvoice | TaxInvoice | None = (
