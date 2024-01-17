@@ -44,7 +44,8 @@ class SaleInvoiceProduct(db.Model):  # type: ignore
     tax_invoice_products = db.relationship("TaxInvoiceProduct")
     products = db.relationship("Product", back_populates="sale_invoice_products")
     sale_invoices = db.relationship(
-        "SaleInvoice", back_populates="sale_invoice_products",
+        "SaleInvoice",
+        back_populates="sale_invoice_products",
     )
 
     def __repr__(self) -> str:

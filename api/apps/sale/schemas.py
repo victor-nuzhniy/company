@@ -42,18 +42,22 @@ sale_invoice_patch_schema = {
     "parameters": [
         {
             "name": "Partially update sale invoice",
-            "description": "".join((
-                "SaleInvoice 'name', 'invoice_id', 'created_at ",
-                "and 'done' fields.",
-            )),
+            "description": "".join(
+                (
+                    "SaleInvoice 'name', 'invoice_id', 'created_at ",
+                    "and 'done' fields.",
+                ),
+            ),
             "required": False,
             "allowMultiple": True,
             "dataType": "json",
             "paramType": "body",
-            "defaultValue": "".join((
-                '{"name": "S-000012345", "invoice_id": 1, ',
-                '"created_at": "2023-10-01", "done": 0}',
-            )),
+            "defaultValue": "".join(
+                (
+                    '{"name": "S-000012345", "invoice_id": 1, ',
+                    '"created_at": "2023-10-01", "done": 0}',
+                ),
+            ),
         },
     ]
     + authorization_parameter,
@@ -119,18 +123,22 @@ sale_invoice_product_put_schema = {
     "parameters": [
         {
             "name": "Update sale invoice product",
-            "description": "".join((
-                "SaleInvoiceProduct 'product_id', 'quantity', 'price'",
-                " and 'sale_invoice_id' fields.",
-            )),
+            "description": "".join(
+                (
+                    "SaleInvoiceProduct 'product_id', 'quantity', 'price'",
+                    " and 'sale_invoice_id' fields.",
+                ),
+            ),
             "required": True,
             "allowMultiple": True,
             "dataType": "json",
             "paramType": "body",
-            "defaultValue": "".join((
-                '{"product_id": 1, "quantity": 1, "price": 100, ',
-                '"sale_invoice_id": 1}',
-            )),
+            "defaultValue": "".join(
+                (
+                    '{"product_id": 1, "quantity": 1, "price": 100, ',
+                    '"sale_invoice_id": 1}',
+                ),
+            ),
         },
     ]
     + authorization_parameter,
@@ -145,10 +153,12 @@ sale_invoice_product_patch_schema = {
     "parameters": [
         {
             "name": "Partially update sale invoice product",
-            "description": "".join((
-                "SaleInvoiceProduct 'product_id', 'quantity', 'price'",
-                " and 'sale_invoice_id' fields.",
-            )),
+            "description": "".join(
+                (
+                    "SaleInvoiceProduct 'product_id', 'quantity', 'price'",
+                    " and 'sale_invoice_id' fields.",
+                ),
+            ),
             "required": False,
             "allowMultiple": True,
             "dataType": "json",
@@ -181,18 +191,22 @@ sale_invoice_product_post_schema = {
     "parameters": [
         {
             "name": "Create sale invoice product",
-            "description": "".join((
-                "SaleInvoiceProduct 'product_id', 'quantity', 'price'",
-                " and 'sale_invoice_id' fields.",
-            )),
+            "description": "".join(
+                (
+                    "SaleInvoiceProduct 'product_id', 'quantity', 'price'",
+                    " and 'sale_invoice_id' fields.",
+                ),
+            ),
             "required": True,
             "allowMultiple": True,
             "dataType": "json",
             "paramType": "body",
-            "defaultValue": "".join((
-                '{"username": "Alex", "email": "a@a.com",',
-                ' "password": "111"}',
-            )),
+            "defaultValue": "".join(
+                (
+                    '{"username": "Alex", "email": "a@a.com",',
+                    ' "password": "111"}',
+                ),
+            ),
         },
     ]
     + authorization_parameter,
