@@ -11,18 +11,19 @@ from api import (
     PurchaseInvoice,
     PurchaseInvoiceProduct,
 )
+from api.constants import EARLIEST_DATE, LATEST_DATE
 
 
 def get_purchase_invoice_data(
     offset: int = 0,
     limit: int = 20,
-    date_from: datetime = datetime(1000, 1, 1),
-    date_to: datetime = datetime(9000, 1, 1),
+    date_from: datetime = EARLIEST_DATE,
+    date_to: datetime = LATEST_DATE,
 ) -> Sequence:
     """Get Purchase registry product list."""
-    date_from = datetime(1000, 1, 1) if not date_from else date_from
-    date_to = datetime(9000, 1, 1) if not date_to else date_to
-    return (
+    date_from = date_from if date_from else EARLIEST_DATE
+    date_to = date_to if date_to else LATEST_DATE
+    query = (
         PurchaseInvoice.query.with_entities(
             PurchaseInvoice.id.label("id"),
             PurchaseInvoice.created_at.label("created_at"),
@@ -30,7 +31,7 @@ def get_purchase_invoice_data(
             Counterparty.name.label("counterparty"),
             Agreement.name.label("agreement"),
             func.sum(
-                (PurchaseInvoiceProduct.quantity * PurchaseInvoiceProduct.price)
+                (PurchaseInvoiceProduct.quantity * PurchaseInvoiceProduct.price),
             ).label("summ"),
             Product.currency.label("currency"),
         )
@@ -38,11 +39,13 @@ def get_purchase_invoice_data(
         .join(Agreement)
         .join(Counterparty)
         .outerjoin(Product)
-        .filter(
+    )
+    return (
+        query.filter(
             and_(
                 PurchaseInvoice.created_at > date_from,
                 PurchaseInvoice.created_at < date_to,
-            )
+            ),
         )
         .group_by(PurchaseInvoice)
         .order_by(PurchaseInvoice.id.desc())
@@ -73,7 +76,7 @@ def get_purchase_invoice_products_by_purchase_id(invoice_id: int) -> Sequence:
     )
 
 
-def get_purchase_invoice_products_by_product_id_with_products_left(
+def get_pur_inv_prod_by_prod_id_with_prod_left(
     product_id: int,
 ) -> Sequence:
     """Get PurchaseInvoice products list with products_left > 0 and product_id."""

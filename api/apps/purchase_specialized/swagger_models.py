@@ -6,7 +6,7 @@ from api.common import CustomDateTimeFormat
 
 
 @swagger.model
-class PurchaseRegistryFields:
+class PurchaseRegistryFields(object):
     """PurchaseRegistry output fields."""
 
     resource_fields = {
@@ -21,7 +21,7 @@ class PurchaseRegistryFields:
 
 
 @swagger.model
-class PurchaseInvoicesProductsFields:
+class PurchaseInvoicesProductsFields(object):
     """PurchaseInvoicesProductsRoute output fields."""
 
     resource_fields = {
@@ -38,7 +38,7 @@ class PurchaseInvoicesProductsFields:
     }
 
 
-class PurchaseInvoiceProductsLeftFields:
+class PurchaseInvoiceProductsLeftFields(object):
     """PurchaseInvoiceProductsLeftRoute output fields."""
 
     resource_fields = {

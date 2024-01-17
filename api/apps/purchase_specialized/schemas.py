@@ -1,21 +1,17 @@
 """Schemas for purchase_specialized apps."""
-
-
+from api.constants import (
+    authorization_parameter,
+    code_error,
+    code_success,
+    small_response_message_list,
+)
 
 purchase_registry_get_schema = {
     "notes": "Get purchase registry.",
     "nickname": "Get purchase registry.",
     "responseClass": "PurchaseRegistryFields",
-    "parameters": [
-        {
-            "name": "Authorization",
-            "description": "Authorization: Bearer token",
-            "required": True,
-            "allowMultiple": False,
-            "dataType": "String",
-            "paramType": "header",
-            "defaultValue": "Bearer ",
-        },
+    "parameters": authorization_parameter
+    + [
         {
             "name": "offset",
             "description": "Query parameters offset",
@@ -54,8 +50,8 @@ purchase_registry_get_schema = {
         },
     ],
     "responseMessages": [
-        {"code": 200, "message": "Operation successfully performed"},
-        {"code": 400, "message": "Invalid input (specified)."},
+        code_success,
+        code_error,
     ],
 }
 
@@ -64,22 +60,8 @@ purchase_invoices_products_get_schema = {
     "notes": "Get purchase invoice products by purchase invoice id.",
     "nickname": "Get purchase invoice products by purchase invoice id.",
     "responseClass": "PurchaseInvoicesProductsFields",
-    "parameters": [
-        {
-            "name": "Authorization",
-            "description": "Authorization: Bearer token",
-            "required": True,
-            "allowMultiple": False,
-            "dataType": "String",
-            "paramType": "header",
-            "defaultValue": "Bearer ",
-        },
-    ],
-    "responseMessages": [
-        {"code": 200, "message": "Operation successfully performed"},
-        {"code": 401, "message": "Unauthorized."},
-        {"code": 409, "message": "Instance with id does not exist."},
-    ],
+    "parameters": authorization_parameter,
+    "responseMessages": small_response_message_list,
 }
 
 
@@ -87,20 +69,6 @@ purchase_invoice_products_left_get_schema = {
     "notes": "Get purchase invoice products with products left > 0 and product id.",
     "nickname": "Get purchase invoice products with products left > 0 and product id.",
     "responseClass": "PurchaseInvoiceProductsLeftFields",
-    "parameters": [
-        {
-            "name": "Authorization",
-            "description": "Authorization: Bearer token",
-            "required": True,
-            "allowMultiple": False,
-            "dataType": "String",
-            "paramType": "header",
-            "defaultValue": "Bearer ",
-        },
-    ],
-    "responseMessages": [
-        {"code": 200, "message": "Operation successfully performed"},
-        {"code": 401, "message": "Unauthorized."},
-        {"code": 409, "message": "Instance with id does not exist."},
-    ],
+    "parameters": authorization_parameter,
+    "responseMessages": small_response_message_list,
 }
