@@ -59,7 +59,8 @@ def get_tax_data(
     )
     additional_query = (
         query.outerjoin(
-            TaxInvoiceProduct, TaxInvoiceProduct.tax_invoice_id == TaxInvoice.id,
+            TaxInvoiceProduct,
+            TaxInvoiceProduct.tax_invoice_id == TaxInvoice.id,
         )
         .outerjoin(
             SaleInvoiceProduct,
