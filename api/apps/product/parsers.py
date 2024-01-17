@@ -19,7 +19,9 @@ product_patch_parser.add_argument("units", type=str_hundred, required=False)
 product_patch_parser.add_argument("currency", type=str_fifteen, required=False)
 product_patch_parser.add_argument("price", type=int, required=False)
 product_patch_parser.add_argument(
-    "product_type_id", type=product_type_id, required=False,
+    "product_type_id",
+    type=product_type_id,
+    required=False,
 )
 
 

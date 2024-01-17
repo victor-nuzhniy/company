@@ -22,18 +22,22 @@ product_put_schema = {
     "parameters": [
         {
             "name": "Update product",
-            "description": "".join((
-                "Product 'name', 'code', 'units', 'currency', ",
-                "'price' and 'product_type_id' fields.",
-            )),
+            "description": "".join(
+                (
+                    "Product 'name', 'code', 'units', 'currency', ",
+                    "'price' and 'product_type_id' fields.",
+                ),
+            ),
             "required": True,
             "allowMultiple": True,
             "dataType": "json",
             "paramType": "body",
-            "defaultValue": "".join((
-                '{"name": "sugar", "code": "123456", "units": "kg",',
-                ' "currency": "uah", "price": 100, "product_type_id": 1}',
-            )),
+            "defaultValue": "".join(
+                (
+                    '{"name": "sugar", "code": "123456", "units": "kg",',
+                    ' "currency": "uah", "price": 100, "product_type_id": 1}',
+                ),
+            ),
         },
     ]
     + authorization_parameter,
@@ -48,18 +52,22 @@ product_patch_schema = {
     "parameters": [
         {
             "name": "Partially update product",
-            "description": "".join((
-                "Product 'name', 'code', 'units', 'currency', ",
-                "'price' and 'product_type_id' fields.",
-            )),
+            "description": "".join(
+                (
+                    "Product 'name', 'code', 'units', 'currency', ",
+                    "'price' and 'product_type_id' fields.",
+                ),
+            ),
             "required": False,
             "allowMultiple": True,
             "dataType": "json",
             "paramType": "body",
-            "defaultValue": "".join((
-                '{"name": "sugar", "code": "123456", "units": "kg",',
-                ' "currency": "uah", "price": 100, "product_type_id": 1}',
-            )),
+            "defaultValue": "".join(
+                (
+                    '{"name": "sugar", "code": "123456", "units": "kg",',
+                    ' "currency": "uah", "price": 100, "product_type_id": 1}',
+                ),
+            ),
         },
     ]
     + authorization_parameter,
@@ -87,18 +95,22 @@ product_post_schema = {
     "parameters": [
         {
             "name": "Create product",
-            "description": "".join((
-                "Product 'name', 'code', 'units', 'currency', ",
-                "'price' and 'product_type_id' fields.",
-            )),
+            "description": "".join(
+                (
+                    "Product 'name', 'code', 'units', 'currency', ",
+                    "'price' and 'product_type_id' fields.",
+                ),
+            ),
             "required": True,
             "allowMultiple": True,
             "dataType": "json",
             "paramType": "body",
-            "defaultValue": "".join((
-                '{"name": "sugar", "code": "123456", "units": "kg",',
-                ' "currency": "uah", "price": 100, "product_type_id": 1}',
-            )),
+            "defaultValue": "".join(
+                (
+                    '{"name": "sugar", "code": "123456", "units": "kg",',
+                    ' "currency": "uah", "price": 100, "product_type_id": 1}',
+                ),
+            ),
         },
     ]
     + authorization_parameter,
