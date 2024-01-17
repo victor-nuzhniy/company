@@ -42,18 +42,22 @@ purchase_invoice_patch_schema = {
     "parameters": [
         {
             "name": "Partially update purchase invoice",
-            "description": "".join((
-                "PurchaseInvoice 'name', 'agreement_id' and ",
-                "'created_at fields.",
-            )),
+            "description": "".join(
+                (
+                    "PurchaseInvoice 'name', 'agreement_id' and ",
+                    "'created_at fields.",
+                ),
+            ),
             "required": False,
             "allowMultiple": True,
             "dataType": "json",
             "paramType": "body",
-            "defaultValue": "".join((
-                '{"name": "P-000012345", "agreement_id": 1, ',
-                '"created_at": "2023-09-20"}',
-            )),
+            "defaultValue": "".join(
+                (
+                    '{"name": "P-000012345", "agreement_id": 1, ',
+                    '"created_at": "2023-09-20"}',
+                ),
+            ),
         },
     ]
     + authorization_parameter,
@@ -119,18 +123,22 @@ purchase_invoice_product_put_schema = {
     "parameters": [
         {
             "name": "Update purchase invoice product",
-            "description": "".join((
-                "PurchaseInvoiceProduct 'product_id', 'quantity', ",
-                "'price', 'purchase_invoice_id' and 'products_left' fields.",
-            )),
+            "description": "".join(
+                (
+                    "PurchaseInvoiceProduct 'product_id', 'quantity', ",
+                    "'price', 'purchase_invoice_id' and 'products_left' fields.",
+                ),
+            ),
             "required": True,
             "allowMultiple": True,
             "dataType": "json",
             "paramType": "body",
-            "defaultValue": "".join((
-                '{"product_id": 1, "quantity": 2, "price": 100, ',
-                '"purchase_invoice_id": 1, "products_left": 100}',
-            )),
+            "defaultValue": "".join(
+                (
+                    '{"product_id": 1, "quantity": 2, "price": 100, ',
+                    '"purchase_invoice_id": 1, "products_left": 100}',
+                ),
+            ),
         },
     ]
     + authorization_parameter,
@@ -145,18 +153,22 @@ purchase_invoice_product_patch_schema = {
     "parameters": [
         {
             "name": "Partially update purchase invoice product",
-            "description": "".join((
-                "PurchaseInvoiceProduct 'product_id', 'quantity', ",
-                "'price', 'purchase_invoice_id' and 'product_left' fields.",
-            )),
+            "description": "".join(
+                (
+                    "PurchaseInvoiceProduct 'product_id', 'quantity', ",
+                    "'price', 'purchase_invoice_id' and 'product_left' fields.",
+                ),
+            ),
             "required": False,
             "allowMultiple": True,
             "dataType": "json",
             "paramType": "body",
-            "defaultValue": "".join((
-                '{"product_id": 1, "quantity": 2, "price": 100, ',
-                '"purchase_invoice_id": 1, "products_left": 100}',
-            )),
+            "defaultValue": "".join(
+                (
+                    '{"product_id": 1, "quantity": 2, "price": 100, ',
+                    '"purchase_invoice_id": 1, "products_left": 100}',
+                ),
+            ),
         },
     ]
     + authorization_parameter,
@@ -184,18 +196,22 @@ purchase_invoice_product_post_schema = {
     "parameters": [
         {
             "name": "Create purchase invoice product",
-            "description": "".join((
-                "PurchaseInvoiceProduct 'product_id', 'quantity', ",
-                "'price', 'purchase_invoice_id' and 'product_left' fields.",
-            )),
+            "description": "".join(
+                (
+                    "PurchaseInvoiceProduct 'product_id', 'quantity', ",
+                    "'price', 'purchase_invoice_id' and 'product_left' fields.",
+                ),
+            ),
             "required": True,
             "allowMultiple": True,
             "dataType": "json",
             "paramType": "body",
-            "defaultValue": "".join((
-                '{"product_id": 1, "quantity": 2, "price": 100, ',
-                '"purchase_invoice_id": 1, "products_left": 100}',
-            )),
+            "defaultValue": "".join(
+                (
+                    '{"product_id": 1, "quantity": 2, "price": 100, ',
+                    '"purchase_invoice_id": 1, "products_left": 100}',
+                ),
+            ),
         },
     ]
     + authorization_parameter,
