@@ -1,13 +1,10 @@
 """Models for order apps."""
 from sqlalchemy import func
-from sqlalchemy.orm import DeclarativeBase
 
 from api import db
 
-BaseModel: DeclarativeBase = db.Model
 
-
-class Order(BaseModel):
+class Order(db.Model):  # type: ignore
     """Order model for api app."""
 
     id = db.Column(db.Integer, primary_key=True)
@@ -33,7 +30,7 @@ class Order(BaseModel):
         return str(self.name)
 
 
-class OrderProduct(BaseModel):
+class OrderProduct(db.Model):  # type: ignore
     """OrderProducts model for api app."""
 
     id = db.Column(db.Integer, primary_key=True)
@@ -54,4 +51,4 @@ class OrderProduct(BaseModel):
 
     def __repr__(self) -> str:
         """Represent model instance."""
-        return f"Order product with id {self.product_id}"
+        return "Order product with id {id}".format(id=self.product_id)
