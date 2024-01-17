@@ -3,8 +3,8 @@ from flask_restful import reqparse
 from flask_restful.inputs import int_range
 
 from api.apps.counterparty.validators import (
-    counterparty_id,
-    discount_id,
+    counterparty_id_valid,
+    discount_id_valid,
     str_hundred_fifty,
     str_hundred_fifty_five,
     str_ten,
@@ -29,21 +29,23 @@ counterparty_parser.add_argument("country", type=str_hundred)
 counterparty_parser.add_argument("city", type=str_hundred)
 counterparty_parser.add_argument("address", type=str_hundred_fifty_five)
 counterparty_parser.add_argument("phone_number", type=str_thirty)
-counterparty_parser.add_argument("discount_id", type=discount_id, required=True)
+counterparty_parser.add_argument("discount_id", type=discount_id_valid, required=True)
 
 counterparty_patch_parser = counterparty_parser.copy()
 counterparty_patch_parser.replace_argument("name", type=str_hundred_fifty)
-counterparty_patch_parser.replace_argument("discount_id", type=discount_id)
+counterparty_patch_parser.replace_argument("discount_id", type=discount_id_valid)
 
 
 agreement_parser = reqparse.RequestParser()
 agreement_parser.add_argument("name", type=str_length_200, required=True)
-agreement_parser.add_argument("counterparty_id", type=counterparty_id, required=True)
+agreement_parser.add_argument(
+    "counterparty_id", type=counterparty_id_valid, required=True,
+)
 
 agreement_patch_parser = reqparse.RequestParser()
 agreement_patch_parser.add_argument("name", type=str_length_200, required=False)
 agreement_patch_parser.add_argument(
     "counterparty_id",
-    type=counterparty_id,
+    type=counterparty_id_valid,
     required=False,
 )

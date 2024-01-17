@@ -40,7 +40,7 @@ from api.apps.counterparty.swagger_models import (
     CounterpartyFields,
     DiscountFields,
 )
-from api.apps.counterparty.validators import counterparty_id
+from api.apps.counterparty.validators import counterparty_id_valid
 from api.model_routes import ModelRoute, ModelsRoute, token_required
 from api.services import crud
 
@@ -216,7 +216,7 @@ class CounterpartyAgreementsRoute(Resource):
         **kwargs: typing.Any,
     ) -> ResponseReturnValue:
         """Get Agreements list by counterparty id."""
-        company_id = counterparty_id(company_id)
+        company_id = counterparty_id_valid(company_id)
         return marshal(
             crud.read_many(Agreement, {"counterparty_id": company_id}),
             AgreementFields.resource_fields,

@@ -12,7 +12,7 @@ def str_thirty(name_str: str) -> str:
     return name_str
 
 
-def discount_id(discount_id_int: int) -> int:
+def discount_id_valid(discount_id_int: int) -> int:
     """Validate discount id."""
     if db_utils.is_exists(Discount, {"id": discount_id_int}):
         return discount_id_int
@@ -21,7 +21,7 @@ def discount_id(discount_id_int: int) -> int:
     )
 
 
-def counterparty_id(counterparty_id_int: int) -> int:
+def counterparty_id_valid(counterparty_id_int: int) -> int:
     """Validate counterparty_id."""
     if db_utils.is_exists(Counterparty, {"id": counterparty_id_int}):
         return counterparty_id_int
