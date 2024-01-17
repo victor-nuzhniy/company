@@ -1,28 +1,18 @@
 """Schemas for product apps."""
-
+from api.constants import (
+    authorization_parameter,
+    code_does_not_exist,
+    code_unauthorized,
+    response_message_list,
+    small_response_message_list,
+)
 
 product_get_schema = {
     "notes": "Get product by id.",
     "nickname": "Get product.",
     "responseClass": "ProductFields",
-    "parameters": [
-        {
-            "name": "Authorization",
-            "description": "Authorization: Bearer token",
-            "required": True,
-            "allowMultiple": False,
-            "dataType": "String",
-            "paramType": "header",
-            "defaultValue": "Bearer ",
-        },
-    ],
-    "responseMessages": [
-        {"code": 200, "message": "Operation successfully performed"},
-        {"code": 400, "message": "Invalid input (specified)."},
-        {"code": 401, "message": "Unauthorized."},
-        {"code": 409, "message": "Instance with id does not exist."},
-        {"code": 422, "message": "Invalid input (specified)."},
-    ],
+    "parameters": authorization_parameter,
+    "responseMessages": response_message_list,
 }
 
 
@@ -32,33 +22,23 @@ product_put_schema = {
     "parameters": [
         {
             "name": "Update product",
-            "description": "Product 'name', 'code', 'units', 'currency', "
-            "'price' and 'product_type_id' fields.",
+            "description": "".join((
+                "Product 'name', 'code', 'units', 'currency', ",
+                "'price' and 'product_type_id' fields.",
+            )),
             "required": True,
             "allowMultiple": True,
             "dataType": "json",
             "paramType": "body",
-            "defaultValue": '{"name": "sugar", "code": "123456", "units": "kg",'
-            ' "currency": "uah", "price": 100, "product_type_id": 1}',
+            "defaultValue": "".join((
+                '{"name": "sugar", "code": "123456", "units": "kg",',
+                ' "currency": "uah", "price": 100, "product_type_id": 1}',
+            )),
         },
-        {
-            "name": "Authorization",
-            "description": "Authorization: Bearer token",
-            "required": True,
-            "allowMultiple": False,
-            "dataType": "String",
-            "paramType": "header",
-            "defaultValue": "Bearer ",
-        },
-    ],
+    ]
+    + authorization_parameter,
     "responseClass": "ProductFields",
-    "responseMessages": [
-        {"code": 200, "message": "Operation successfully performed"},
-        {"code": 400, "message": "Invalid input (specified)."},
-        {"code": 401, "message": "Unauthorized."},
-        {"code": 409, "message": "Instance with id does not exist."},
-        {"code": 422, "message": "Invalid input (specified)."},
-    ],
+    "responseMessages": response_message_list,
 }
 
 
@@ -68,33 +48,23 @@ product_patch_schema = {
     "parameters": [
         {
             "name": "Partially update product",
-            "description": "Product 'name', 'code', 'units', 'currency', "
-            "'price' and 'product_type_id' fields.",
+            "description": "".join((
+                "Product 'name', 'code', 'units', 'currency', ",
+                "'price' and 'product_type_id' fields.",
+            )),
             "required": False,
             "allowMultiple": True,
             "dataType": "json",
             "paramType": "body",
-            "defaultValue": '{"name": "sugar", "code": "123456", "units": "kg",'
-            ' "currency": "uah", "price": 100, "product_type_id": 1}',
+            "defaultValue": "".join((
+                '{"name": "sugar", "code": "123456", "units": "kg",',
+                ' "currency": "uah", "price": 100, "product_type_id": 1}',
+            )),
         },
-        {
-            "name": "Authorization",
-            "description": "Authorization: Bearer token",
-            "required": True,
-            "allowMultiple": False,
-            "dataType": "String",
-            "paramType": "header",
-            "defaultValue": "Bearer ",
-        },
-    ],
+    ]
+    + authorization_parameter,
     "responseClass": "ProductFields",
-    "responseMessages": [
-        {"code": 200, "message": "Operation successfully performed"},
-        {"code": 400, "message": "Invalid input (specified)."},
-        {"code": 401, "message": "Unauthorized."},
-        {"code": 409, "message": "Instance with id does not exist."},
-        {"code": 422, "message": "Invalid input (specified)."},
-    ],
+    "responseMessages": response_message_list,
 }
 
 
@@ -102,21 +72,11 @@ product_delete_schema = {
     "notes": "Delete product data by id.",
     "nickname": "Delete product.",
     "responseClass": '{"message": "Deleted instance with id"}',
-    "parameters": [
-        {
-            "name": "Authorization",
-            "description": "Authorization: Bearer token",
-            "required": True,
-            "allowMultiple": False,
-            "dataType": "String",
-            "paramType": "header",
-            "defaultValue": "Bearer ",
-        },
-    ],
+    "parameters": authorization_parameter,
     "responseMessages": [
         {"code": 200, "message": "Deleted instance with id."},
-        {"code": 401, "message": "Unauthorized."},
-        {"code": 409, "message": "Instance with id does not exist."},
+        code_unauthorized,
+        code_does_not_exist,
     ],
 }
 
@@ -127,33 +87,23 @@ product_post_schema = {
     "parameters": [
         {
             "name": "Create product",
-            "description": "Product 'name', 'code', 'units', 'currency', "
-            "'price' and 'product_type_id' fields.",
+            "description": "".join((
+                "Product 'name', 'code', 'units', 'currency', ",
+                "'price' and 'product_type_id' fields.",
+            )),
             "required": True,
             "allowMultiple": True,
             "dataType": "json",
             "paramType": "body",
-            "defaultValue": '{"name": "sugar", "code": "123456", "units": "kg",'
-            ' "currency": "uah", "price": 100, "product_type_id": 1}',
+            "defaultValue": "".join((
+                '{"name": "sugar", "code": "123456", "units": "kg",',
+                ' "currency": "uah", "price": 100, "product_type_id": 1}',
+            )),
         },
-        {
-            "name": "Authorization",
-            "description": "Authorization: Bearer token",
-            "required": True,
-            "allowMultiple": False,
-            "dataType": "String",
-            "paramType": "header",
-            "defaultValue": "Bearer ",
-        },
-    ],
+    ]
+    + authorization_parameter,
     "responseClass": "ProductFields",
-    "responseMessages": [
-        {"code": 200, "message": "Operation successfully performed"},
-        {"code": 400, "message": "Invalid input (specified)."},
-        {"code": 401, "message": "Unauthorized."},
-        {"code": 409, "message": "Instance with id does not exist."},
-        {"code": 422, "message": "Invalid input (specified)."},
-    ],
+    "responseMessages": response_message_list,
 }
 
 
@@ -161,22 +111,8 @@ products_get_schema = {
     "notes": "Get all products.",
     "nickname": "Get all products.",
     "responseClass": "ProductFields",
-    "parameters": [
-        {
-            "name": "Authorization",
-            "description": "Authorization: Bearer token",
-            "required": True,
-            "allowMultiple": False,
-            "dataType": "String",
-            "paramType": "header",
-            "defaultValue": "Bearer ",
-        },
-    ],
-    "responseMessages": [
-        {"code": 200, "message": "Operation successfully performed"},
-        {"code": 401, "message": "Unauthorized."},
-        {"code": 409, "message": "Instance with id does not exist."},
-    ],
+    "parameters": authorization_parameter,
+    "responseMessages": small_response_message_list,
 }
 
 
@@ -184,24 +120,8 @@ product_type_get_schema = {
     "notes": "Get product type by id.",
     "nickname": "Get product type.",
     "responseClass": "ProductTypeFields",
-    "parameters": [
-        {
-            "name": "Authorization",
-            "description": "Authorization: Bearer token",
-            "required": True,
-            "allowMultiple": False,
-            "dataType": "String",
-            "paramType": "header",
-            "defaultValue": "Bearer ",
-        },
-    ],
-    "responseMessages": [
-        {"code": 200, "message": "Operation successfully performed"},
-        {"code": 400, "message": "Invalid input (specified)."},
-        {"code": 401, "message": "Unauthorized."},
-        {"code": 409, "message": "Instance with id does not exist."},
-        {"code": 422, "message": "Invalid input (specified)."},
-    ],
+    "parameters": authorization_parameter,
+    "responseMessages": response_message_list,
 }
 
 
@@ -218,24 +138,10 @@ product_type_put_schema = {
             "paramType": "body",
             "defaultValue": '{"name": "product"}',
         },
-        {
-            "name": "Authorization",
-            "description": "Authorization: Bearer token",
-            "required": True,
-            "allowMultiple": False,
-            "dataType": "String",
-            "paramType": "header",
-            "defaultValue": "Bearer ",
-        },
-    ],
+    ]
+    + authorization_parameter,
     "responseClass": "ProductTypeFields",
-    "responseMessages": [
-        {"code": 200, "message": "Operation successfully performed"},
-        {"code": 400, "message": "Invalid input (specified)."},
-        {"code": 401, "message": "Unauthorized."},
-        {"code": 409, "message": "Instance with id does not exist."},
-        {"code": 422, "message": "Invalid input (specified)."},
-    ],
+    "responseMessages": response_message_list,
 }
 
 
@@ -252,24 +158,10 @@ product_type_patch_schema = {
             "paramType": "body",
             "defaultValue": '{"name": "product"}',
         },
-        {
-            "name": "Authorization",
-            "description": "Authorization: Bearer token",
-            "required": True,
-            "allowMultiple": False,
-            "dataType": "String",
-            "paramType": "header",
-            "defaultValue": "Bearer ",
-        },
-    ],
+    ]
+    + authorization_parameter,
     "responseClass": "ProductTypeFields",
-    "responseMessages": [
-        {"code": 200, "message": "Operation successfully performed"},
-        {"code": 400, "message": "Invalid input (specified)."},
-        {"code": 401, "message": "Unauthorized."},
-        {"code": 409, "message": "Instance with id does not exist."},
-        {"code": 422, "message": "Invalid input (specified)."},
-    ],
+    "responseMessages": response_message_list,
 }
 
 
@@ -277,21 +169,11 @@ product_type_delete_schema = {
     "notes": "Delete product type data by id.",
     "nickname": "Delete product type.",
     "responseClass": '{"message": "Deleted instance with id"}',
-    "parameters": [
-        {
-            "name": "Authorization",
-            "description": "Authorization: Bearer token",
-            "required": True,
-            "allowMultiple": False,
-            "dataType": "String",
-            "paramType": "header",
-            "defaultValue": "Bearer ",
-        },
-    ],
+    "parameters": authorization_parameter,
     "responseMessages": [
         {"code": 200, "message": "Deleted instance with id."},
-        {"code": 401, "message": "Unauthorized."},
-        {"code": 409, "message": "Instance with id does not exist."},
+        code_unauthorized,
+        code_does_not_exist,
     ],
 }
 
@@ -309,24 +191,10 @@ product_type_post_schema = {
             "paramType": "body",
             "defaultValue": '{"name": "product"}',
         },
-        {
-            "name": "Authorization",
-            "description": "Authorization: Bearer token",
-            "required": True,
-            "allowMultiple": False,
-            "dataType": "String",
-            "paramType": "header",
-            "defaultValue": "Bearer ",
-        },
-    ],
+    ]
+    + authorization_parameter,
     "responseClass": "ProductTypeFields",
-    "responseMessages": [
-        {"code": 200, "message": "Operation successfully performed"},
-        {"code": 400, "message": "Invalid input (specified)."},
-        {"code": 401, "message": "Unauthorized."},
-        {"code": 409, "message": "Instance with id does not exist."},
-        {"code": 422, "message": "Invalid input (specified)."},
-    ],
+    "responseMessages": response_message_list,
 }
 
 
@@ -334,20 +202,6 @@ product_types_get_schema = {
     "notes": "Get all product types.",
     "nickname": "Get all product types.",
     "responseClass": "ProductTypeFields",
-    "parameters": [
-        {
-            "name": "Authorization",
-            "description": "Authorization: Bearer token",
-            "required": True,
-            "allowMultiple": False,
-            "dataType": "String",
-            "paramType": "header",
-            "defaultValue": "Bearer ",
-        },
-    ],
-    "responseMessages": [
-        {"code": 200, "message": "Operation successfully performed"},
-        {"code": 401, "message": "Unauthorized."},
-        {"code": 409, "message": "Instance with id does not exist."},
-    ],
+    "parameters": authorization_parameter,
+    "responseMessages": small_response_message_list,
 }

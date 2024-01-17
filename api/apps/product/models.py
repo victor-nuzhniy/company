@@ -1,12 +1,9 @@
 """Product models."""
-from sqlalchemy.orm import DeclarativeBase
 
 from api import db
 
-BaseModel: DeclarativeBase = db.Model
 
-
-class ProductType(BaseModel):
+class ProductType(db.Model):  # type: ignore
     """ProductType model for api app."""
 
     id = db.Column(db.Integer, primary_key=True)
@@ -18,7 +15,7 @@ class ProductType(BaseModel):
         return str(self.name)
 
 
-class Product(BaseModel):
+class Product(db.Model):  # type: ignore
     """Product model for api app."""
 
     id = db.Column(db.Integer, primary_key=True)
