@@ -33,13 +33,12 @@ def get_invoice_data(
             Product.currency.label("currency"),
         )
         .outerjoin(Invoice.invoice_products)
-        .join(Agreement)
-        .join(Order)
-        .join(Counterparty)
-        .outerjoin(Product)
+    )
+    additional_query = (
+        query.join(Agreement).join(Order).join(Counterparty).outerjoin(Product)
     )
     return (
-        query
+        additional_query
         .filter(and_(Invoice.created_at > date_from, Invoice.created_at < date_to))
         .group_by(Invoice)
         .order_by(Invoice.id.desc())

@@ -172,7 +172,10 @@ class InvoicesProductsRoute(Resource):
     @swagger.operation(**invoices_products_get_schema)
     @token_required()
     def get(
-        self, invoice_id: int, *args: typing.Any, **kwargs: typing.Any,
+        self,
+        invoice_id: int,
+        *args: typing.Any,
+        **kwargs: typing.Any,
     ) -> ResponseReturnValue:
         """Get Invoice products list by invoice id."""
         invoice_id = invoice_id_valid(invoice_id)
@@ -188,7 +191,10 @@ class AgreementInvoicesRoute(Resource):
     @swagger.operation(**agreement_invoice_products_get_schema)
     @token_required()
     def get(
-        self, agreement_id: int, *args: typing.Any, **kwargs: typing.Any,
+        self,
+        agreement_id: int,
+        *args: typing.Any,
+        **kwargs: typing.Any,
     ) -> ResponseReturnValue:
         """Get Invoices list by agreement id."""
         agreement_id = agreement_id_valid(agreement_id)

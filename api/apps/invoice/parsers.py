@@ -42,7 +42,9 @@ invoice_patch_parser.add_argument(
 )
 invoice_patch_parser.add_argument("paid", type=boolean, required=False)
 invoice_patch_parser.add_argument(
-    "agreement_id", type=agreement_id_valid, required=False,
+    "agreement_id",
+    type=agreement_id_valid,
+    required=False,
 )
 
 invoice_product_parser = reqparse.RequestParser()
@@ -53,10 +55,14 @@ invoice_product_parser.add_argument("invoice_id", type=invoice_id_valid, require
 
 invoice_product_patch_parser = reqparse.RequestParser()
 invoice_product_patch_parser.add_argument(
-    "product_id", type=product_id_valid, required=False,
+    "product_id",
+    type=product_id_valid,
+    required=False,
 )
 invoice_product_patch_parser.add_argument("quantity", type=int, required=False)
 invoice_product_patch_parser.add_argument("price", type=int, required=False)
 invoice_product_patch_parser.add_argument(
-    "invoice_id", type=invoice_id_valid, required=False,
+    "invoice_id",
+    type=invoice_id_valid,
+    required=False,
 )

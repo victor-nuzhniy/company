@@ -44,18 +44,22 @@ invoice_patch_schema = {
     "parameters": [
         {
             "name": "Partially update invoice",
-            "description": "".join((
-                "Invoice 'name', 'order_id', 'created_at' ",
-                "and 'agreement_id' fields.",
-            )),
+            "description": "".join(
+                (
+                    "Invoice 'name', 'order_id', 'created_at' ",
+                    "and 'agreement_id' fields.",
+                ),
+            ),
             "required": False,
             "allowMultiple": True,
             "dataType": "json",
             "paramType": "body",
-            "defaultValue": "".join((
-                '{"name": "I-00357", "order_id": 1, ',
-                '"created_at": "2023-10-01", "agreement_id": 1}',
-            )),
+            "defaultValue": "".join(
+                (
+                    '{"name": "I-00357", "order_id": 1, ',
+                    '"created_at": "2023-10-01", "agreement_id": 1}',
+                ),
+            ),
         },
     ]
     + authorization_parameter,
@@ -121,18 +125,22 @@ invoice_product_put_schema = {
     "parameters": [
         {
             "name": "Update invoice product",
-            "description": "".join((
-                "Invoice product 'product_id', ",
-                "'quantity', 'price' and 'invoice_id' fields.",
-            )),
+            "description": "".join(
+                (
+                    "Invoice product 'product_id', ",
+                    "'quantity', 'price' and 'invoice_id' fields.",
+                ),
+            ),
             "required": True,
             "allowMultiple": True,
             "dataType": "json",
             "paramType": "body",
-            "defaultValue": "".join((
-                '{"product_id": 1, "quantity": 2, ',
-                '"price": 100, "invoice_id": 1}',
-            )),
+            "defaultValue": "".join(
+                (
+                    '{"product_id": 1, "quantity": 2, ',
+                    '"price": 100, "invoice_id": 1}',
+                ),
+            ),
         },
     ]
     + authorization_parameter,
@@ -147,18 +155,22 @@ invoice_product_patch_schema = {
     "parameters": [
         {
             "name": "Partially update invoice product",
-            "description": "".join((
-                "Invoice product 'product_id', ",
-                "'quantity', 'price' and 'invoice_id' fields.",
-            )),
+            "description": "".join(
+                (
+                    "Invoice product 'product_id', ",
+                    "'quantity', 'price' and 'invoice_id' fields.",
+                ),
+            ),
             "required": False,
             "allowMultiple": True,
             "dataType": "json",
             "paramType": "body",
-            "defaultValue": "".join((
-                '{"product_id": 1, "quantity": 2, ',
-                '"price": 100, "invoice_id": 1}',
-            )),
+            "defaultValue": "".join(
+                (
+                    '{"product_id": 1, "quantity": 2, ',
+                    '"price": 100, "invoice_id": 1}',
+                ),
+            ),
         },
     ]
     + authorization_parameter,
@@ -186,18 +198,22 @@ invoice_product_post_schema = {
     "parameters": [
         {
             "name": "Create invoice product",
-            "description": "".join((
-                "Invoice product 'product_id', ",
-                "'quantity', 'price' and 'invoice_id' fields.",
-            )),
+            "description": "".join(
+                (
+                    "Invoice product 'product_id', ",
+                    "'quantity', 'price' and 'invoice_id' fields.",
+                ),
+            ),
             "required": True,
             "allowMultiple": True,
             "dataType": "json",
             "paramType": "body",
-            "defaultValue": "".join((
-                '{"product_id": 1, "quantity": 2, ',
-                '"price": 100, "invoice_id": 1}',
-            )),
+            "defaultValue": "".join(
+                (
+                    '{"product_id": 1, "quantity": 2, ',
+                    '"price": 100, "invoice_id": 1}',
+                ),
+            ),
         },
     ]
     + authorization_parameter,
