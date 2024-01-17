@@ -1,13 +1,10 @@
 """Models for sale apps."""
 from sqlalchemy import func
-from sqlalchemy.orm import DeclarativeBase
 
 from api import db
 
-BaseModel: DeclarativeBase = db.Model
 
-
-class SaleInvoice(BaseModel):
+class SaleInvoice(db.Model):  # type: ignore
     """SaleInvoice model for api app."""
 
     id = db.Column(db.Integer, primary_key=True)
@@ -28,7 +25,7 @@ class SaleInvoice(BaseModel):
         return str(self.name)
 
 
-class SaleInvoiceProduct(BaseModel):
+class SaleInvoiceProduct(db.Model):  # type: ignore
     """InvoiceProducts model for api app."""
 
     id = db.Column(db.Integer, primary_key=True)
@@ -47,9 +44,9 @@ class SaleInvoiceProduct(BaseModel):
     tax_invoice_products = db.relationship("TaxInvoiceProduct")
     products = db.relationship("Product", back_populates="sale_invoice_products")
     sale_invoices = db.relationship(
-        "SaleInvoice", back_populates="sale_invoice_products"
+        "SaleInvoice", back_populates="sale_invoice_products",
     )
 
     def __repr__(self) -> str:
         """Represent model instance."""
-        return f"Sale_invoice product with id {self.product_id}"
+        return "Sale_invoice product with id {id}".format(id=self.product_id)
