@@ -1,21 +1,17 @@
 """Schemas for sale_specialized apps."""
-
-
+from api.constants import (
+    authorization_parameter,
+    code_error,
+    code_success,
+    small_response_message_list,
+)
 
 sale_registry_get_schema = {
     "notes": "Get sale registry.",
     "nickname": "Get sale registry.",
     "responseClass": "SaleRegistryFields",
-    "parameters": [
-        {
-            "name": "Authorization",
-            "description": "Authorization: Bearer token",
-            "required": True,
-            "allowMultiple": False,
-            "dataType": "String",
-            "paramType": "header",
-            "defaultValue": "Bearer ",
-        },
+    "parameters": authorization_parameter
+    + [
         {
             "name": "offset",
             "description": "Query parameters offset",
@@ -54,8 +50,8 @@ sale_registry_get_schema = {
         },
     ],
     "responseMessages": [
-        {"code": 200, "message": "Operation successfully performed"},
-        {"code": 400, "message": "Invalid input (specified)."},
+        code_success,
+        code_error,
     ],
 }
 
@@ -64,46 +60,22 @@ sale_invoices_products_get_schema = {
     "notes": "Get sale invoice products by sale invoice id.",
     "nickname": "Get sale invoice products by sale invoice id.",
     "responseClass": "SaleInvoicesProductsFields",
-    "parameters": [
-        {
-            "name": "Authorization",
-            "description": "Authorization: Bearer token",
-            "required": True,
-            "allowMultiple": False,
-            "dataType": "String",
-            "paramType": "header",
-            "defaultValue": "Bearer ",
-        },
-    ],
-    "responseMessages": [
-        {"code": 200, "message": "Operation successfully performed"},
-        {"code": 401, "message": "Unauthorized."},
-        {"code": 409, "message": "Instance with id does not exist."},
-    ],
+    "parameters": authorization_parameter,
+    "responseMessages": small_response_message_list,
 }
 
 
 tax_sale_invoices_products_left_get_schema = {
     "notes": "Get sale invoice products by sale invoice id and not in tax invoice.",
-    "nickname": "Get sale invoice products by sale invoice id and not in tax "
-    "invoice with tax_invoice_id.",
+    "nickname": "".join(
+        (
+            "Get sale invoice products by sale invoice id and not in tax ",
+            "invoice with tax_invoice_id.",
+        ),
+    ),
     "responseClass": "SaleInvoicesProductsFields",
-    "parameters": [
-        {
-            "name": "Authorization",
-            "description": "Authorization: Bearer token",
-            "required": True,
-            "allowMultiple": False,
-            "dataType": "String",
-            "paramType": "header",
-            "defaultValue": "Bearer ",
-        },
-    ],
-    "responseMessages": [
-        {"code": 200, "message": "Operation successfully performed"},
-        {"code": 401, "message": "Unauthorized."},
-        {"code": 409, "message": "Instance with id does not exist."},
-    ],
+    "parameters": authorization_parameter,
+    "responseMessages": small_response_message_list,
 }
 
 
@@ -111,20 +83,6 @@ agreement_sale_invoices_get_schema = {
     "notes": "Get all sale invoices with agreement id.",
     "nickname": "Get all sale invoices with agreement id.",
     "responseClass": "SaleInvoiceFields",
-    "parameters": [
-        {
-            "name": "Authorization",
-            "description": "Authorization: Bearer token",
-            "required": True,
-            "allowMultiple": False,
-            "dataType": "String",
-            "paramType": "header",
-            "defaultValue": "Bearer ",
-        },
-    ],
-    "responseMessages": [
-        {"code": 200, "message": "Operation successfully performed"},
-        {"code": 401, "message": "Unauthorized."},
-        {"code": 409, "message": "Instance with id does not exist."},
-    ],
+    "parameters": authorization_parameter,
+    "responseMessages": small_response_message_list,
 }
