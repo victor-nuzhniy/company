@@ -1,62 +1,16 @@
 """Swagger schemas for user apps."""
-
-user_admin_schema = {
-    "notes": "Admin user operations.",
-    "nickname": "Modify user 'is_active' or/and 'is_admin' fields.",
-    "parameters": [
-        {
-            "name": "User status",
-            "description": "User 'is_active' or/and 'is_admin' fields.",
-            "required": False,
-            "allowMultiple": True,
-            "dataType": "json",
-            "paramType": "body",
-            "defaultValue": '{"is_active": 1, "is_amdin": 1}',
-        },
-        {
-            "name": "Authorization",
-            "description": "Authorization: Bearer token",
-            "required": True,
-            "allowMultiple": False,
-            "dataType": "String",
-            "paramType": "header",
-            "defaultValue": "Bearer ",
-        },
-    ],
-    "responseClass": "UserFields",
-    "responseMessages": [
-        {"code": 200, "message": "Operation successfully performed"},
-        {"code": 400, "message": "Invalid input (specified)."},
-        {"code": 401, "message": "Unauthorized."},
-        {"code": 403, "message": "Forbidden."},
-        {"code": 409, "message": "Instance with id does not exist."},
-        {"code": 422, "message": "Invalid input (specified)."},
-    ],
-}
-
+from api.constants import (
+    authorization_parameter,
+    response_message_list,
+    small_response_message_list,
+)
 
 user_get_schema = {
     "notes": "Get user by id.",
     "nickname": "Get user.",
     "responseClass": "UserFields",
-    "parameters": [
-        {
-            "name": "Authorization",
-            "description": "Authorization: Bearer token",
-            "required": True,
-            "allowMultiple": False,
-            "dataType": "String",
-            "paramType": "header",
-            "defaultValue": "Bearer ",
-        },
-    ],
-    "responseMessages": [
-        {"code": 200, "message": "Operation successfully performed"},
-        {"code": 400, "message": "Invalid input (specified)."},
-        {"code": 401, "message": "Unauthorized."},
-        {"code": 409, "message": "Instance with id does not exist."},
-        {"code": 422, "message": "Invalid input (specified)."},
-    ],
+    "parameters": authorization_parameter,
+    "responseMessages": response_message_list,
 }
 
 
@@ -71,27 +25,17 @@ user_put_schema = {
             "allowMultiple": True,
             "dataType": "json",
             "paramType": "body",
-            "defaultValue": '{"username": "Alex", "email": "a@a.com", '
-            '"password": "111", "is_admin": 0, "is_active": 0}',
+            "defaultValue": "".join(
+                (
+                    '{"username": "Alex", "email": "a@a.com", ',
+                    '"password": "111", "is_admin": 0, "is_active": 0}',
+                ),
+            ),
         },
-        {
-            "name": "Authorization",
-            "description": "Authorization: Bearer token",
-            "required": True,
-            "allowMultiple": False,
-            "dataType": "String",
-            "paramType": "header",
-            "defaultValue": "Bearer ",
-        },
-    ],
+    ]
+    + authorization_parameter,
     "responseClass": "UserFields",
-    "responseMessages": [
-        {"code": 200, "message": "Operation successfully performed"},
-        {"code": 400, "message": "Invalid input (specified)."},
-        {"code": 401, "message": "Unauthorized."},
-        {"code": 409, "message": "Instance with id does not exist."},
-        {"code": 422, "message": "Invalid input (specified)."},
-    ],
+    "responseMessages": response_message_list,
 }
 
 
@@ -106,27 +50,17 @@ user_patch_schema = {
             "allowMultiple": True,
             "dataType": "json",
             "paramType": "body",
-            "defaultValue": '{"username": "Alex", "email": "a@a.com", '
-            '"password": "111", "is_admin": 0, "is_active": 0}',
+            "defaultValue": "".join(
+                (
+                    '{"username": "Alex", "email": "a@a.com", ',
+                    '"password": "111", "is_admin": 0, "is_active": 0}',
+                ),
+            ),
         },
-        {
-            "name": "Authorization",
-            "description": "Authorization: Bearer token",
-            "required": True,
-            "allowMultiple": False,
-            "dataType": "String",
-            "paramType": "header",
-            "defaultValue": "Bearer ",
-        },
-    ],
+    ]
+    + authorization_parameter,
     "responseClass": "UserFields",
-    "responseMessages": [
-        {"code": 200, "message": "Operation successfully performed"},
-        {"code": 400, "message": "Invalid input (specified)."},
-        {"code": 401, "message": "Unauthorized."},
-        {"code": 409, "message": "Instance with id does not exist."},
-        {"code": 422, "message": "Invalid input (specified)."},
-    ],
+    "responseMessages": response_message_list,
 }
 
 
@@ -134,22 +68,8 @@ user_delete_schema = {
     "notes": "Delete user data by id.",
     "nickname": "Delete user.",
     "responseClass": '{"message": "Deleted instance with id"}',
-    "parameters": [
-        {
-            "name": "Authorization",
-            "description": "Authorization: Bearer token",
-            "required": True,
-            "allowMultiple": False,
-            "dataType": "String",
-            "paramType": "header",
-            "defaultValue": "Bearer ",
-        },
-    ],
-    "responseMessages": [
-        {"code": 200, "message": "Deleted instance with id."},
-        {"code": 401, "message": "Unauthorized."},
-        {"code": 409, "message": "Instance with id does not exist."},
-    ],
+    "parameters": authorization_parameter,
+    "responseMessages": small_response_message_list,
 }
 
 
@@ -164,27 +84,17 @@ user_post_schema = {
             "allowMultiple": True,
             "dataType": "json",
             "paramType": "body",
-            "defaultValue": '{"username": "Alex", "email": "a@a.com", '
-            '"password": "111", "is_admin": 0, "is_active": 0}',
+            "defaultValue": "".join(
+                (
+                    '{"username": "Alex", "email": "a@a.com", ',
+                    '"password": "111", "is_admin": 0, "is_active": 0}',
+                ),
+            ),
         },
-        {
-            "name": "Authorization",
-            "description": "Authorization: Bearer token",
-            "required": True,
-            "allowMultiple": False,
-            "dataType": "String",
-            "paramType": "header",
-            "defaultValue": "Bearer ",
-        },
-    ],
+    ]
+    + authorization_parameter,
     "responseClass": "UserFields",
-    "responseMessages": [
-        {"code": 200, "message": "Operation successfully performed"},
-        {"code": 400, "message": "Invalid input (specified)."},
-        {"code": 401, "message": "Unauthorized."},
-        {"code": 409, "message": "Instance with id does not exist."},
-        {"code": 422, "message": "Invalid input (specified)."},
-    ],
+    "responseMessages": response_message_list,
 }
 
 
@@ -192,20 +102,6 @@ users_get_schema = {
     "notes": "Get all users.",
     "nickname": "Get all users.",
     "responseClass": "UserFields",
-    "parameters": [
-        {
-            "name": "Authorization",
-            "description": "Authorization: Bearer token",
-            "required": True,
-            "allowMultiple": False,
-            "dataType": "String",
-            "paramType": "header",
-            "defaultValue": "Bearer ",
-        },
-    ],
-    "responseMessages": [
-        {"code": 200, "message": "Operation successfully performed"},
-        {"code": 401, "message": "Unauthorized."},
-        {"code": 409, "message": "Instance with id does not exist."},
-    ],
+    "parameters": authorization_parameter,
+    "responseMessages": small_response_message_list,
 }

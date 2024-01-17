@@ -2,30 +2,38 @@
 import os
 import re
 
-from api.apps.auth.utils import encrypt_password
+from api.apps.auth.auth_utilities import encrypt_password
 
 
-def username(username_str) -> str:
+def username(username_str: str) -> str:
     """Validate username."""
     if len(username_str) > 50:
-        raise ValueError(f"{username_str} length shoud be lower.")
+        raise ValueError(
+            "{username} length shoud be lower.".format(username=username_str),
+        )
     if not re.search(r"^[\w.@+-]+\Z", username_str):
         raise ValueError(
-            "Enter a valid username. This value may contain"
-            " only English letters, "
-            "numbers, and @/./+/-/_ characters.",
+            "".join(
+                (
+                    "Enter a valid username. This value may contain",
+                    " only English letters, ",
+                    "numbers, and @/./+/-/_ characters.",
+                ),
+            ),
         )
     return username_str
 
 
-def email(email_str) -> str:
+def email(email_str: str) -> str:
     """Validate email."""
     if len(email_str) > 120:
-        raise ValueError(f"{email_str} length should be lower.")
+        raise ValueError(
+            "{email} length should be lower.".format(email=email_str),
+        )
     specials = "!#$%&'*+-/=?^_`{|?."
     specials = re.escape(specials)
     regex = (
-        r"^(?!["
+        "^(?!["
         + specials
         + "])(?!.*["
         + specials
@@ -35,16 +43,18 @@ def email(email_str) -> str:
         + specials
         + "]+(?<!["
         + specials
-        + "])@[A-Za-z0-9.-]+\.[A-Za-z]{2,4}$"
+        + "])@[A-Za-z0-9.-]+[.][A-Za-z]{2,4}$"
     )
     if not re.fullmatch(regex, email_str):
-        raise ValueError(f"Invalid email address format: {email_str}")
+        raise ValueError(
+            "Invalid email address format: {email}".format(email=email_str),
+        )
     return email_str
 
 
 def password(password_str: str) -> str:
     """Validate and encrypt password."""
-    if len(password_str) < 1:  # TODO bigger int
+    if len(password_str) < 2:  # TODO bigger int
         raise ValueError("Password length is too short.")
     return encrypt_password(password_str)
 

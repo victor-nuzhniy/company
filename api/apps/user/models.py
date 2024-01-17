@@ -1,12 +1,8 @@
 """Models for user app."""
-from sqlalchemy.orm import DeclarativeBase
-
 from api import db
 
-BaseModel: DeclarativeBase = db.Model
 
-
-class User(BaseModel):
+class User(db.Model):  # type: ignore
     """User model for api app."""
 
     id = db.Column(db.Integer, primary_key=True)
