@@ -42,18 +42,22 @@ tax_invoice_patch_schema = {
     "parameters": [
         {
             "name": "Partially update tax invoice",
-            "description": "".join((
-                "TaxInvoice 'name', 'sale_invoice_id' and ",
-                "'created_at' fields.",
-            )),
+            "description": "".join(
+                (
+                    "TaxInvoice 'name', 'sale_invoice_id' and ",
+                    "'created_at' fields.",
+                ),
+            ),
             "required": False,
             "allowMultiple": True,
             "dataType": "json",
             "paramType": "body",
-            "defaultValue": "".join((
-                '{"name": "T-000012345", "sale_invoice_id": 1,',
-                ' "created_at": "2023-10-01"}',
-            )),
+            "defaultValue": "".join(
+                (
+                    '{"name": "T-000012345", "sale_invoice_id": 1,',
+                    ' "created_at": "2023-10-01"}',
+                ),
+            ),
         },
     ]
     + authorization_parameter,
@@ -119,19 +123,23 @@ tax_invoice_product_put_schema = {
     "parameters": [
         {
             "name": "Update tax invoice product",
-            "description": "".join((
-                "TaxInvoiceProduct 'tax_invoice_id', ",
-                "'sale_invoice_product_id', 'purchase_invoice_products_id'",
-                " and 'quantity' fields.",
-            )),
+            "description": "".join(
+                (
+                    "TaxInvoiceProduct 'tax_invoice_id', ",
+                    "'sale_invoice_product_id', 'purchase_invoice_products_id'",
+                    " and 'quantity' fields.",
+                ),
+            ),
             "required": True,
             "allowMultiple": True,
             "dataType": "json",
             "paramType": "body",
-            "defaultValue": "".join((
-                '{"tax_invoice_id": 1, "sale_invoice_product_id": 1, ',
-                '"purchase_invoice_product_id": 1, "quantity": 2}',
-            )),
+            "defaultValue": "".join(
+                (
+                    '{"tax_invoice_id": 1, "sale_invoice_product_id": 1, ',
+                    '"purchase_invoice_product_id": 1, "quantity": 2}',
+                ),
+            ),
         },
     ]
     + authorization_parameter,
@@ -146,19 +154,23 @@ tax_invoice_product_patch_schema = {
     "parameters": [
         {
             "name": "Partially update tax invoice product",
-            "description": "".join((
-                "TaxInvoiceProduct 'tax_invoice_id', ",
-                "'sale_invoice_product_id', 'purchase_invoice_products_id'",
-                " and 'quantity' fields.",
-            )),
+            "description": "".join(
+                (
+                    "TaxInvoiceProduct 'tax_invoice_id', ",
+                    "'sale_invoice_product_id', 'purchase_invoice_products_id'",
+                    " and 'quantity' fields.",
+                ),
+            ),
             "required": False,
             "allowMultiple": True,
             "dataType": "json",
             "paramType": "body",
-            "defaultValue": "".join((
-                '{"tax_invoice_id": 1, "sale_invoice_product_id": 1, ',
-                '"purchase_invoice_product_id": 1, "quantity": 2}',
-            )),
+            "defaultValue": "".join(
+                (
+                    '{"tax_invoice_id": 1, "sale_invoice_product_id": 1, ',
+                    '"purchase_invoice_product_id": 1, "quantity": 2}',
+                ),
+            ),
         },
     ]
     + authorization_parameter,
@@ -186,19 +198,23 @@ tax_invoice_product_post_schema = {
     "parameters": [
         {
             "name": "Create tax invoice product",
-            "description": "".join((
-                "TaxInvoiceProduct 'tax_invoice_id', ",
-                "'sale_invoice_product_id', 'purchase_invoice_products_id'",
-                " and 'quantity' fields.",
-            )),
+            "description": "".join(
+                (
+                    "TaxInvoiceProduct 'tax_invoice_id', ",
+                    "'sale_invoice_product_id', 'purchase_invoice_products_id'",
+                    " and 'quantity' fields.",
+                ),
+            ),
             "required": True,
             "allowMultiple": True,
             "dataType": "json",
             "paramType": "body",
-            "defaultValue": "".join((
-                '{"tax_invoice_id": 1, "sale_invoice_product_id": 1, ',
-                '"purchase_invoice_product_id": 1, "quantity": 2}',
-            )),
+            "defaultValue": "".join(
+                (
+                    '{"tax_invoice_id": 1, "sale_invoice_product_id": 1, ',
+                    '"purchase_invoice_product_id": 1, "quantity": 2}',
+                ),
+            ),
         },
     ]
     + authorization_parameter,

@@ -14,13 +14,17 @@ from api.apps.tax.validators import (
 tax_invoice_post_parser = reqparse.RequestParser()
 tax_invoice_post_parser.add_argument("name", type=str_hundred, required=True)
 tax_invoice_post_parser.add_argument(
-    "sale_invoice_id", type=sale_invoice_id_valid, required=True,
+    "sale_invoice_id",
+    type=sale_invoice_id_valid,
+    required=True,
 )
 
 tax_invoice_put_parser = reqparse.RequestParser()
 tax_invoice_put_parser.add_argument("name", type=str_hundred, required=True)
 tax_invoice_put_parser.add_argument(
-    "sale_invoice_id", type=sale_invoice_id_valid, required=True,
+    "sale_invoice_id",
+    type=sale_invoice_id_valid,
+    required=True,
 )
 tax_invoice_put_parser.add_argument(
     "created_at",
@@ -31,7 +35,9 @@ tax_invoice_put_parser.add_argument(
 tax_invoice_patch_parser = reqparse.RequestParser()
 tax_invoice_patch_parser.add_argument("name", type=str_hundred, required=False)
 tax_invoice_patch_parser.add_argument(
-    "sale_invoice_id", type=sale_invoice_id_valid, required=False,
+    "sale_invoice_id",
+    type=sale_invoice_id_valid,
+    required=False,
 )
 tax_invoice_patch_parser.add_argument(
     "created_at",
@@ -41,10 +47,14 @@ tax_invoice_patch_parser.add_argument(
 
 tax_invoice_product_parser = reqparse.RequestParser()
 tax_invoice_product_parser.add_argument(
-    "tax_invoice_id", type=tax_invoice_id_valid, required=True,
+    "tax_invoice_id",
+    type=tax_invoice_id_valid,
+    required=True,
 )
 tax_invoice_product_parser.add_argument(
-    "sale_invoice_product_id", type=sale_invoice_products_id_valid, required=True,
+    "sale_invoice_product_id",
+    type=sale_invoice_products_id_valid,
+    required=True,
 )
 tax_invoice_product_parser.add_argument(
     "purchase_invoice_product_id",
@@ -55,10 +65,14 @@ tax_invoice_product_parser.add_argument("quantity", type=int, required=True)
 
 tax_invoice_product_patch_parser = reqparse.RequestParser()
 tax_invoice_product_patch_parser.add_argument(
-    "tax_invoice_id", type=tax_invoice_id_valid, required=False,
+    "tax_invoice_id",
+    type=tax_invoice_id_valid,
+    required=False,
 )
 tax_invoice_product_patch_parser.add_argument(
-    "sale_invoice_product_id", type=sale_invoice_products_id_valid, required=False,
+    "sale_invoice_product_id",
+    type=sale_invoice_products_id_valid,
+    required=False,
 )
 tax_invoice_product_patch_parser.add_argument(
     "purchase_invoice_product_id",
