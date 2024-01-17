@@ -32,7 +32,9 @@ order_patch_parser.add_argument(
     required=False,
 )
 order_patch_parser.add_argument(
-    "customer_id", type=counterparty_id_valid, required=False,
+    "customer_id",
+    type=counterparty_id_valid,
+    required=False,
 )
 
 
@@ -44,7 +46,9 @@ order_product_parser.add_argument("order_id", type=order_id_valid, required=True
 
 order_product_patch_parser = reqparse.RequestParser()
 order_product_patch_parser.add_argument(
-    "product_id", type=product_id_valid, required=False,
+    "product_id",
+    type=product_id_valid,
+    required=False,
 )
 order_product_patch_parser.add_argument("quantity", type=int, required=False)
 order_product_patch_parser.add_argument("price", type=int, required=False)

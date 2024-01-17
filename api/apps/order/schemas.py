@@ -42,18 +42,22 @@ order_patch_schema = {
     "parameters": [
         {
             "name": "Partially update order",
-            "description": "".join((
-                "Order 'user_id', 'name', 'created_at' and ",
-                "'customer_id' fields.",
-            )),
+            "description": "".join(
+                (
+                    "Order 'user_id', 'name', 'created_at' and ",
+                    "'customer_id' fields.",
+                ),
+            ),
             "required": False,
             "allowMultiple": True,
             "dataType": "json",
             "paramType": "body",
-            "defaultValue": "".join((
-                '{"user_id": 1, "name": "O-000234", ',
-                '"created_at": "2023-10-01", "customer_id": 1}',
-            )),
+            "defaultValue": "".join(
+                (
+                    '{"user_id": 1, "name": "O-000234", ',
+                    '"created_at": "2023-10-01", "customer_id": 1}',
+                ),
+            ),
         },
     ]
     + authorization_parameter,
@@ -119,18 +123,22 @@ order_product_put_schema = {
     "parameters": [
         {
             "name": "Update order product",
-            "description": "".join((
-                "OrderProduct 'product_id', 'quantity', 'price' ",
-                "and 'order_id' fields.",
-            )),
+            "description": "".join(
+                (
+                    "OrderProduct 'product_id', 'quantity', 'price' ",
+                    "and 'order_id' fields.",
+                ),
+            ),
             "required": True,
             "allowMultiple": True,
             "dataType": "json",
             "paramType": "body",
-            "defaultValue": "".join((
-                '{"product_id": 1, "quantity": 2, "price": 100,',
-                ' "order_id": 1}',
-            )),
+            "defaultValue": "".join(
+                (
+                    '{"product_id": 1, "quantity": 2, "price": 100,',
+                    ' "order_id": 1}',
+                ),
+            ),
         },
     ]
     + authorization_parameter,
@@ -145,18 +153,22 @@ order_product_patch_schema = {
     "parameters": [
         {
             "name": "Partially update order product",
-            "description": "".join((
-                "OrderProduct 'product_id', 'quantity', 'price' ",
-                "and 'order_id' fields.",
-            )),
+            "description": "".join(
+                (
+                    "OrderProduct 'product_id', 'quantity', 'price' ",
+                    "and 'order_id' fields.",
+                ),
+            ),
             "required": False,
             "allowMultiple": True,
             "dataType": "json",
             "paramType": "body",
-            "defaultValue": "".join((
-                '{"product_id": 1, "quantity": 2, "price": 100,',
-                ' "order_id": 1}',
-            )),
+            "defaultValue": "".join(
+                (
+                    '{"product_id": 1, "quantity": 2, "price": 100,',
+                    ' "order_id": 1}',
+                ),
+            ),
         },
     ]
     + authorization_parameter,
@@ -184,18 +196,22 @@ order_product_post_schema = {
     "parameters": [
         {
             "name": "Create order product",
-            "description": "".join((
-                "OrderProduct 'product_id', 'quantity', 'price' ",
-                "and 'order_id' fields.",
-            )),
+            "description": "".join(
+                (
+                    "OrderProduct 'product_id', 'quantity', 'price' ",
+                    "and 'order_id' fields.",
+                ),
+            ),
             "required": True,
             "allowMultiple": True,
             "dataType": "json",
             "paramType": "body",
-            "defaultValue": "".join((
-                '{"product_id": 1, "quantity": 2, "price": 100,',
-                ' "order_id": 1}',
-            )),
+            "defaultValue": "".join(
+                (
+                    '{"product_id": 1, "quantity": 2, "price": 100,',
+                    ' "order_id": 1}',
+                ),
+            ),
         },
     ]
     + authorization_parameter,
