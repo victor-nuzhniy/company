@@ -1,9 +1,11 @@
 """Contstants for api app."""
-
+from datetime import datetime
 
 INVOICE_NAME_PREFIX = "I-0000"
 TAX_INVOICE_NAME_PREFIX = "T-0000"
 SALE_INVOICE_NAME_PREFIX = "S-0000"
+EARLIEST_DATE: datetime = datetime(1000, 1, 1)
+LATEST_DATE: datetime = datetime(9000, 1, 1)
 
 code_success: dict = {"code": 200, "message": "Operation successfully performed"}
 code_error: dict = {"code": 400, "message": "Error (specified)."}
@@ -23,6 +25,12 @@ response_message_list: list[dict] = [
     code_unauthorized,
     code_does_not_exist,
     code_invalid_input,
+]
+
+small_response_message_list: list[dict] = [
+    code_success,
+    code_unauthorized,
+    code_does_not_exist,
 ]
 
 authorization_parameter = [{
