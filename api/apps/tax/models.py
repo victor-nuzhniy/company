@@ -1,13 +1,10 @@
 """Models for tax apps."""
 from sqlalchemy import func
-from sqlalchemy.orm import DeclarativeBase
 
 from api import db
 
-BaseModel: DeclarativeBase = db.Model
 
-
-class TaxInvoice(BaseModel):
+class TaxInvoice(db.Model):  # type: ignore
     """SaleInvoice model for api app."""
 
     id = db.Column(db.Integer, primary_key=True)
@@ -26,7 +23,7 @@ class TaxInvoice(BaseModel):
         return str(self.name)
 
 
-class TaxInvoiceProduct(BaseModel):
+class TaxInvoiceProduct(db.Model):  # type: ignore
     """TaxInvoiceProducts model for api app."""
 
     id = db.Column(db.Integer, primary_key=True)
@@ -38,26 +35,26 @@ class TaxInvoiceProduct(BaseModel):
     sale_invoice_product_id = db.Column(
         db.Integer,
         db.ForeignKey(
-            "sale_invoice_product.id", ondelete="CASCADE", onupdate="CASCADE"
+            "sale_invoice_product.id", ondelete="CASCADE", onupdate="CASCADE",
         ),
         nullable=False,
     )
     purchase_invoice_product_id = db.Column(
         db.Integer,
         db.ForeignKey(
-            "purchase_invoice_product.id", ondelete="CASCADE", onupdate="CASCADE"
+            "purchase_invoice_product.id", ondelete="CASCADE", onupdate="CASCADE",
         ),
         nullable=False,
     )
     quantity = db.Column(db.Integer, nullable=False)
     tax_invoices = db.relationship("TaxInvoice", back_populates="tax_invoice_products")
     sale_invoice_products = db.relationship(
-        "SaleInvoiceProduct", back_populates="tax_invoice_products"
+        "SaleInvoiceProduct", back_populates="tax_invoice_products",
     )
     purchase_invoice_products = db.relationship(
-        "PurchaseInvoiceProduct", back_populates="tax_invoice_products"
+        "PurchaseInvoiceProduct", back_populates="tax_invoice_products",
     )
 
     def __repr__(self) -> str:
         """Represent model instance."""
-        return f"Tax invoice id {self.tax_invoice_id}"
+        return "Tax invoice id {id}".format(id=self.tax_invoice_id)
