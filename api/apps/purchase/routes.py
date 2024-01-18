@@ -4,7 +4,8 @@ import typing
 from flask.typing import ResponseReturnValue
 from flask_restful_swagger import swagger
 
-from api import PurchaseInvoice, PurchaseInvoiceProduct, api
+from api import api
+from api.apps.purchase import models
 from api.apps.purchase.parsers import (
     purchase_invoice_patch_parser,
     purchase_invoice_post_parser,
@@ -36,7 +37,7 @@ from api.model_routes import ModelRoute, ModelsRoute, token_required
 class PurchaseInvoiceRoute(ModelRoute):
     """Operations with single PurchaseInvoice instance."""
 
-    model = PurchaseInvoice
+    model = models.PurchaseInvoice
     put_parser = purchase_invoice_put_parser
     patch_parser = purchase_invoice_patch_parser
     model_fields = PurchaseInvoiceFields.resource_fields
@@ -69,7 +70,7 @@ class PurchaseInvoiceRoute(ModelRoute):
 class PurchaseInvoicesRoute(ModelsRoute):
     """Operations with many PurchaseInvoice instances and instance creations."""
 
-    model = PurchaseInvoice
+    model = models.PurchaseInvoice
     post_parser = purchase_invoice_post_parser
     model_fields = PurchaseInvoiceFields.resource_fields
 
@@ -89,7 +90,7 @@ class PurchaseInvoicesRoute(ModelsRoute):
 class PurchaseInvoiceProductRoute(ModelRoute):
     """Operations with single PurchaseInvoiceProducts instance."""
 
-    model = PurchaseInvoiceProduct
+    model = models.PurchaseInvoiceProduct
     put_parser = purchase_invoice_product_parser
     patch_parser = purchase_invoice_product_patch_parser
     model_fields = PurchaseInvoiceProductFields.resource_fields
@@ -122,7 +123,7 @@ class PurchaseInvoiceProductRoute(ModelRoute):
 class PurchaseInvoiceProductsRoute(ModelsRoute):
     """Operatios with PurchaseInvoiceProducts instances and instance creation."""
 
-    model = PurchaseInvoiceProduct
+    model = models.PurchaseInvoiceProduct
     post_parser = purchase_invoice_product_parser
     model_fields = PurchaseInvoiceProductFields.resource_fields
 
