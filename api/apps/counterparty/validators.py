@@ -1,5 +1,5 @@
 """Validators for counterparty apps."""
-from api import Counterparty, Discount
+from api.apps.counterparty import models
 from api.services import db_utils
 
 
@@ -14,7 +14,7 @@ def str_thirty(name_str: str) -> str:
 
 def discount_id_valid(discount_id_int: int) -> int:
     """Validate discount id."""
-    if db_utils.is_exists(Discount, {"id": discount_id_int}):
+    if db_utils.is_exists(models.Discount, {"id": discount_id_int}):
         return discount_id_int
     raise ValueError(
         "Discount with id {id} does not exist.".format(id=discount_id_int),
@@ -23,7 +23,7 @@ def discount_id_valid(discount_id_int: int) -> int:
 
 def counterparty_id_valid(counterparty_id_int: int) -> int:
     """Validate counterparty_id."""
-    if db_utils.is_exists(Counterparty, {"id": counterparty_id_int}):
+    if db_utils.is_exists(models.Counterparty, {"id": counterparty_id_int}):
         return counterparty_id_int
     raise ValueError(
         "Counterparty with id {id} does not exist.".format(id=counterparty_id_int),

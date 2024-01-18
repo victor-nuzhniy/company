@@ -56,3 +56,6 @@ class Agreement(db.Model):  # type: ignore
     def __repr__(self) -> str:
         """Represent model instance."""
         return str(self.name)
+
+
+__ALL__ = ("Discount", "Counterparty", "Agreement")

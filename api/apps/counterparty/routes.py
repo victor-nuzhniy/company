@@ -5,7 +5,8 @@ from flask.typing import ResponseReturnValue
 from flask_restful import Resource, marshal
 from flask_restful_swagger import swagger
 
-from api import Agreement, Counterparty, Discount, api
+from api import api
+from api.apps.counterparty import models
 from api.apps.counterparty.parsers import (
     agreement_parser,
     agreement_patch_parser,
@@ -48,7 +49,7 @@ from api.services import crud
 class DiscountRoute(ModelRoute):
     """Operations with single Agreement instance."""
 
-    model = Discount
+    model = models.Discount
     put_parser = discount_parser
     patch_parser = discount_patch_parser
     model_fields = DiscountFields.resource_fields
@@ -81,7 +82,7 @@ class DiscountRoute(ModelRoute):
 class DiscountsRoute(ModelsRoute):
     """Operations with many Discounts instances and instance creation."""
 
-    model = Discount
+    model = models.Discount
     post_parser = discount_parser
     model_fields = DiscountFields.resource_fields
 
@@ -101,7 +102,7 @@ class DiscountsRoute(ModelsRoute):
 class CounterpartyRoute(ModelRoute):
     """Operations with single Counterparty instance."""
 
-    model = Counterparty
+    model = models.Counterparty
     put_parser = counterparty_parser
     patch_parser = counterparty_patch_parser
     model_fields = CounterpartyFields.resource_fields
@@ -134,7 +135,7 @@ class CounterpartyRoute(ModelRoute):
 class CounterpartysRoute(ModelsRoute):
     """Operations with many Counterparty instances and instance creation."""
 
-    model = Counterparty
+    model = models.Counterparty
     post_parser = counterparty_parser
     model_fields = CounterpartyFields.resource_fields
 
@@ -154,7 +155,7 @@ class CounterpartysRoute(ModelsRoute):
 class AgreementRoute(ModelRoute):
     """Operations with single Agreement instance."""
 
-    model = Agreement
+    model = models.Agreement
     put_parser = agreement_parser
     patch_parser = agreement_patch_parser
     model_fields = AgreementFields.resource_fields
@@ -187,7 +188,7 @@ class AgreementRoute(ModelRoute):
 class AgreementsRoute(ModelsRoute):
     """Operations with many Agreement instances and instance creation."""
 
-    model = Agreement
+    model = models.Agreement
     post_parser = agreement_parser
     model_fields = AgreementFields.resource_fields
 
@@ -218,7 +219,7 @@ class CounterpartyAgreementsRoute(Resource):
         """Get Agreements list by counterparty id."""
         company_id = counterparty_id_valid(company_id)
         return marshal(
-            crud.read_many(Agreement, {"counterparty_id": company_id}),
+            crud.read_many(models.Agreement, {"counterparty_id": company_id}),
             AgreementFields.resource_fields,
         )
 
