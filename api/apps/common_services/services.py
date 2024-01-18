@@ -4,7 +4,7 @@ import inspect
 from flask import abort
 from sqlalchemy import Row
 
-from api import Invoice, Order, PurchaseInvoice, SaleInvoice, TaxInvoice
+from api.typing import GetLastNameModelType
 
 
 def get_last_name(model_name: str) -> Row:
@@ -27,9 +27,7 @@ def get_last_name(model_name: str) -> Row:
             ),
         )
     caller_globals = inspect.stack()[1][0].f_globals
-    model: Order | Invoice | PurchaseInvoice | SaleInvoice | TaxInvoice | None = (
-        caller_globals.get(model_name)
-    )
+    model: GetLastNameModelType = caller_globals.get(model_name)
     if model:
         query = model.query.with_entities(model.name)
         return query.order_by(model.id.desc()).first()
