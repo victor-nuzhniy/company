@@ -5,7 +5,8 @@ from flask.typing import ResponseReturnValue
 from flask_restful import Resource, marshal_with
 from flask_restful_swagger import swagger
 
-from api import User, api
+from api import api
+from api.apps.user import models
 from api.apps.user.parsers import user_admin_patch_parser
 from api.apps.user.swagger_models import UserFields
 from api.apps.user_specialized.schemas import user_admin_schema
@@ -27,7 +28,7 @@ class AdminUserRoute(Resource):
         arguments = {
             key: elem for key, elem in arguments.items() if elem is not None
         }
-        return crud.update(User, arguments, {"id": user_id})
+        return crud.update(models.User, arguments, {"id": user_id})
 
 
 api.add_resource(AdminUserRoute, "/user/admin/<user_id>/")
