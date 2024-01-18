@@ -6,7 +6,7 @@ from flask.typing import ResponseReturnValue
 from flask_restful import Resource, marshal, marshal_with
 from flask_restful_swagger import swagger
 
-from api import SaleInvoice, SaleInvoiceProduct, api, model_routes, services
+from api import api, model_routes, services
 from api.apps.account.account_utilities import (
     add_income_to_products,
     create_income_products_dict,
@@ -33,6 +33,7 @@ from api.apps.account.swagger_models import (
     PeriodReport,
     ProductLeftovers,
 )
+from api.apps.sale import models
 
 
 class ProcessSaleInvoiceRoute(Resource):
@@ -52,14 +53,14 @@ class ProcessSaleInvoiceRoute(Resource):
         will be set to True, otherwise error with 409 code will be raised.
         """
         sale_invoice_id = account_parser.parse_args().get("sale_invoice_id")
-        sale_invoice = services.crud.read(SaleInvoice, {"id": sale_invoice_id})
+        sale_invoice = services.crud.read(models.SaleInvoice, {"id": sale_invoice_id})
         if sale_invoice and sale_invoice.done:
             abort(
                 406,
                 "Sale_invoice with id {id} is already done!".format(id=sale_invoice_id),
             )
         sale_invoice_products = services.crud.read_many(
-            SaleInvoiceProduct,
+            models.SaleInvoiceProduct,
             {"sale_invoice_id": sale_invoice_id},
         )
         purchase_products = account_queries.get_purchase_products_by_invoice_products(

@@ -6,7 +6,9 @@ from api.apps.sale.validators import sale_invoice_id_valid
 
 account_parser = reqparse.RequestParser()
 account_parser.add_argument(
-    "sale_invoice_id", type=sale_invoice_id_valid, required=True,
+    "sale_invoice_id",
+    type=sale_invoice_id_valid,
+    required=True,
 )
 
 period_parser = reqparse.RequestParser()
