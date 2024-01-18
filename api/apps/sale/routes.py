@@ -4,7 +4,8 @@ import typing
 from flask.typing import ResponseReturnValue
 from flask_restful_swagger import swagger
 
-from api import SaleInvoice, SaleInvoiceProduct, api
+from api import api
+from api.apps.sale import models
 from api.apps.sale.parsers import (
     sale_invoice_patch_parser,
     sale_invoice_post_parser,
@@ -33,7 +34,7 @@ from api.model_routes import ModelRoute, ModelsRoute, token_required
 class SaleInvoiceRoute(ModelRoute):
     """Operations with single SaleInvoice instance."""
 
-    model = SaleInvoice
+    model = models.SaleInvoice
     put_parser = sale_invoice_put_parser
     patch_parser = sale_invoice_patch_parser
     model_fields = SaleInvoiceFields.resource_fields
@@ -66,7 +67,7 @@ class SaleInvoiceRoute(ModelRoute):
 class SaleInvoicesRoute(ModelsRoute):
     """Operations with many SaleInvoice instances and instance creation."""
 
-    model = SaleInvoice
+    model = models.SaleInvoice
     post_parser = sale_invoice_post_parser
     model_fields = SaleInvoiceFields.resource_fields
 
@@ -86,7 +87,7 @@ class SaleInvoicesRoute(ModelsRoute):
 class SaleInvoiceProductRoute(ModelRoute):
     """Operations with single SaleInvoiceProduct instance."""
 
-    model = SaleInvoiceProduct
+    model = models.SaleInvoiceProduct
     put_parser = sale_invoice_product_parser
     patch_parser = sale_invoice_product_patch_parser
     model_fields = SaleInvoiceProductFields.resource_fields
@@ -119,7 +120,7 @@ class SaleInvoiceProductRoute(ModelRoute):
 class SaleInvoiceProductsRoute(ModelsRoute):
     """Operations with many SaleInvoiceProduct instance and instance creation."""
 
-    model = SaleInvoiceProduct
+    model = models.SaleInvoiceProduct
     post_parser = sale_invoice_product_parser
     model_fields = SaleInvoiceProductFields.resource_fields
 
