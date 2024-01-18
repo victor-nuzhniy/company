@@ -4,7 +4,8 @@ import typing
 from flask.typing import ResponseReturnValue
 from flask_restful_swagger import swagger
 
-from api import TaxInvoice, TaxInvoiceProduct, api
+from api import api
+from api.apps.tax import models
 from api.apps.tax.parsers import (
     tax_invoice_patch_parser,
     tax_invoice_post_parser,
@@ -33,7 +34,7 @@ from api.model_routes import ModelRoute, ModelsRoute, token_required
 class TaxInvoiceRoute(ModelRoute):
     """Operations with single TaxInvoice instance."""
 
-    model = TaxInvoice
+    model = models.TaxInvoice
     put_parser = tax_invoice_put_parser
     patch_parser = tax_invoice_patch_parser
     model_fields = TaxInvoiceFields.resource_fields
@@ -66,7 +67,7 @@ class TaxInvoiceRoute(ModelRoute):
 class TaxInvoicesRoute(ModelsRoute):
     """Operations with TaxInvoice instances and instance creation."""
 
-    model = TaxInvoice
+    model = models.TaxInvoice
     post_parser = tax_invoice_post_parser
     model_fields = TaxInvoiceFields.resource_fields
 
@@ -86,7 +87,7 @@ class TaxInvoicesRoute(ModelsRoute):
 class TaxInvoiceProductRoute(ModelRoute):
     """Operations with single TaxInvoiceProducts instance."""
 
-    model = TaxInvoiceProduct
+    model = models.TaxInvoiceProduct
     put_parser = tax_invoice_product_parser
     patch_parser = tax_invoice_product_patch_parser
     model_fields = TaxInvoiceProductFields.resource_fields
@@ -119,7 +120,7 @@ class TaxInvoiceProductRoute(ModelRoute):
 class TaxInvoiceProductsRoute(ModelsRoute):
     """Operations with TaxInvoiceProducts instances and instance creation."""
 
-    model = TaxInvoiceProduct
+    model = models.TaxInvoiceProduct
     post_parser = tax_invoice_product_parser
     model_fields = TaxInvoiceProductFields.resource_fields
 
