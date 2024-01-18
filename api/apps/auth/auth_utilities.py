@@ -6,14 +6,15 @@ from flask.typing import ResponseReturnValue
 from sqlalchemy import Row
 from werkzeug.security import check_password_hash, generate_password_hash
 
-from api import User, app
+from api import app
 from api.apps.auth.parsers import login_parser
+from api.apps.user import models
 from api.services import crud
 
 
 def login(email: str, password: str) -> Optional[Row]:
     """Login and return user."""
-    user = crud.read(User, {"email": email})
+    user = crud.read(models.User, {"email": email})
     if not user or not check_password_hash(user.password, password):
         return None
     return user
@@ -21,7 +22,7 @@ def login(email: str, password: str) -> Optional[Row]:
 
 def disable_account(user_id: int) -> Row:
     """Disable user account - is_active to False."""
-    return crud.update(User, {"is_active": False}, {"id": user_id})
+    return crud.update(models.User, {"is_active": False}, {"id": user_id})
 
 
 def encrypt_password(password: str) -> str:

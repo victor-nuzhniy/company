@@ -3,11 +3,12 @@ from flask.typing import ResponseReturnValue
 from flask_restful import Resource, marshal
 from flask_restful_swagger import swagger
 
-from api import User, api
+from api import api
 from api.api_utilities import check_unique
 from api.apps.auth.auth_utilities import get_auth_response
 from api.apps.auth.parsers import admin_parser
 from api.apps.auth.schemas import admin_schema, login_schema
+from api.apps.user import models
 from api.apps.user.routes import UserFields
 from api.services import crud
 
@@ -41,8 +42,8 @@ class AdminRoute(Resource):
         args = admin_parser.parse_args()
         args.update({"is_active": True, "is_admin": True})
         args.pop("admin_password", None)
-        check_unique(User, args)
-        return marshal(crud.create(User, args), UserFields.resource_fields)
+        check_unique(models.User, args)
+        return marshal(crud.create(models.User, args), UserFields.resource_fields)
 
 
 api.add_resource(LoginRoute, "/auth/login/")
