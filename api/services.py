@@ -1,91 +1,122 @@
 """Db service functionality for api."""
-from typing import Any, Dict, List, Optional, Sequence
+from typing import Any, Optional, Sequence
 
-from flask_restful import abort
+from flask import abort
 from sqlalchemy import (
-    ChunkedIteratorResult,
     CursorResult,
+    Result,
+    Row,
+    Select,
     and_,
     delete,
     insert,
     select,
     update,
 )
+from sqlalchemy.sql.dml import ReturningInsert
 
-from api import db
+from api import ModelType, db
 
 
-class CRUDOperations:
+class AbortMethods(object):
+    """Class with methods that performing abort operation."""
+
+    def raise_forbidden_error(self, ex: str):
+        """Raise forbidden error."""
+        abort(
+            403,
+            "Authentication token is invalid. Error - {ex}".format(
+                ex=ex,
+            ),
+        )
+
+    def raise_not_found_error(self, data_values: dict, name: str) -> None:
+        """Raise not found error."""
+        abort(
+            404,
+            "".join(
+                (
+                    "{name} with data".format(name=name),
+                    *[
+                        "{key}: {elem}".format(
+                            key=key, elem=elem,
+                        ) for key, elem in data_values.items()
+                    ],
+                    " doesn't exist",
+                ),
+            ),
+        )
+
+
+abort_methods = AbortMethods()
+
+
+class CRUDOperations(object):
     """CRUD operations for api app."""
 
-    @staticmethod
     def create(
-        model: db.Model,
-        data: Dict,
-    ) -> db.Model:
-        """Create model instance with given data."""
-        insert_statement = insert(model).values(**data).returning(model)
+        self,
+        model: ModelType,
+        data_values: dict,
+    ) -> Any:
+        """Create model instance with given data_values."""
+        insert_statement: ReturningInsert = (
+            insert(model).values(**data_values).returning(model)
+        )
         statement = (
             select(model)
             .from_statement(insert_statement)
             .execution_options(populate_existing=True)
         )
-        result: ChunkedIteratorResult = db.session.execute(statement=statement)
-        data: db.Model = result.scalar_one()
+        result_value: Result = db.session.execute(statement=statement)
+        result_data: Any = result_value.scalar_one()
         db.session.commit()
-        return data
+        return result_data
 
-    @staticmethod
     def create_many(
-        model: db.Model,
-        data: List[Dict],
-    ) -> Optional[List[db.Model]]:
-        """Create many model instances with given data."""
-        insert_statement = insert(model).values(data).returning(model)
+        self,
+        model: ModelType,
+        data_values: list[dict],
+    ) -> Sequence[Any]:
+        """Create many model instances with given data_values."""
+        insert_statement = insert(model).values(data_values).returning(model)
         statement = (
             select(model)
             .from_statement(insert_statement)
             .execution_options(populate_existing=True)
         )
-        result: CursorResult = db.session.execute(statement=statement)
-        data: Optional[db.Model] = result.scalars().all()
+        result_value: Result = db.session.execute(statement=statement)
+        result_data: Sequence[Any] = result_value.scalars().all()
         db.session.commit()
-        return data
+        return result_data
 
-    @staticmethod
     def read(
-        model: db.Model,
-        data: Dict,
-    ) -> db.Model:
-        """Get model instance by given data."""
+        self,
+        model: ModelType,
+        data_values: dict,
+    ) -> Any | None:
+        """Get model instance by given data_values."""
         statement = select(model)
-        for k, v in data.items():
-            statement = statement.where(getattr(model, k) == v)
-        result: CursorResult = db.session.execute(statement=statement)
-        response: db.Model = result.first()
-        if not response:
-            abort(
-                404,
-                message=f"{model.__name__} with data "
-                f"{[str(key) + ': ' + str(value) for key, value in data.items()]} "
-                f"doesn't exist",
-            )
-        return response[0]
+        for key, elem in data_values.items():
+            statement = statement.where(getattr(model, key) == elem)
+        result_value: Result = db.session.execute(statement=statement)
+        result_data: Any | None = result_value.scalar_one_or_none()
+        if not result_data:
+            abort_methods.raise_not_found_error(data_values, model.__name__)
+        return result_data
 
-    @staticmethod
     def update(
-        model: db.Model,
-        values: Dict,
-        filters: Dict,
-    ) -> db.Model:
+        self,
+        model: ModelType,
+        data_values: dict,
+        filters: dict,
+    ) -> Any:
         """Update model instance with given data."""
-        where_expr = []
-        for k, v in filters.items():
-            where_expr.append(getattr(model, k) == v)
+        where_expr = self._get_where_expressions(model, filters)
         update_statement = (
             update(model)
             .where(and_(*where_expr))
-            .values(**values)
+            .values(**data_values)
             .returning(model)
             .execution_options(synchronize_session="fetch")
         )
@@ -94,72 +125,78 @@ class CRUDOperations:
             .from_statement(statement=update_statement)
             .execution_options(populate_existing=True)
         )
-        result: CursorResult = db.session.execute(statement=statement)
-        data: db.Model = result.scalar_one_or_none()
+        result_value: Result = db.session.execute(statement=statement)
+        result_data: Any | None = result_value.scalar_one_or_none()
+        if not result_data:
+            abort_methods.raise_not_found_error(filters, model.__name__)
         db.session.commit()
-        return data
+        return result_data
 
-    @staticmethod
     def delete(
-        model: db.Model,
-        data: Dict,
-    ) -> db.Model:
+        self,
+        model: ModelType,
+        data_values: dict,
+    ) -> CursorResult:
         """Delete model instance."""
         statement = delete(model)
-        for k, v in data.items():
-            statement = statement.where(getattr(model, k) == v)
-        result: CursorResult = db.session.execute(statement=statement)
+        for key, elem in data_values.items():
+            statement = statement.where(getattr(model, key) == elem)
+        result_value: CursorResult = db.session.execute(statement=statement)
         db.session.commit()
-        return result
+        return result_value
 
-    @staticmethod
     def read_many(
-        model: db.Model,
-        filters: Dict = None,
+        self,
+        model: ModelType,
+        filters: Optional[dict] = None,
         rev: bool = False,
-    ) -> db.Model:
+    ) -> Sequence[Any]:
         """Get model instances list."""
-        filters = filters if filters else dict()
-        select_statement = select(model)
+        filters = filters if filters else {}
+        select_statement: Select[Any] = select(model)
         if filters:
             select_statement = select_statement.filter_by(**filters)
         if rev:
             select_statement = select_statement.order_by(model.id.desc())
         select_statement = select_statement.execution_options(populate_existing=True)
-        result: CursorResult = db.session.execute(statement=select_statement)
-        objects: Sequence = result.scalars().all()
-        return objects
+        result_value: Result = db.session.execute(statement=select_statement)
+        return result_value.scalars().all()
+
+    def _get_where_expressions(self, model: ModelType, filters: dict) -> list:
+        """Create 'where' expressions for sql statement."""
+        where_expr = []
+        for key, elem in filters.items():
+            where_expr.append(getattr(model, key) == elem)
+        return where_expr
 
 
 crud = CRUDOperations()
 
 
-class DbUtils:
+class DbUtils(object):
     """Db utilities."""
 
-    @staticmethod
     def is_exists(
-        model: db.Model,
-        data: Dict,
+        self,
+        model: ModelType,
+        data_values: dict,
     ) -> bool:
         """Check instance existence."""
-        """Get model instance by given data."""
         statement = select(model.id)
-        for k, v in data.items():
-            statement = statement.where(getattr(model, k) == v)
-        result: CursorResult = db.session.execute(statement=statement)
-        return result.first() is not None
+        for key, elem in data_values.items():
+            statement = statement.where(getattr(model, key) == elem)
+        result_value: Result = db.session.execute(statement=statement)
+        return result_value.first() is not None
 
-    @staticmethod
     def check_unique_constraits(
-        model: db.Model, name: str, value: Any, instance_id: Optional[int]
+        self, model: ModelType, name: str, model_value: Any, instance_id: Optional[int],
     ) -> bool:
-        """Check unique constraits for model field with given value."""
-        statement = select(model.id).where(getattr(model, name) == value)
+        """Check unique constraits for model field with given model_value."""
+        statement = select(model.id).where(getattr(model, name) == model_value)
         if instance_id:
             statement = statement.where(model.id != instance_id)
-        result: CursorResult = db.session.execute(statement=statement)
-        return result.first() is not None
+        result_value: Result = db.session.execute(statement=statement)
+        return result_value.first() is not None
 
 
 db_utils = DbUtils()

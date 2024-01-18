@@ -2,22 +2,51 @@
 from functools import wraps
 from typing import Any, Callable, Dict, Optional
 
-from flask import request
+import jwt
+from flask import Request, abort, current_app, request
 from flask.typing import ResponseReturnValue
 from flask_restful import Resource, marshal
 from flask_restful.reqparse import RequestParser
 from sqlalchemy import Row
 
-from api import ModelType
-from api.api_utilities import (
-    check_current_user,
-    check_unique,
-    get_current_user,
-    get_token,
-    raise_forbidden_error,
-)
+from api import ModelType, User
+from api.api_utilities import check_unique
 from api.constants import server_error
-from api.services import crud
+from api.services import abort_methods, crud
+
+
+class TokenFunctionality(object):
+    """Class with methods supporting token functionality."""
+
+    def get_token(self, req: Request) -> str:
+        """Get token from request headers."""
+        auth_data: Optional[str] = req.headers.get("Authorization")
+        if auth_data:
+            token = auth_data.split(" ")[1]
+            if token:
+                return token
+        abort(401, "Authentication Token is missing! Unauthorized.")
+
+    def get_current_user(self, token: str) -> Row:
+        """Get current user from token data."""
+        data_values = jwt.decode(
+            token,
+            current_app.config["SECRET_KEY"],
+            algorithms=["HS256"],
+        )
+        return crud.read(User, {"id": data_values.get("user_id")})
+
+    def check_current_user(self, current_user: Row, is_admin: bool) -> None:
+        """Check current_user status."""
+        if current_user is None:
+            abort(401, "Invalid Authentication token!")
+        if not current_user.is_active:
+            abort(403, "Current user is not active.")
+        if is_admin and not current_user.is_admin:
+            abort(403, "Current user is not admin.")
+
+
+token_functionality = TokenFunctionality()
 
 
 def token_required(is_admin: bool = False) -> Callable:
@@ -27,13 +56,13 @@ def token_required(is_admin: bool = False) -> Callable:
         @wraps(func)
         def decorated(*args: Any, **kwargs: Any) -> ResponseReturnValue:  # noqa WPS430
             """Perform token checking."""
-            token = get_token(request)
+            token = token_functionality.get_token(request)
             current_user: Optional[Row] = None
             try:
-                current_user = get_current_user(token)
+                current_user = token_functionality.get_current_user(token)
             except Exception as ex:
-                raise_forbidden_error(str(ex))
-            check_current_user(current_user, is_admin)
+                abort_methods.raise_forbidden_error(str(ex))
+            token_functionality.check_current_user(current_user, is_admin)
             return func(*args, current_user=current_user, **kwargs)
 
         return decorated
