@@ -1,7 +1,7 @@
 """Swagger schemas for auth apps."""
 from api.constants import (
     code_access_denied,
-    code_does_not_exist,
+    code_conflict,
     code_server,
     code_success,
     code_unsupported_media_type,
@@ -33,7 +33,7 @@ login_schema = {
             "code": 404,
             "message": "Error fetching auth token!, invalid email or password",
         },
-        code_does_not_exist,
+        code_conflict,
         code_unsupported_media_type,
         code_server,
     ],
