@@ -8,6 +8,10 @@ from flask_migrate import Migrate
 from flask_restful import Api
 from flask_restful_swagger import swagger
 from flask_sqlalchemy import SQLAlchemy
+from sqlalchemy.orm import DeclarativeBase
+
+from api import typing
+from api.typing import ModelType
 
 load_dotenv()
 
@@ -23,21 +27,22 @@ app.config["DEFAULT_RENDERERS"] = [
 ]
 app.config["SQLALCHEMY_DATABASE_URI"] = os.getenv("SQLALCHEMY_DATABASE_URI")
 api = swagger.docs(Api(app), apiVersion="0.1")
-db = SQLAlchemy(app)
 
-from api.apps.counterparty.models import Agreement, Counterparty, Discount
-from api.apps.invoice.models import Invoice, InvoiceProduct
-from api.apps.order.models import Order, OrderProduct
-from api.apps.product.models import Product, ProductType
-from api.apps.purchase.models import PurchaseInvoice, PurchaseInvoiceProduct
-from api.apps.sale.models import SaleInvoice, SaleInvoiceProduct
-from api.apps.tax.models import TaxInvoice, TaxInvoiceProduct
-from api.apps.user.models import User
+
+class Base(DeclarativeBase):
+    """Base class for models instantiaton."""
+
+
+db: SQLAlchemy = SQLAlchemy(model_class=Base)
+db.init_app(app)
+
+Model: ModelType = db.Model
 
 migrate = Migrate(app, db)
 
 from api.apps.account import routes
 from api.apps.auth import routes
+from api.apps.common_services import routes
 from api.apps.counterparty import routes
 from api.apps.invoice import routes
 from api.apps.order import routes
