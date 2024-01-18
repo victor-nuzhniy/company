@@ -5,7 +5,6 @@ from flask import abort
 from sqlalchemy import (
     CursorResult,
     Result,
-    Row,
     Select,
     and_,
     delete,

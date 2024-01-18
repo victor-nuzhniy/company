@@ -9,10 +9,11 @@ from flask_restful import Resource, marshal
 from flask_restful.reqparse import RequestParser
 from sqlalchemy import Row
 
-from api import ModelType, User
+from api import ModelType
 from api.api_utilities import check_unique
 from api.constants import server_error
 from api.services import abort_methods, crud
+from api.apps.user import models
 
 
 class TokenFunctionality(object):
@@ -34,7 +35,7 @@ class TokenFunctionality(object):
             current_app.config["SECRET_KEY"],
             algorithms=["HS256"],
         )
-        return crud.read(User, {"id": data_values.get("user_id")})
+        return crud.read(models.User, {"id": data_values.get("user_id")})
 
     def check_current_user(self, current_user: Row, is_admin: bool) -> None:
         """Check current_user status."""
