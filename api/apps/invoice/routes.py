@@ -5,7 +5,8 @@ from flask.typing import ResponseReturnValue
 from flask_restful import Resource, marshal
 from flask_restful_swagger import swagger
 
-from api import Invoice, InvoiceProduct, api
+from api import api
+from api.apps.invoice import models
 from api.apps.invoice.parsers import (
     invoice_patch_parser,
     invoice_post_parser,
@@ -49,7 +50,7 @@ from api.services import crud
 class InvoiceRoute(ModelRoute):
     """Operations with single Invoice instance."""
 
-    model = Invoice
+    model = models.Invoice
     put_parser = invoice_put_parser
     patch_parser = invoice_patch_parser
     model_fields = InvoiceFields.resource_fields
@@ -82,7 +83,7 @@ class InvoiceRoute(ModelRoute):
 class InvoicesRoute(ModelsRoute):
     """Operations with many Invoice isntances and instance creation."""
 
-    model = Invoice
+    model = models.Invoice
     post_parser = invoice_post_parser
     model_fields = InvoiceFields.resource_fields
 
@@ -102,7 +103,7 @@ class InvoicesRoute(ModelsRoute):
 class InvoiceProductRoute(ModelRoute):
     """Operations with single InvoiceProducts instance."""
 
-    model = InvoiceProduct
+    model = models.InvoiceProduct
     put_parser = invoice_product_parser
     patch_parser = invoice_product_patch_parser
     model_fields = InvoiceProductFields.resource_fields
@@ -135,7 +136,7 @@ class InvoiceProductRoute(ModelRoute):
 class InvoiceProductsRoute(ModelsRoute):
     """Operations with many InvoiceProducts instances and instance creation."""
 
-    model = InvoiceProduct
+    model = models.InvoiceProduct
     post_parser = invoice_product_parser
     model_fields = InvoiceProductFields.resource_fields
 
@@ -199,7 +200,7 @@ class AgreementInvoicesRoute(Resource):
         """Get Invoices list by agreement id."""
         agreement_id = agreement_id_valid(agreement_id)
         return marshal(
-            crud.read_many(Invoice, {"agreement_id": agreement_id}, rev=True),
+            crud.read_many(models.Invoice, {"agreement_id": agreement_id}, rev=True),
             InvoiceFields.resource_fields,
         )
 

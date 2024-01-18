@@ -1,5 +1,6 @@
 """Validators for invoice apps."""
-from api import Agreement, Invoice, Order, Product
+from api import Invoice, Order, Product
+from api.apps.counterparty import models
 from api.services import db_utils
 
 
@@ -14,7 +15,7 @@ def order_id_valid(order_id_int: int) -> int:
 
 def agreement_id_valid(agreement_id_int: int) -> int:
     """Validate agreement_id."""
-    if db_utils.is_exists(Agreement, {"id": agreement_id_int}):
+    if db_utils.is_exists(models.Agreement, {"id": agreement_id_int}):
         return agreement_id_int
     raise ValueError(
         "Agreement with id {id} does not exist.".format(id=agreement_id_int),
