@@ -4,8 +4,8 @@ import typing
 from flask.typing import ResponseReturnValue
 from flask_restful_swagger import swagger
 
-from api import Product, api
-from api.apps.product.models import ProductType
+from api import api
+from api.apps.product import models
 from api.apps.product.parsers import (
     product_parser,
     product_patch_parser,
@@ -33,7 +33,7 @@ from api.model_routes import ModelRoute, ModelsRoute, token_required
 class ProductRoute(ModelRoute):
     """Operations with single Product instance."""
 
-    model = Product
+    model = models.Product
     put_parser = product_parser
     patch_parser = product_patch_parser
     model_fields = ProductFields.resource_fields
@@ -66,7 +66,7 @@ class ProductRoute(ModelRoute):
 class ProductsRoute(ModelsRoute):
     """Operations with many Product instance and instance creation."""
 
-    model = Product
+    model = models.Product
     post_parser = product_parser
     model_fields = ProductFields.resource_fields
 
@@ -86,7 +86,7 @@ class ProductsRoute(ModelsRoute):
 class ProductTypeRoute(ModelRoute):
     """Operations with single ProductType instance."""
 
-    model = ProductType
+    model = models.ProductType
     put_parser = product_type_parser
     patch_parser = product_type_patch_parser
     model_fields = ProductTypeFields.resource_fields
@@ -119,7 +119,7 @@ class ProductTypeRoute(ModelRoute):
 class ProductTypesRoute(ModelsRoute):
     """Operations with many Product instance and instance creation."""
 
-    model = ProductType
+    model = models.ProductType
     post_parser = product_type_parser
     model_fields = ProductTypeFields.resource_fields
 

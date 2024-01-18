@@ -1,5 +1,5 @@
 """Validators for product apps."""
-from api.apps.product.models import ProductType
+from api.apps.product import models
 from api.services import db_utils
 
 
@@ -23,7 +23,7 @@ def str_fifteen(name_str: str) -> str:
 
 def product_type_id(product_type_id_int: int) -> int:
     """Validate product_type_id."""
-    if db_utils.is_exists(ProductType, {"id": product_type_id_int}):
+    if db_utils.is_exists(models.ProductType, {"id": product_type_id_int}):
         return product_type_id_int
     raise ValueError(
         "Product type with id {id} does not exist.".format(
