@@ -2,7 +2,7 @@
 import os
 import re
 
-from api.apps.auth.auth_utilities import encrypt_password
+from werkzeug.security import generate_password_hash
 
 
 def username(username_str: str) -> str:
@@ -56,7 +56,7 @@ def password(password_str: str) -> str:
     """Validate and encrypt password."""
     if len(password_str) < 2:  # TODO bigger int
         raise ValueError("Password length is too short.")
-    return encrypt_password(password_str)
+    return generate_password_hash(password_str)
 
 
 def admin_password(admin_password_str: str) -> str:
