@@ -4,7 +4,8 @@ import typing
 from flask.typing import ResponseReturnValue
 from flask_restful_swagger import swagger
 
-from api import Order, OrderProduct, api, model_routes
+from api import api, model_routes
+from api.apps.order import models
 from api.apps.order.parsers import (
     order_patch_parser,
     order_post_parser,
@@ -32,7 +33,7 @@ from api.apps.order.swagger_models import OrderFields, OrderProductFields
 class OrderRoute(model_routes.ModelRoute):
     """Operations with single Order instance."""
 
-    model = Order
+    model = models.Order
     put_parser = order_put_parser
     patch_parser = order_patch_parser
     model_fields = OrderFields.resource_fields
@@ -65,7 +66,7 @@ class OrderRoute(model_routes.ModelRoute):
 class OrdersRoute(model_routes.ModelsRoute):
     """Operations with many Order instances and instance creation."""
 
-    model = Order
+    model = models.Order
     post_parser = order_post_parser
     model_fields = OrderFields.resource_fields
 
@@ -85,7 +86,7 @@ class OrdersRoute(model_routes.ModelsRoute):
 class OrderProductRoute(model_routes.ModelRoute):
     """Operations with single OrderProducts instance."""
 
-    model = OrderProduct
+    model = models.OrderProduct
     put_parser = order_product_parser
     patch_parser = order_product_patch_parser
     model_fields = OrderProductFields.resource_fields
@@ -118,7 +119,7 @@ class OrderProductRoute(model_routes.ModelRoute):
 class OrderProductsRoute(model_routes.ModelsRoute):
     """Operations with many OrderProducts and instance creation."""
 
-    model = OrderProduct
+    model = models.OrderProduct
     post_parser = order_product_parser
     model_fields = OrderProductFields.resource_fields
 
