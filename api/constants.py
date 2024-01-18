@@ -12,8 +12,8 @@ code_error: dict = {"code": 400, "message": "Error (specified)."}
 code_unauthorized: dict = {"code": 401, "message": "Unauthorized."}
 code_access_denied: dict = {"code": 403, "message": "Access denied. Value is invalid."}
 code_not_found: dict = {"code": 404, "message": "Not found."}
-code_does_not_exist: dict = {
-    "code": 409, "message": "Instance with id does not exist.",
+code_conflict: dict = {
+    "code": 409, "message": "Instance with id exists.",
 }
 code_unsupported_media_type: dict = {"code": 415, "message": "Unsupported media type."}
 code_invalid_input: dict = {"code": 422, "message": "Invalid input (specified)."}
@@ -23,14 +23,14 @@ response_message_list: list[dict] = [
     code_success,
     code_error,
     code_unauthorized,
-    code_does_not_exist,
+    code_conflict,
     code_invalid_input,
 ]
 
 small_response_message_list: list[dict] = [
     code_success,
     code_unauthorized,
-    code_does_not_exist,
+    code_conflict,
 ]
 
 authorization_parameter = [{

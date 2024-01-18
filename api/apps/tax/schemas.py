@@ -1,7 +1,7 @@
 """Schemas for tax apps."""
 from api.constants import (
     authorization_parameter,
-    code_does_not_exist,
+    code_conflict,
     code_unauthorized,
     response_message_list,
     small_response_message_list,
@@ -74,7 +74,7 @@ tax_invoice_delete_schema = {
     "responseMessages": [
         {"code": 200, "message": "Deleted instance with id."},
         code_unauthorized,
-        code_does_not_exist,
+        code_conflict,
     ],
 }
 
@@ -187,7 +187,7 @@ tax_invoice_product_delete_schema = {
     "responseMessages": [
         {"code": 200, "message": "Deleted instance with id."},
         code_unauthorized,
-        code_does_not_exist,
+        code_conflict,
     ],
 }
 

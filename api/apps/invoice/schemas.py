@@ -1,7 +1,7 @@
 """Schemas for invoice apps."""
 from api.constants import (
     authorization_parameter,
-    code_does_not_exist,
+    code_conflict,
     code_error,
     code_success,
     code_unauthorized,
@@ -76,7 +76,7 @@ invoice_delete_schema = {
     "responseMessages": [
         {"code": 200, "message": "Deleted instance with id."},
         code_unauthorized,
-        code_does_not_exist,
+        code_conflict,
     ],
 }
 
@@ -187,7 +187,7 @@ invoice_product_delete_schema = {
     "responseMessages": [
         {"code": 200, "message": "Deleted instance with id."},
         code_unauthorized,
-        code_does_not_exist,
+        code_conflict,
     ],
 }
 

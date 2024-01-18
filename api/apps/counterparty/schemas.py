@@ -1,7 +1,7 @@
 """Schemas for counterparty apps."""
 from api.constants import (
     authorization_parameter,
-    code_does_not_exist,
+    code_conflict,
     code_unauthorized,
     response_message_list,
     small_response_message_list,
@@ -61,7 +61,7 @@ discount_delete_schema = {
     "responseMessages": [
         {"code": 200, "message": "Deleted instance with id."},
         code_unauthorized,
-        code_does_not_exist,
+        code_conflict,
     ],
 }
 
@@ -172,7 +172,7 @@ counterparty_delete_schema = {
     "responseMessages": [
         {"code": 200, "message": "Deleted instance with id."},
         code_unauthorized,
-        code_does_not_exist,
+        code_conflict,
     ],
 }
 
@@ -270,7 +270,7 @@ agreement_delete_schema = {
     "responseMessages": [
         {"code": 200, "message": "Deleted instance with id."},
         code_unauthorized,
-        code_does_not_exist,
+        code_conflict,
     ],
 }
 

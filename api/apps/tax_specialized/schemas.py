@@ -4,7 +4,7 @@ from api.apps.purchase_specialized.schemas import (
 )
 from api.constants import (
     authorization_parameter,
-    code_does_not_exist,
+    code_conflict,
     code_error,
     code_success,
     code_unauthorized,
@@ -122,7 +122,7 @@ tax_inv_prod_with_add_prod_left_del_schema = {
     "responseMessages": [
         {"code": 200, "message": "Deleted instance with id."},
         code_unauthorized,
-        code_does_not_exist,
+        code_conflict,
     ],
 }
 
@@ -135,6 +135,6 @@ tax_inv_with_purch_add_prod_left_del_schema = {
     "responseMessages": [
         {"code": 200, "message": "Deleted instance with id."},
         code_unauthorized,
-        code_does_not_exist,
+        code_conflict,
     ],
 }
