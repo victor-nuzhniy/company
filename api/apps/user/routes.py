@@ -4,7 +4,8 @@ import typing
 from flask.typing import ResponseReturnValue
 from flask_restful_swagger import swagger
 
-from api import User, api
+from api import api
+from api.apps.user import models
 from api.apps.user.parsers import user_parser, user_patch_parser
 from api.apps.user.schemas import (
     user_delete_schema,
@@ -21,7 +22,7 @@ from api.model_routes import ModelRoute, ModelsRoute, token_required
 class UserRoute(ModelRoute):
     """Operations with single User isntance."""
 
-    model = User
+    model = models.User
     put_parser = user_parser
     patch_parser = user_patch_parser
     model_fields = UserFields.resource_fields
@@ -54,7 +55,7 @@ class UserRoute(ModelRoute):
 class UsersRoute(ModelsRoute):
     """Operations with many User isntances and instance creation."""
 
-    model = User
+    model = models.User
     post_parser = user_parser
     model_fields = UserFields.resource_fields
 
