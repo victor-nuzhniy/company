@@ -6,7 +6,7 @@ from flask_restful import Resource, marshal
 from flask_restful_swagger import swagger
 from sqlalchemy import Row
 
-from api.app import api
+from api import api
 from api.apps.common.account.account_utilities import get_last_string_digits_number
 from api.apps.common.special.schemas import name_number_schema
 from api.apps.common.special.services import get_last_name

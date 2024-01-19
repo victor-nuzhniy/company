@@ -5,8 +5,7 @@ from flask.typing import ResponseReturnValue
 from flask_restful import Resource, marshal
 from flask_restful_swagger import swagger
 
-from api import Order, User
-from api.app import api
+from api import Order, User, api
 from api.apps.counterparty.base.validators import counterparty_id_valid
 from api.apps.invoice.base.validators import order_id_valid
 from api.apps.order.base.swagger_models import OrderFields

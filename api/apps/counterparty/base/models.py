@@ -1,5 +1,5 @@
 """Counterparty base apps models."""
-from api.app import db
+from api import db
 
 
 class Discount(db.Model):  # type: ignore

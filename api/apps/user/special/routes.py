@@ -5,8 +5,7 @@ from flask.typing import ResponseReturnValue
 from flask_restful import Resource, marshal_with
 from flask_restful_swagger import swagger
 
-from api import User
-from api.app import api
+from api import User, api
 from api.apps.user.base.parsers import user_admin_patch_parser
 from api.apps.user.base.swagger_models import UserFields
 from api.apps.user.special.schemas import user_admin_schema

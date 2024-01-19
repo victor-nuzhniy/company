@@ -16,8 +16,8 @@ from api import (
     SaleInvoiceProduct,
     TaxInvoice,
     TaxInvoiceProduct,
+    db,
 )
-from api.app import db
 from api.common.constants import EARLIEST_DATE, LATEST_DATE
 
 

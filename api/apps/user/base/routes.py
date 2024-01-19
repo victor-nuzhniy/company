@@ -4,8 +4,7 @@ import typing
 from flask.typing import ResponseReturnValue
 from flask_restful_swagger import swagger
 
-from api import User
-from api.app import api
+from api import User, api
 from api.apps.user.base.parsers import user_parser, user_patch_parser
 from api.apps.user.base.schemas import (
     user_delete_schema,

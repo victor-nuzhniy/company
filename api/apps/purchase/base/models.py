@@ -1,7 +1,7 @@
 """Models for purchase base apps."""
 from sqlalchemy import func
 
-from api.app import db
+from api import db
 
 
 class PurchaseInvoice(db.Model):  # type: ignore

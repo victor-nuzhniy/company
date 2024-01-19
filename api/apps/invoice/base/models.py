@@ -1,7 +1,7 @@
 """Models for invoice base apps."""
 from sqlalchemy import func
 
-from api.app import db
+from api import db
 
 
 class Invoice(db.Model):  # type: ignore

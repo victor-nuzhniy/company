@@ -1,6 +1,6 @@
 """Product base apps models."""
 
-from api.app import db
+from api import db
 
 
 class ProductType(db.Model):  # type: ignore

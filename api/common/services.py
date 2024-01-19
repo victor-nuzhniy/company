@@ -14,7 +14,7 @@ from sqlalchemy import (
 )
 from sqlalchemy.sql.dml import ReturningInsert
 
-from api.app import db
+from api import db
 from api.common.api_types import ModelType
 
 

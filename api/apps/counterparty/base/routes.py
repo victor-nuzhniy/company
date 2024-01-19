@@ -4,7 +4,7 @@ import typing
 from flask.typing import ResponseReturnValue
 from flask_restful_swagger import swagger
 
-from api.app import api
+from api import api
 from api.apps.counterparty.base import models
 from api.apps.counterparty.base.parsers import (
     agreement_parser,

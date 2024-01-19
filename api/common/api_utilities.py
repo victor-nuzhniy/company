@@ -3,8 +3,8 @@ from typing import Dict, List, Optional
 
 from flask import abort
 
-from api.common.services import db_utils
 from api.common.api_types import ModelType
+from api.common.services import db_utils
 
 
 def get_model_unique_fields_name(model: ModelType) -> List:

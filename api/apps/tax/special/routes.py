@@ -5,7 +5,7 @@ from flask.typing import ResponseReturnValue
 from flask_restful import Resource, marshal
 from flask_restful_swagger import swagger
 
-from api.app import api
+from api import api
 from api.apps.purchase.special.parsers import purchase_registry_parser
 from api.apps.tax.base import parsers, swagger_models
 from api.apps.tax.base.validators import (

@@ -1,7 +1,7 @@
 """Models for order base apps."""
 from sqlalchemy import func
 
-from api.app import db
+from api import db
 
 
 class Order(db.Model):  # type: ignore

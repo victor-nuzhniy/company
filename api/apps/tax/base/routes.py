@@ -4,8 +4,7 @@ import typing
 from flask.typing import ResponseReturnValue
 from flask_restful_swagger import swagger
 
-from api import TaxInvoice, TaxInvoiceProduct
-from api.app import api
+from api import TaxInvoice, TaxInvoiceProduct, api
 from api.apps.tax.base.parsers import (
     tax_invoice_patch_parser,
     tax_invoice_post_parser,

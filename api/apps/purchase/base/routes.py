@@ -4,8 +4,7 @@ import typing
 from flask.typing import ResponseReturnValue
 from flask_restful_swagger import swagger
 
-from api import PurchaseInvoice, PurchaseInvoiceProduct
-from api.app import api
+from api import PurchaseInvoice, PurchaseInvoiceProduct, api
 from api.apps.purchase.base.parsers import (
     purchase_invoice_patch_parser,
     purchase_invoice_post_parser,

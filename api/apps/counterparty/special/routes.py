@@ -5,7 +5,7 @@ from flask.typing import ResponseReturnValue
 from flask_restful import Resource, marshal
 from flask_restful_swagger import swagger
 
-from api.app import api
+from api import api
 from api.apps.counterparty.base import models
 from api.apps.counterparty.base.swagger_models import AgreementFields
 from api.apps.counterparty.base.validators import counterparty_id_valid

@@ -3,7 +3,7 @@ from flask.typing import ResponseReturnValue
 from flask_restful import Resource, marshal
 from flask_restful_swagger import swagger
 
-from api.app import api
+from api import api
 from api.apps.common.auth.auth_utilities import get_auth_response
 from api.apps.common.auth.parsers import admin_parser
 from api.apps.common.auth.schemas import admin_schema, login_schema

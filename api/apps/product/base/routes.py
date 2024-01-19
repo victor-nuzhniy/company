@@ -4,8 +4,7 @@ import typing
 from flask.typing import ResponseReturnValue
 from flask_restful_swagger import swagger
 
-from api import Product, ProductType
-from api.app import api
+from api import Product, ProductType, api
 from api.apps.product.base.parsers import (
     product_parser,
     product_patch_parser,

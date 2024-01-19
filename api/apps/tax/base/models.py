@@ -1,7 +1,7 @@
 """Models for tax base apps."""
 from sqlalchemy import func
 
-from api.app import db
+from api import db
 
 
 class TaxInvoice(db.Model):  # type: ignore

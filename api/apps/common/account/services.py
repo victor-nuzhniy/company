@@ -5,7 +5,7 @@ from flask import abort
 from flask.typing import ResponseReturnValue
 from sqlalchemy import and_, func
 
-from api.app import db
+from api import db
 from api.apps.product.base import models as product_models
 from api.apps.purchase.base import models as purchase_models
 from api.apps.sale.base import models as sale_models

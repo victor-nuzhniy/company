@@ -9,10 +9,10 @@ from flask_restful.reqparse import RequestParser
 from sqlalchemy import Row
 
 from api import User
+from api.common.api_types import ModelType
 from api.common.api_utilities import check_unique
 from api.common.constants import server_error
 from api.common.services import abort_methods, crud
-from api.common.api_types import ModelType
 
 
 class TokenFunctionality(object):
