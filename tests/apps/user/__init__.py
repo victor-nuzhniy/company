@@ -1,1 +1,1 @@
-"""Init module for user package in apps tests."""
+"""Init module for base package in apps tests."""

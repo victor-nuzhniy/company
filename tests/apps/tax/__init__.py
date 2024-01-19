@@ -1,1 +1,1 @@
-"""Init module for testing tax package."""
+"""Init module for testing base package."""

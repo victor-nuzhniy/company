@@ -1,1 +1,1 @@
-"""Init module for counterparty package."""
+"""Init module for base package."""

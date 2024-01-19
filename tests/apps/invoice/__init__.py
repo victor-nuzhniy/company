@@ -1,1 +1,1 @@
-"""Init module for invoice package."""
+"""Init module for base package."""

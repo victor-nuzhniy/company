@@ -1,1 +1,1 @@
-"""Init module for testing sale apps."""
+"""Init module for testing base apps."""
