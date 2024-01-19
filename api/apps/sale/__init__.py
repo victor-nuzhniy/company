@@ -1,1 +1,1 @@
-"""Init module for sale apps."""
+"""Init module for sale package."""
