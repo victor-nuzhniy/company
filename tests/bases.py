@@ -4,7 +4,7 @@ from typing import Type
 
 import factory
 
-from api import db
+from api.common.api_types import ModelType
 
 
 class BaseModelFactory(factory.alchemy.SQLAlchemyModelFactory):
@@ -16,14 +16,17 @@ class BaseModelFactory(factory.alchemy.SQLAlchemyModelFactory):
         abstract = True
         sqlalchemy_session_persistence = "commit"
 
-    @staticmethod
-    def check_factory(factory_class: Type["BaseModelFactory"], model: db.Model) -> None:
+    def check_factory(
+        self,
+        factory_class: Type["BaseModelFactory"],
+        model: ModelType,
+    ) -> None:
         """Test, that factory creates successfully."""
-        obj = factory_class()
+        instance = factory_class()
         size = random.randint(2, 3)
-        objs = factory_class.create_batch(size=size)
+        instances = factory_class.create_batch(size=size)
 
-        assert isinstance(obj, model)
-        assert size == len(objs)
-        for i in objs:
-            assert isinstance(i, model)
+        assert isinstance(instance, model)
+        assert size == len(instances)
+        for index in instances:
+            assert isinstance(index, model)
