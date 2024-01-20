@@ -22,7 +22,7 @@ class AccountQueries(object):
         invoice_products: Sequence,
     ) -> Sequence:
         """Get base products list by products ids."""
-        products_ids: list[int] = [elem.product_id_valid for elem in invoice_products]
+        products_ids: list[int] = [elem.product_id for elem in invoice_products]
         joinload = db.joinedload(product_models.Product.purchase_invoice_products)
         return (
             product_models.Product.query.options(joinload)
@@ -174,7 +174,7 @@ def prepare_tax_invoice_products(  # noqa WPS210
     tax_products: list = []
     for product in invoice_products:
         purchase_products = purchase_products_dict[
-            product.product_id_valid
+            product.product_id
         ].purchase_invoice_products
         quantity: int = product.quantity
         for purchase_product in purchase_products:
@@ -197,7 +197,7 @@ def prepare_tax_invoice_products(  # noqa WPS210
             abort(
                 409,
                 "{name} not enough to process base with id {id}".format(
-                    name=purchase_products_dict[product.product_id_valid].name,
+                    name=purchase_products_dict[product.product_id].name,
                     id=invoice_id,
                 ),
             )
