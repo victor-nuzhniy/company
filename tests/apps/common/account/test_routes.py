@@ -11,9 +11,9 @@ from tests.apps.common.account.testing_utilities import (
     get_purchase_products,
     get_tax_products,
 )
-from tests.apps.product.factories import ProductFactory
-from tests.apps.purchase.factories import PurchaseInvoiceProductFactory
-from tests.apps.sale.factories import SaleInvoiceFactory, SaleInvoiceProductFactory
+from tests.apps.product.base.factories import ProductFactory
+from tests.apps.purchase.base.factories import PurchaseInvoiceProductFactory
+from tests.apps.sale.base.factories import SaleInvoiceFactory, SaleInvoiceProductFactory
 from tests.testing_utilities import InstanceWithClient
 
 
