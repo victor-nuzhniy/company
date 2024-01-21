@@ -15,11 +15,11 @@ class TestAgreement:
         """Test Agreement model instance creation."""
         BaseModelFactory.check_factory(factory_class=AgreementFactory, model=Agreement)
 
-    def test__repr__(self) -> None:
+    def test_repr(self) -> None:
         """Test Agreement __repr__ method."""
-        obj: Agreement = AgreementFactory()
-        expected_result: str = str(obj.name)
-        assert expected_result == obj.__repr__()
+        instance: Agreement = AgreementFactory()
+        expected_result: str = str(instance.name)
+        assert expected_result == instance.__repr__()  # noqa: WPS609
 
 
 class TestCounterparty:
@@ -28,14 +28,15 @@ class TestCounterparty:
     def test_factory(self) -> None:
         """Test Agreement model instance creation."""
         BaseModelFactory.check_factory(
-            factory_class=CounterpartyFactory, model=Counterparty
+            factory_class=CounterpartyFactory,
+            model=Counterparty,
         )
 
-    def test__repr__(self) -> None:
+    def test_repr(self) -> None:
         """Test Agreement __repr__ method."""
-        obj: Counterparty = CounterpartyFactory()
-        expected_result: str = str(obj.name)
-        assert expected_result == obj.__repr__()
+        instance: Counterparty = CounterpartyFactory()
+        expected_result: str = str(instance.name)
+        assert expected_result == instance.__repr__()  # noqa: WPS609
 
 
 class TestDiscount:
@@ -45,8 +46,8 @@ class TestDiscount:
         """Test Agreement model instance creation."""
         BaseModelFactory.check_factory(factory_class=DiscountFactory, model=Discount)
 
-    def test__repr__(self) -> None:
+    def test_repr(self) -> None:
         """Test Agreement __repr__ method."""
-        obj: Discount = DiscountFactory()
-        expected_result: str = str(obj.name)
-        assert expected_result == obj.__repr__()
+        instance: Discount = DiscountFactory()
+        expected_result: str = str(instance.name)
+        assert expected_result == instance.__repr__()  # noqa: WPS609

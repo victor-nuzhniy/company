@@ -7,15 +7,15 @@ from faker import Faker
 from flask import url_for
 
 from api import Agreement, Counterparty, Discount
-from tests.apps.counterparty.base.testing_utilities import (
-    create_agreement_data,
-    create_counterparty_data,
-    create_discount_data,
-)
 from tests.apps.counterparty.base.factories import (
     AgreementFactory,
     CounterpartyFactory,
     DiscountFactory,
+)
+from tests.apps.counterparty.base.testing_utilities import (
+    create_agreement_data,
+    create_counterparty_data,
+    create_discount_data,
 )
 from tests.testing_classes import SampleTestRoute
 
@@ -51,11 +51,15 @@ class TestPutDiscountRoute:
             headers=auth_header,
             data=json.dumps(expected_data),
         )
-        result = response.get_json()
+        response_result = response.get_json()
         assert response.status_code == 400
-        assert result.get("message") == {
-            "rate": f"Invalid argument: {expected_data.get('rate')}. "
-            f"argument must be within the range 0 - 100"
+        assert response_result.get("message") == {
+            "rate": "".join(
+                (
+                    "Invalid argument: {rate}. ".format(rate=expected_data.get("rate")),
+                    "argument must be within the range 0 - 100",
+                ),
+            ),
         }
 
     def test_put_route_without_rate(self, faker: Faker, auth_header: Dict) -> None:
@@ -69,11 +73,15 @@ class TestPutDiscountRoute:
             headers=auth_header,
             data=json.dumps(expected_data),
         )
-        result = response.get_json()
+        response_result = response.get_json()
         assert response.status_code == 400
-        assert result.get("message") == {
-            "rate": "Missing required parameter in the JSON "
-            "body or the post body or the query string"
+        assert response_result.get("message") == {
+            "rate": "".join(
+                (
+                    "Missing required parameter in the JSON ",
+                    "body or the post body or the query string",
+                ),
+            ),
         }
 
     def test_put_route_same_name(self, faker: Faker, auth_header: Dict) -> None:
@@ -89,11 +97,12 @@ class TestPutDiscountRoute:
             headers=auth_header,
             data=json.dumps(expected_data),
         )
-        result = response.get_json()
+        response_result = response.get_json()
         assert response.status_code == 409
-        assert (
-            result.get("message")
-            == f"Field name already has {another_discount.name} value in discount table"
+        assert response_result.get(
+            "message",
+        ) == "Field name already has {name} value in discount table".format(
+            name=another_discount.name,
         )
 
     def test_put_route_long_name(self, faker: Faker, auth_header: Dict) -> None:
@@ -108,11 +117,17 @@ class TestPutDiscountRoute:
             headers=auth_header,
             data=json.dumps(expected_data),
         )
-        result = response.get_json()
+        response_result = response.get_json()
         assert response.status_code == 400
-        assert result.get("message") == {
-            "name": f"{expected_data.get('name')} length should be lower"
-            f" than 30 character."
+        assert response_result.get("message") == {
+            "name": "".join(
+                (
+                    "{name} length should be lower".format(
+                        name=expected_data.get("name"),
+                    ),
+                    " than 30 character.",
+                ),
+            ),
         }
 
 

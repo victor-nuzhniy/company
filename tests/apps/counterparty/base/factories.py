@@ -8,7 +8,7 @@ from tests.bases import BaseModelFactory
 class DiscountFactory(BaseModelFactory):
     """Factory for testing Discount model."""
 
-    id = factory.Sequence(lambda x: x)
+    id = factory.Sequence(lambda arg: arg)
     name = factory.Faker("pystr", min_chars=1, max_chars=30)
     rate = factory.Faker("random_int", min=0, max=100)
     counterparties = factory.RelatedFactoryList(
@@ -32,7 +32,7 @@ class DiscountFactory(BaseModelFactory):
 class CounterpartyFactory(BaseModelFactory):
     """Factory for Counterparty model."""
 
-    id = factory.Sequence(lambda x: x)
+    id = factory.Sequence(lambda arg: arg)
     name = factory.Faker("pystr", min_chars=1, max_chars=150)
     postal_code = factory.Faker("postcode")
     country = factory.Faker("country")
@@ -73,7 +73,7 @@ class CounterpartyFactory(BaseModelFactory):
 class AgreementFactory(BaseModelFactory):
     """Factory for Agreement model."""
 
-    id = factory.Sequence(lambda x: x)
+    id = factory.Sequence(lambda arg: arg)
     name = factory.Faker("pystr", min_chars=1, max_chars=200)
     counterparty = factory.SubFactory(CounterpartyFactory)
     counterparty_id = factory.SelfAttribute(attribute_name="counterparty.id")
