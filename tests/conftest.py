@@ -28,7 +28,6 @@ from api.apps.tax.base import routes as tax_base_routes
 from api.apps.tax.special import routes as tax_special_routes
 from api.apps.user.base import routes as user_base_routes
 from api.apps.user.special import routes as user_special_routes
-from api.common.api_types import ModelType
 from api.common.services import crud
 from tests.apps.counterparty.factories import (
     AgreementFactory,
@@ -243,7 +242,7 @@ def app() -> typing.Generator[Flask, None, None]:  # noqa WPS213
 
 
 @pytest.fixture(scope="session")
-def admin_user() -> User:
+def admin() -> User:
     """Create admin base."""
     return crud.create(
         User,
@@ -258,11 +257,11 @@ def admin_user() -> User:
 
 
 @pytest.fixture(scope="session")
-def auth_header(admin: User, application: Flask) -> dict:
+def auth_header(admin: User, app: Flask) -> dict:  # noqa: WPS442
     """Get admin base authorization token."""
     token = jwt.encode(
         {"user_id": admin.id},
-        application.config["SECRET_KEY"],
+        app.config["SECRET_KEY"],
         algorithm="HS256",
     )
     return {
@@ -296,34 +295,3 @@ def set_session_for_factories() -> None:
     for factory_class in known_factories:
         # Set up session to factory
         factory_class._meta.sqlalchemy_session = db.session  # noqa WPS347
-
-
-def check_instance_expected_data(
-    response: typing.Any,
-    expected_data: dict | ModelType,
-) -> None:
-    """
-    Check response status whether it's 200.
-
-    Compare instance data with expected.
-    """
-    result_response = response.get_json()
-    assert response.status_code == 200
-    if isinstance(expected_data, typing.Dict):
-        for key, elem in expected_data.items():
-            if key in result_response:
-                assert result_response[key] == elem
-    else:
-        for ky, el in result_response.items():
-            if ky == "created_at":
-                assert getattr(expected_data, ky).strftime("%Y-%m-%dT%H:%M:%S") == el
-            else:
-                assert getattr(expected_data, ky) == el
-
-
-def delete_random_dict_key(data_dict: dict) -> dict:
-    """Delete random dict key."""
-    if len(data_dict) > 1:
-        key = random.choice(list(data_dict.keys()))
-        data_dict.pop(key)
-    return data_dict
