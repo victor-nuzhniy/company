@@ -66,7 +66,7 @@ def faker_seed() -> None:
 
 
 @pytest.fixture(scope="session", autouse=True)
-def app() -> FixtureFunc[Flask]:  # noqa WPS213
+def app() -> typing.Generator[Flask, None, None]:  # noqa WPS213
     """Override dependencies for Flask and return flask instance."""
     application = Flask(__name__)
     application.config["SECRET_KEY"] = os.getenv("SECRET_KEY")
