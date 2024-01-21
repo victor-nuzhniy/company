@@ -21,7 +21,9 @@ from tests.testing_utilities import InstanceWithClient
 class TestProcessSaleInvoiceRoute:
     """Class for testing ProcessSaleInvoiceRoute."""
 
-    def test_post_route(self: InstanceWithClient, auth_header: Dict, faker: Faker) -> None:  # noqa: WPS218
+    def test_post_route(  # noqa: WPS218
+        self: InstanceWithClient, auth_header: Dict, faker: Faker,
+    ) -> None:
         """Test ProcessSaleInvoiceRoute post route."""
         products: List[Product] = ProductFactory.create_batch(size=5)
         sale_invoice: SaleInvoice = SaleInvoiceFactory(done=False)
@@ -66,7 +68,9 @@ class TestProcessSaleInvoiceRoute:
         assert response.status_code == 200
         assert response_result.get("message") == "Operation successfully performed"
 
-    def test_post_route_sale_invoice_done(self: InstanceWithClient, auth_header: dict[str, str]) -> None:
+    def test_post_route_sale_invoice_done(
+        self: InstanceWithClient, auth_header: dict[str, str],
+    ) -> None:
         """Test ProcessSaleInvoiceRoute post method, sale_invoice is done."""
         sale_invoice: SaleInvoice = SaleInvoiceFactory(done=True)
         response = self.client.post(
