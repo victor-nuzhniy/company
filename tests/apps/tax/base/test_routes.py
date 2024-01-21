@@ -4,7 +4,7 @@ from typing import Dict
 from faker import Faker
 
 from api import TaxInvoice, TaxInvoiceProduct
-from tests.apps.tax.base.testing_utilites import (
+from tests.apps.tax.base.testing_utilities import (
     create_tax_invoice_data,
     create_tax_invoice_product_data,
     create_tax_invoice_put_data,
