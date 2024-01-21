@@ -16,8 +16,8 @@ class BaseModelFactory(factory.alchemy.SQLAlchemyModelFactory):
         abstract = True
         sqlalchemy_session_persistence = "commit"
 
-    def check_factory(
-        self,
+    @staticmethod
+    def check_factory(  # noqa WPS602
         factory_class: Type["BaseModelFactory"],
         model: ModelType,
     ) -> None:
