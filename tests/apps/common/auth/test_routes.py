@@ -9,8 +9,11 @@ from faker import Faker
 from flask import Flask, url_for
 
 from api import User
-from tests.apps.user.base.testing_utilities import create_user_data, create_user_put_data
-from tests.conftest import check_instance_expected_data
+from tests.apps.user.base.testing_utilities import (
+    create_user_data,
+    create_user_put_data,
+)
+from tests.testing_utilities import checkers
 
 
 @pytest.mark.usefixtures("client_class")
@@ -21,19 +24,19 @@ class TestAdminRoute:
     def test_post_route(self, get_mock: MagicMock, faker: Faker) -> None:
         """Test AdminRoute post method."""
         expected_data: Dict = create_user_data(faker)
-        expected_data["admin_password"] = "111"
+        expected_data["admin_password"] = "Emilia231"   # noqa: S105
         get_mock.return_value = expected_data
         response = self.client.post(
             url_for("adminroute"),
             headers={"Content-Type": "application/json"},
             data=json.dumps(expected_data),
         )
-        check_instance_expected_data(response, expected_data)
+        checkers.check_instance_expected_data(response, expected_data)
 
     def test_post_route_invalid_admin_password(self, faker: Faker) -> None:
         """Test AdminRoute post method."""
         expected_data: Dict = create_user_data(faker)
-        expected_data["admin_password"] = "111"
+        expected_data["admin_password"] = "Emilia231"   # noqa: S105
         response = self.client.post(
             url_for("adminroute"),
             headers={"Content-Type": "application/json"},
@@ -41,7 +44,7 @@ class TestAdminRoute:
         )
         assert response.status_code == 400
         assert response.get_json().get("message") == {
-            "admin_password": "Access denied. Value is invalid."
+            "admin_password": "Access denied. Value is invalid.",
         }
 
 
@@ -64,12 +67,12 @@ class TestLoginRoute:
                 {
                     "email": expected_data.get("email"),
                     "password": expected_data.get("password"),
-                }
+                },
             ),
         )
-        result = response.get_json()
+        response_result = response.get_json()
         assert response.status_code == 200
-        assert result.get("message") == "Successfully fetched auth token"
-        assert result.get("data") == jwt.encode(
-            {"user_id": user.get("id")}, app.config["SECRET_KEY"], algorithm="HS256"
+        assert response_result.get("message") == "Successfully fetched auth token"
+        assert response_result.get("data") == jwt.encode(
+            {"user_id": user.get("id")}, app.config["SECRET_KEY"], algorithm="HS256",
         )

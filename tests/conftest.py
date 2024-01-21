@@ -249,7 +249,7 @@ def admin() -> User:
         {
             "username": "administrator",
             "email": "elegance@abc.com",
-            "password": encrypt_password("11111"),
+            "password": encrypt_password("Emilia231"),
             "is_admin": True,
             "is_active": True,
         },
