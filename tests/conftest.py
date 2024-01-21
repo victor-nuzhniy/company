@@ -47,6 +47,17 @@ from tests.apps.tax.factories import TaxInvoiceFactory, TaxInvoiceProductFactory
 from tests.apps.user.factories import UserFactory
 from tests.bases import BaseModelFactory
 
+FixtureValue = typing.TypeVar("FixtureValue")
+
+# The type of the fixture function (type variable).
+FixtureFunction = typing.TypeVar("FixtureFunction", bound=typing.Callable[..., object])
+
+# The type of a fixture function (type alias generic in fixture value).
+FixtureFunc = typing.Union[
+    typing.Callable[..., FixtureValue],
+    typing.Callable[..., typing.Generator[FixtureValue, None, None]],
+]
+
 
 @pytest.fixture(scope="function", autouse=True)
 def faker_seed() -> None:
@@ -55,7 +66,7 @@ def faker_seed() -> None:
 
 
 @pytest.fixture(scope="session", autouse=True)
-def app() -> _FixtureFunc[Flask]:  # noqa WPS213
+def app() -> FixtureFunc[Flask]:  # noqa WPS213
     """Override dependencies for Flask and return flask instance."""
     application = Flask(__name__)
     application.config["SECRET_KEY"] = os.getenv("SECRET_KEY")
