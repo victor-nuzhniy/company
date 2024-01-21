@@ -29,21 +29,21 @@ from api.apps.tax.special import routes as tax_special_routes
 from api.apps.user.base import routes as user_base_routes
 from api.apps.user.special import routes as user_special_routes
 from api.common.services import crud
-from tests.apps.counterparty.factories import (
+from tests.apps.counterparty.base.factories import (
     AgreementFactory,
     CounterpartyFactory,
     DiscountFactory,
 )
-from tests.apps.invoice.factories import InvoiceFactory, InvoiceProductFactory
-from tests.apps.order.factories import OrderFactory, OrderProductFactory
-from tests.apps.product.factories import ProductFactory, ProductTypeFactory
-from tests.apps.purchase.factories import (
+from tests.apps.invoice.base.factories import InvoiceFactory, InvoiceProductFactory
+from tests.apps.order.base.factories import OrderFactory, OrderProductFactory
+from tests.apps.product.base.factories import ProductFactory, ProductTypeFactory
+from tests.apps.purchase.base.factories import (
     PurchaseInvoiceFactory,
     PurchaseInvoiceProductFactory,
 )
-from tests.apps.sale.factories import SaleInvoiceFactory, SaleInvoiceProductFactory
-from tests.apps.tax.factories import TaxInvoiceFactory, TaxInvoiceProductFactory
-from tests.apps.user.factories import UserFactory
+from tests.apps.sale.base.factories import SaleInvoiceFactory, SaleInvoiceProductFactory
+from tests.apps.tax.base.factories import TaxInvoiceFactory, TaxInvoiceProductFactory
+from tests.apps.user.base.factories import UserFactory
 from tests.bases import BaseModelFactory
 
 FixtureValue = typing.TypeVar("FixtureValue")
