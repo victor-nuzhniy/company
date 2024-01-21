@@ -2,6 +2,8 @@
 import random
 import typing
 
+from flask.testing import FlaskClient
+
 from api.common.api_types import ModelType
 
 
@@ -56,3 +58,11 @@ def delete_random_dict_key(data_dict: dict) -> dict:
         key = random.choice(list(data_dict.keys()))
         data_dict.pop(key)
     return data_dict
+
+
+class InstanceWithClient(typing.Protocol):
+    """Class with given attributes."""
+
+    @property
+    def client(self) -> FlaskClient:
+        """Get Flask client."""
