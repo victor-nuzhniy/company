@@ -24,7 +24,7 @@ def create_sale_invoice_put_data(faker: Faker) -> Dict:
     return {
         "name": faker.pystr(min_chars=1, max_chars=100),
         "invoice_id": invoice.id,
-        "created_at": faker.date_time().strftime("%Y-%m-%dT%H:%M:%S"),
+        "created_at": faker.date_time().strftime("%Y-%m-%d %H:%M:%S"),
         "done": faker.pybool(),
     }
 

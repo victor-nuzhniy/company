@@ -28,7 +28,7 @@ def create_order_put_data(faker: Faker) -> Dict:
     return {
         "user_id": user.id,
         "name": faker.user_name(),
-        "created_at": faker.date_time().strftime("%Y-%m-%dT%H:%M:%S"),
+        "created_at": faker.date_time().strftime("%Y-%m-%d %H:%M:%S"),
         "customer_id": counterparty.id,
     }
 
