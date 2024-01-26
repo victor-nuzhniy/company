@@ -4,12 +4,12 @@ from typing import Dict
 from faker import Faker
 
 from api import Invoice, InvoiceProduct
+from tests.apps.invoice.base.factories import InvoiceFactory, InvoiceProductFactory
 from tests.apps.invoice.base.testing_utilities import (
     create_invoice_data,
     create_invoice_product_data,
     create_invoice_put_data,
 )
-from tests.apps.invoice.base.factories import InvoiceFactory, InvoiceProductFactory
 from tests.testing_classes import SampleTestRoute
 
 
