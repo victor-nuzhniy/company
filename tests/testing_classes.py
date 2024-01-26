@@ -64,7 +64,7 @@ class SampleTestRoute:  # noqa WPS214
         assert response.status_code == 404
         assert response_result.get(
             "message",
-        ) == "{name} with data ['id: {id}'] doesn't exist".format(
+        ) == "{name} with dataid: {id} doesn't exist".format(
             name=self.model.__name__,  # type: ignore
             id=instance_id,
         )
@@ -136,12 +136,12 @@ class SampleTestRoute:  # noqa WPS214
         )
         checkers.check_instance_expected_data(response, expected_data)
 
-    def test_get_many_route(self, auth_header: dict, admin_user: User) -> None:
+    def test_get_many_route(self, auth_header: dict, admin: User) -> None:
         """Test get route. Model list expected."""
         if self.factory and self.model:
             instances: list[ModelType | Any] = self.factory.create_batch(size=5)
             if self.model == User:
-                instances = [admin_user] + instances
+                instances = [admin] + instances
             response = self.client.get(
                 url_for("{name}sroute".format(name=self.model.__name__.lower())),
                 headers=auth_header,
