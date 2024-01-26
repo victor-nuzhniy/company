@@ -10,14 +10,15 @@ class TestSaleInvoice:
     def test_factory(self) -> None:
         """Test SaleInvoice model instance creation."""
         BaseModelFactory.check_factory(
-            factory_class=SaleInvoiceFactory, model=SaleInvoice
+            factory_class=SaleInvoiceFactory,
+            model=SaleInvoice,
         )
 
-    def test__repr__(self) -> None:
+    def test_repr(self) -> None:
         """Test SaleInvoice __repr__ method."""
-        obj: SaleInvoice = SaleInvoiceFactory()
-        expected_result: str = str(obj.name)
-        assert expected_result == obj.__repr__()
+        instance: SaleInvoice = SaleInvoiceFactory()
+        expected_result: str = str(instance.name)
+        assert expected_result == str(instance)
 
 
 class TestSaleInvoiceProduct:
@@ -26,11 +27,14 @@ class TestSaleInvoiceProduct:
     def test_factory(self) -> None:
         """Test SaleInvoiceProduct model instance creation."""
         BaseModelFactory.check_factory(
-            factory_class=SaleInvoiceProductFactory, model=SaleInvoiceProduct
+            factory_class=SaleInvoiceProductFactory,
+            model=SaleInvoiceProduct,
         )
 
-    def test__repr__(self) -> None:
+    def test_repr(self) -> None:
         """Test SaleInvoiceProduct __repr__ method."""
-        obj: SaleInvoiceProduct = SaleInvoiceProductFactory()
-        expected_result: str = f"Sale_invoice product with id {obj.product_id}"
-        assert expected_result == obj.__repr__()
+        instance: SaleInvoiceProduct = SaleInvoiceProductFactory()
+        expected_result: str = "Sale_invoice product with id {id}".format(
+            id=instance.product_id,
+        )
+        assert expected_result == str(instance)

@@ -11,11 +11,11 @@ class TestOrder:
         """Test Order model instance creation."""
         BaseModelFactory.check_factory(factory_class=OrderFactory, model=Order)
 
-    def test__repr__(self) -> None:
+    def test_repr(self) -> None:
         """Test Order __repr__ method."""
-        obj: Order = OrderFactory()
-        expected_result: str = str(obj.name)
-        assert expected_result == obj.__repr__()
+        instance: Order = OrderFactory()
+        expected_result: str = str(instance.name)
+        assert expected_result == str(instance)
 
 
 class TestOrderProduct:
@@ -24,11 +24,14 @@ class TestOrderProduct:
     def test_factory(self) -> None:
         """Test OrderProduct model instance creation."""
         BaseModelFactory.check_factory(
-            factory_class=OrderProductFactory, model=OrderProduct
+            factory_class=OrderProductFactory,
+            model=OrderProduct,
         )
 
-    def test__repr__(self) -> None:
+    def test_repr(self) -> None:
         """Test OrderProduct __repr__ method."""
-        obj: OrderProduct = OrderProductFactory()
-        expected_result: str = f"Order product with id {obj.product_id}"
-        assert expected_result == obj.__repr__()
+        instance: OrderProduct = OrderProductFactory()
+        expected_result: str = "Order product with id {id}".format(
+            id=instance.product_id,
+        )
+        assert expected_result == str(instance)

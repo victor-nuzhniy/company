@@ -10,7 +10,7 @@ from tests.bases import BaseModelFactory
 class SaleInvoiceFactory(BaseModelFactory):
     """Factory for SaleInvoice model."""
 
-    id = factory.Sequence(lambda x: x)
+    id = factory.Sequence(lambda arg: arg)
     name = factory.Faker("pystr", min_chars=1, max_chars=100)
     invoice = factory.SubFactory(InvoiceFactory)
     invoice_id = factory.SelfAttribute(attribute_name="invoice.id")
@@ -48,7 +48,7 @@ class SaleInvoiceFactory(BaseModelFactory):
 class SaleInvoiceProductFactory(BaseModelFactory):
     """Factory for SaleInvoiceProduct model."""
 
-    id = factory.Sequence(lambda x: x)
+    id = factory.Sequence(lambda arg: arg)
     product = factory.SubFactory(ProductFactory)
     product_id = factory.SelfAttribute(attribute_name="product.id")
     quantity = factory.Faker("pyint")

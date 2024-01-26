@@ -11,7 +11,7 @@ from tests.bases import BaseModelFactory
 class OrderFactory(BaseModelFactory):
     """Factory for testing Order model."""
 
-    id = factory.Sequence(lambda x: x)
+    id = factory.Sequence(lambda arg: arg)
     user = factory.SubFactory(UserFactory)
     user_id = factory.SelfAttribute(attribute_name="user.id")
     name = factory.Faker("pystr", min_chars=1, max_chars=100)
@@ -62,7 +62,7 @@ class OrderFactory(BaseModelFactory):
 class OrderProductFactory(BaseModelFactory):
     """Factory for OrderProduct model."""
 
-    id = factory.Sequence(lambda x: x)
+    id = factory.Sequence(lambda arg: arg)
     product = factory.SubFactory(ProductFactory)
     product_id = factory.SelfAttribute(attribute_name="product.id")
     quantity = factory.Faker("pyint")

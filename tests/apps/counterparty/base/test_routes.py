@@ -1,6 +1,5 @@
 """Module for testing base routes."""
 import json
-from typing import Dict
 
 import pytest
 from faker import Faker
@@ -17,6 +16,7 @@ from tests.apps.counterparty.base.testing_utilities import (
     create_counterparty_data,
     create_discount_data,
 )
+from tests.bases import TestType
 from tests.testing_classes import SampleTestRoute
 
 
@@ -26,11 +26,11 @@ class TestDiscountRoute(SampleTestRoute):
     model = Discount
     factory = DiscountFactory
 
-    def get_fake_data(self, faker: Faker) -> Dict:
+    def get_fake_data(self, faker: Faker) -> dict:
         """Get Discount fake data dict."""
         return create_discount_data(faker)
 
-    def get_fake_put_data(self, faker: Faker) -> Dict:
+    def get_fake_put_data(self, faker: Faker) -> dict:
         """Get Discount fake data dict for put and patch methods."""
         return create_discount_data(faker)
 
@@ -39,10 +39,14 @@ class TestDiscountRoute(SampleTestRoute):
 class TestPutDiscountRoute:
     """Class for testing Discount put single instance route."""
 
-    def test_put_route_invalid_rate(self, faker: Faker, auth_header: Dict) -> None:
+    def test_put_route_invalid_rate(
+        self: TestType,
+        faker: Faker,
+        auth_header: dict,
+    ) -> None:
         """Test put route. Involid rate."""
         discount: Discount = DiscountFactory()
-        expected_data: Dict = {
+        expected_data: dict = {
             "name": faker.pystr(min_chars=4, max_chars=10),
             "rate": faker.random_int(min=101),
         }
@@ -62,10 +66,14 @@ class TestPutDiscountRoute:
             ),
         }
 
-    def test_put_route_without_rate(self, faker: Faker, auth_header: Dict) -> None:
+    def test_put_route_without_rate(
+        self: TestType,
+        faker: Faker,
+        auth_header: dict,
+    ) -> None:
         """Test put route. Without rate."""
         discount: Discount = DiscountFactory()
-        expected_data: Dict = {
+        expected_data: dict = {
             "name": faker.pystr(min_chars=4, max_chars=10),
         }
         response = self.client.put(
@@ -84,11 +92,15 @@ class TestPutDiscountRoute:
             ),
         }
 
-    def test_put_route_same_name(self, faker: Faker, auth_header: Dict) -> None:
+    def test_put_route_same_name(
+        self: TestType,
+        faker: Faker,
+        auth_header: dict,
+    ) -> None:
         """Test put route. Same name."""
         discount: Discount = DiscountFactory()
         another_discount: Discount = DiscountFactory()
-        expected_data: Dict = {
+        expected_data: dict = {
             "name": another_discount.name,
             "rate": faker.random_int(min=0, max=100),
         }
@@ -105,10 +117,14 @@ class TestPutDiscountRoute:
             name=another_discount.name,
         )
 
-    def test_put_route_long_name(self, faker: Faker, auth_header: Dict) -> None:
+    def test_put_route_long_name(
+        self: TestType,
+        faker: Faker,
+        auth_header: dict,
+    ) -> None:
         """Test put route. Long name field."""
         discount: Discount = DiscountFactory()
-        expected_data: Dict = {
+        expected_data: dict = {
             "name": faker.pystr(min_chars=31, max_chars=40),
             "rate": faker.random_int(min=0, max=100),
         }
@@ -137,11 +153,11 @@ class TestAgreementRoute(SampleTestRoute):
     model = Agreement
     factory = AgreementFactory
 
-    def get_fake_data(self, faker: Faker) -> Dict:
+    def get_fake_data(self, faker: Faker) -> dict:
         """Get Agreement fake data dict."""
         return create_agreement_data(faker)
 
-    def get_fake_put_data(self, faker: Faker) -> Dict:
+    def get_fake_put_data(self, faker: Faker) -> dict:
         """Get Agreement fake data dict for put and patch methods."""
         return create_agreement_data(faker)
 
@@ -152,10 +168,10 @@ class TestCounterpartyRoute(SampleTestRoute):
     model = Counterparty
     factory = CounterpartyFactory
 
-    def get_fake_data(self, faker: Faker) -> Dict:
+    def get_fake_data(self, faker: Faker) -> dict:
         """Get Counterparty fake data dict."""
         return create_counterparty_data(faker)
 
-    def get_fake_put_data(self, faker: Faker) -> Dict:
+    def get_fake_put_data(self, faker: Faker) -> dict:
         """Get CounterParty fake data dict for put and patch methods."""
         return create_counterparty_data(faker)

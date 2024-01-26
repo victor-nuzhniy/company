@@ -11,11 +11,11 @@ class TestProduct:
         """Test Product model instance creation."""
         BaseModelFactory.check_factory(factory_class=ProductFactory, model=Product)
 
-    def test__repr__(self) -> None:
+    def test_repr(self) -> None:
         """Test Product __repr__ method."""
-        obj: Product = ProductFactory()
-        expected_result: str = str(obj.name)
-        assert expected_result == obj.__repr__()
+        instance: Product = ProductFactory()
+        expected_result: str = str(instance.name)
+        assert expected_result == str(instance)
 
 
 class TestProductType:
@@ -24,11 +24,12 @@ class TestProductType:
     def test_factory(self) -> None:
         """Test ProductType model instance creation."""
         BaseModelFactory.check_factory(
-            factory_class=ProductTypeFactory, model=ProductType
+            factory_class=ProductTypeFactory,
+            model=ProductType,
         )
 
-    def test__repr__(self) -> None:
+    def test_repr(self) -> None:
         """Test ProductType __repr__ method."""
-        obj: ProductType = ProductTypeFactory()
-        expected_result: str = str(obj.name)
-        assert expected_result == obj.__repr__()
+        instance: ProductType = ProductTypeFactory()
+        expected_result: str = str(instance.name)
+        assert expected_result == str(instance)

@@ -11,8 +11,8 @@ class TestUser:
         """Test User model instance creation."""
         BaseModelFactory.check_factory(factory_class=UserFactory, model=User)
 
-    def test__repr__(self) -> None:
+    def test_repr(self) -> None:
         """Test base __repr__ method."""
-        obj: User = UserFactory()
-        expected_result: str = str(obj.username)
-        assert expected_result == obj.__repr__()
+        instance: User = UserFactory()
+        expected_result: str = str(instance.username)
+        assert expected_result == str(instance)
