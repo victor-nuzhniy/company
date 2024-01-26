@@ -10,14 +10,15 @@ class TestTaxInvoice:
     def test_factory(self) -> None:
         """Test TaxInvoice model instance creation."""
         BaseModelFactory.check_factory(
-            factory_class=TaxInvoiceFactory, model=TaxInvoice
+            factory_class=TaxInvoiceFactory,
+            model=TaxInvoice,
         )
 
-    def test__repr__(self) -> None:
+    def test_repr(self) -> None:
         """Test TaxInvoice __repr__ method."""
-        obj: TaxInvoice = TaxInvoiceFactory()
-        expected_result: str = str(obj.name)
-        assert expected_result == obj.__repr__()
+        instance: TaxInvoice = TaxInvoiceFactory()
+        expected_result: str = str(instance.name)
+        assert expected_result == str(instance)
 
 
 class TestTaxInvoiceProduct:
@@ -26,11 +27,14 @@ class TestTaxInvoiceProduct:
     def test_factory(self) -> None:
         """Test TaxInvoiceProduct model instance creation."""
         BaseModelFactory.check_factory(
-            factory_class=TaxInvoiceProductFactory, model=TaxInvoiceProduct
+            factory_class=TaxInvoiceProductFactory,
+            model=TaxInvoiceProduct,
         )
 
-    def test__repr__(self) -> None:
+    def test_repr(self) -> None:
         """Test TaxInvoiceProduct __repr__ method."""
-        obj: TaxInvoiceProduct = TaxInvoiceProductFactory()
-        expected_result: str = f"Tax invoice id {obj.tax_invoice_id}"
-        assert expected_result == obj.__repr__()
+        instance: TaxInvoiceProduct = TaxInvoiceProductFactory()
+        expected_result: str = "Tax invoice product id {id}".format(
+            id=instance.tax_invoice_id,
+        )
+        assert expected_result == str(instance)
