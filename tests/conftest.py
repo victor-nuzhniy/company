@@ -58,13 +58,13 @@ FixtureFunc = typing.Union[
 ]
 
 
-@pytest.fixture(scope="function", autouse=True)
+@pytest.fixture(autouse=True)
 def faker_seed() -> None:
     """Generate random seed for Faker instance."""
     return random.seed(version=3)
 
 
-@pytest.fixture(scope="session", autouse=True)
+@pytest.fixture(autouse=True)
 def app() -> typing.Generator[Flask, None, None]:  # noqa WPS213
     """Override dependencies for Flask and return flask instance."""
     application = Flask(__name__)
@@ -241,7 +241,7 @@ def app() -> typing.Generator[Flask, None, None]:  # noqa WPS213
         db.drop_all()
 
 
-@pytest.fixture(scope="session")
+@pytest.fixture
 def admin() -> User:
     """Create admin base."""
     return crud.create(
@@ -256,7 +256,7 @@ def admin() -> User:
     )
 
 
-@pytest.fixture(scope="session")
+@pytest.fixture
 def auth_header(admin: User, app: Flask) -> dict:  # noqa: WPS442
     """Get admin base authorization token."""
     token = jwt.encode(
