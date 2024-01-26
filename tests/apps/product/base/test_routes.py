@@ -4,8 +4,11 @@ from typing import Dict
 from faker import Faker
 
 from api import Product, ProductType
-from tests.apps.product.base.testing_utilities import create_product_data, create_product_type_data
 from tests.apps.product.base.factories import ProductFactory, ProductTypeFactory
+from tests.apps.product.base.testing_utilities import (
+    create_product_data,
+    create_product_type_data,
+)
 from tests.testing_classes import SampleTestRoute
 
 

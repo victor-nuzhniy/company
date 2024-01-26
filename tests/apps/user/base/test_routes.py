@@ -7,10 +7,14 @@ from faker import Faker
 from flask import url_for
 
 from api import User
-from tests.apps.user.base.testing_utilities import create_user_data, create_user_put_data
 from tests.apps.user.base.factories import UserFactory
-from tests.conftest import check_instance_expected_data
+from tests.apps.user.base.testing_utilities import (
+    create_user_data,
+    create_user_put_data,
+)
+from tests.bases import TestType
 from tests.testing_classes import SampleTestRoute
+from tests.testing_utilities import checkers
 
 
 class TestUserRoutes(SampleTestRoute):
@@ -32,7 +36,7 @@ class TestUserRoutes(SampleTestRoute):
 class TestAdminUserRoute:
     """Class for testing User patch by id route."""
 
-    def test_patch_route(self, auth_header: Dict) -> None:
+    def test_patch_route(self: TestType, auth_header: Dict) -> None:
         """Test patch User instance - is_active and is_admin only by admin base."""
         instance: User = UserFactory(is_admin=False, is_active=False)
         expected_data: Dict = {"is_admin": True, "is_active": True}
@@ -41,4 +45,4 @@ class TestAdminUserRoute:
             headers=auth_header,
             data=json.dumps(expected_data),
         )
-        check_instance_expected_data(response, expected_data)
+        checkers.check_instance_expected_data(response, expected_data)

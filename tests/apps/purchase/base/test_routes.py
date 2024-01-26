@@ -4,14 +4,14 @@ from typing import Dict
 from faker import Faker
 
 from api import PurchaseInvoice, PurchaseInvoiceProduct
+from tests.apps.purchase.base.factories import (
+    PurchaseInvoiceFactory,
+    PurchaseInvoiceProductFactory,
+)
 from tests.apps.purchase.base.testing_utilities import (
     create_purchase_invoice_data,
     create_purchase_invoice_product_data,
     create_purchase_invoice_put_data,
-)
-from tests.apps.purchase.base.factories import (
-    PurchaseInvoiceFactory,
-    PurchaseInvoiceProductFactory,
 )
 from tests.testing_classes import SampleTestRoute
 

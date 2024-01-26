@@ -4,12 +4,12 @@ from typing import Dict
 from faker import Faker
 
 from api import Order, OrderProduct
+from tests.apps.order.base.factories import OrderFactory, OrderProductFactory
 from tests.apps.order.base.testing_utilities import (
     create_order_data,
     create_order_product_data,
     create_order_put_data,
 )
-from tests.apps.order.base.factories import OrderFactory, OrderProductFactory
 from tests.testing_classes import SampleTestRoute
 
 
