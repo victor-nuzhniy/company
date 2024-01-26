@@ -8,7 +8,7 @@ from tests.bases import BaseModelFactory
 class ProductTypeFactory(BaseModelFactory):
     """Factory for testing ProdutType model."""
 
-    id = factory.Sequence(lambda x: x)
+    id = factory.Sequence(lambda arg: arg)
     name = factory.Faker("pystr", min_chars=1, max_chars=100)
     products = factory.RelatedFactoryList(
         factory="tests.apps.product.factories.ProductFactory",
@@ -31,7 +31,7 @@ class ProductTypeFactory(BaseModelFactory):
 class ProductFactory(BaseModelFactory):
     """Factory for testing Product model."""
 
-    id = factory.Sequence(lambda x: x)
+    id = factory.Sequence(lambda arg: arg)
     name = factory.Faker("pystr", min_chars=1, max_chars=200)
     code = factory.Faker("pystr", min_chars=1, max_chars=100)
     units = factory.Faker("pystr", min_chars=1, max_chars=100)
@@ -66,7 +66,7 @@ class ProductFactory(BaseModelFactory):
     )
 
     @classmethod
-    def _setup_next_sequence(cls):
+    def _setup_next_sequence(cls) -> int:
         """Create id sequence."""
         return 1
 
