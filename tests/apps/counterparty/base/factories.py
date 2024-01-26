@@ -58,7 +58,7 @@ class CounterpartyFactory(BaseModelFactory):
     )
 
     @classmethod
-    def _setup_next_sequence(cls) -> 1:
+    def _setup_next_sequence(cls) -> int:
         """Set sequence next start type value."""
         return 1
 
