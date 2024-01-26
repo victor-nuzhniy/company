@@ -1,8 +1,9 @@
 """Base models for testing section."""
 import random
-from typing import Type
+from typing import Protocol, Type
 
 import factory
+from flask.testing import FlaskClient
 
 from api.common.api_types import ModelType
 
@@ -30,3 +31,11 @@ class BaseModelFactory(factory.alchemy.SQLAlchemyModelFactory):
         assert size == len(instances)
         for index in instances:
             assert isinstance(index, model)
+
+
+class TestType(Protocol):
+    """Type for instance with client attr."""
+
+    @property
+    def client(self) -> FlaskClient:
+        """Client attr."""
