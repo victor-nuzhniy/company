@@ -30,7 +30,7 @@ class Checkers(object):
             for ky, el in result_response.items():
                 if ky == "created_at":
                     assert (
-                        getattr(expected_data, ky).strftime("%Y-%m-%dT%H:%M:%S") == el
+                        getattr(expected_data, ky).strftime("%Y-%m-%d %H:%M:%S") == el
                     )
                 else:
                     assert getattr(expected_data, ky) == el
@@ -41,10 +41,10 @@ class Checkers(object):
         second_list: list[dict],
     ) -> None:
         """Check two dicts for equality."""
-        for index, instance in enumerate(first_list):
+        for index, instance in enumerate(reversed(first_list)):
             for key, elem in second_list[index].items():
                 if key == "created_at":
-                    assert getattr(instance, key).strftime("%Y-%m-%dT%H:%M:%S") == elem
+                    assert getattr(instance, key).strftime("%Y-%m-%d %H:%M:%S") == elem
                 else:
                     assert getattr(instance, key) == elem
 
